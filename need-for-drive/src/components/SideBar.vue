@@ -22,7 +22,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/styles/menu";
+@import "../../public/css/menu";
+@import "public/css/variables";
 .side-bar {
   display: flex;
   flex-direction: column;
@@ -31,26 +32,30 @@ export default {
   width: 65px;
   height: 100vh;
   background-color: #151b1f;
-  padding: 30px 0 30px 0;
+  padding: 38px 0 20px 0;
 }
 
 .side-bar__lang-button {
   background-color: #151b1f;
-  color: #0ec261;
+  color: $main-accent-color;
   font-size: 13px;
-  width: 35px;
-  padding: 5px;
+  width: 45px;
+  padding: 13px 0 13px 0;
   font-weight: bold;
   cursor: pointer;
-  border: none;
+  border: 1px solid #151b1f;
+  border-radius: 50%;
+  outline: none; /*где-то в мире разозлился один Вадим Макеев*/
 
   &:hover {
     color: #fff;
-    transition: color 0.3s;
+    border-color: #fff;
+    transition: all 0.3s;
   }
 }
 
 .nav-bar {
+  z-index: 1;
   position: absolute;
   top: 0;
   left: 0;
