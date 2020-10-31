@@ -1,5 +1,6 @@
 <template>
   <div class="page-wrapper">
+    <Menu class="page-wrapper__mobile-menu"/>
     <SideBar class="page-wrapper__sidebar" />
     <div class="page-wrapper__main main">
       <header class="main__header header">
@@ -35,10 +36,12 @@
 <script>
 import SideBar from "../components/SideBar";
 import PageSlider from "../components/PageSlider";
+import Menu from "../components/Menu";
 
 export default {
   name: "Main",
   components: {
+    Menu,
     SideBar,
     PageSlider
   }
@@ -144,12 +147,83 @@ export default {
   background-color: $black-color;
   height: 100vh;
   flex: 1 0 40%;
-  color: #fff;
+}
+
+.mobile-menu {
+  display: none;
 }
 
 @media (max-width: 1024px) {
   .page-wrapper__slider {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .side-bar {
+    display: none;
+  }
+
+  .main {
+    height: 100vh;
+  }
+
+  .page-wrapper__mobile-menu {
+    display: block;
+  }
+
+  .main {
+    padding: 12px 0 0 0;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0 16px 0 16px;
+  }
+
+  .title {
+    padding: 0 16px 0 16px;
+  }
+
+  .welcome-area__title {
+    line-height: normal;
+  }
+
+  .title__first-phrase {
+    font-size: 32px;
+  }
+
+  .title__second-phrase {
+    font-size: 32px;
+  }
+
+  .title__description {
+    font-size: 18px;
+    margin-top: 5px;
+  }
+
+  .welcome-area__button {
+    margin-top: 35px;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .footer {
+    padding: 12px 16px 12px 16px;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    justify-content: space-around;
+    min-height: 72px;
+    background: $black-color;
+  }
+
+  .footer__telephone {
+    color: $main-accent-color;
+  }
+
+  .footer__copyright {
+    color: #fff;
   }
 }
 </style>

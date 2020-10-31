@@ -1,29 +1,17 @@
 <template>
   <div class="side-bar">
-    <div
-      class="side-bar__menu-wrapper menu-wrapper"
-      v-on:click="isActive = !isActive"
-    >
-      <div
-        class="menu-wrapper__hamburger-menu hamburger-menu"
-        v-bind:class="{ 'hamburger-menu--active': isActive }"
-      ></div>
-    </div>
+    <Menu />
     <button class="side-bar__lang-button">
       Eng
     </button>
-    <div class="nav-bar" v-bind:class="{ 'nav-bar--active': isActive }"></div>
   </div>
 </template>
 
 <script>
+import Menu from "./Menu";
 export default {
   name: "SideBar",
-  data() {
-    return {
-      isActive: false
-    };
-  }
+  components: {Menu},
 };
 </script>
 
@@ -63,25 +51,4 @@ export default {
     color: $main-accent-color;
   }
 }
-
-.nav-bar {
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #151b1f;
-  height: 100vh;
-  width: 100vw;
-  display: none;
-}
-
-.nav-bar--active {
-  display: block;
-  opacity: 0.98;
-}
-
-/*@keyframes menu {*/
-/*  0% { opacity: 0; }*/
-/*  100% { opacity: 0.9; }*/
-/*}*/
 </style>

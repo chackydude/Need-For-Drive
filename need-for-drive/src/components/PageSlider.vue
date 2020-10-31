@@ -67,5 +67,6 @@ export default {
 <style scoped lang="scss">
 .slider {
   z-index: 0;
+  color: #fff;
 }
 </style>
