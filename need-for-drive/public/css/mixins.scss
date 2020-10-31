@@ -1,0 +1,19 @@
+@mixin buttonStyles() {
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &:active {
+    filter: brightness(80%);
+  }
+}
+
+@mixin buttonStulesByColor($color) {
+  &:hover {
+    background-color: darken($color, 10%);
+  }
+
+  &:active {
+    background-color: darken($color, 20%);
+  }
+}

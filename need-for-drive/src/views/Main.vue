@@ -27,106 +27,39 @@
       </footer>
     </div>
     <div class="page-wrapper__slider">
-      <slider class="slider" animation="normal" height="100vh">
-        <slider-item
-          class="slider-item"
-          v-for="slide in slides"
-          :key="slide.title"
-          :style="{
-            background:
-              'linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0.5), #000), ' +
-              `url(${slide.backgroundImage})` +
-              ' 50% / cover'
-          }"
-        >
-          <div class="item__content slide-content">
-            <p class="slide-content__title">{{ slide.title }}</p>
-            <p class="slide-content__description">
-              {{ slide.description }}
-            </p>
-            <button
-              class="slide-content__button"
-              :style="
-                'background: linear-gradient(90deg,' +
-                  slide.buttonColors[0] +
-                  ',' +
-                  slide.buttonColors[1] +
-                  ')'
-              "
-            >
-              Подробнее
-            </button>
-          </div>
-        </slider-item>
-      </slider>
+      <PageSlider />
     </div>
   </div>
 </template>
 
 <script>
-import { Slider, SliderItem } from "vue-easy-slider";
 import SideBar from "../components/SideBar";
-// that works only with imports, but i'm still trying to find another solution
-import backImage1 from "../assets/images/slide-1.png";
-import backImage2 from "../assets/images/slide-2.png";
-import backImage3 from "../assets/images/slide-3.png";
-import backImage4 from "../assets/images/slide-4.png";
+import PageSlider from "../components/PageSlider";
 
 export default {
   name: "Main",
   components: {
     SideBar,
-    Slider,
-    SliderItem
-  },
-  data() {
-    return {
-      slides: [
-        {
-          title: "Бесплатная парковка",
-          description:
-            "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
-          buttonColors: ["#13493f", "#0c7b1b"],
-          backgroundImage: backImage1
-        },
-        {
-          title: "Страховка",
-          description: "Полная страховка страховка автомобиля",
-          buttonColors: ["#132949", "#0c7b67"],
-          backgroundImage: backImage2
-        },
-        {
-          title: "Бензин",
-          description: "Полный бак на любой заправке города за наш счёт",
-          buttonColors: ["#493013", "#7b0c3b"],
-          backgroundImage: backImage3
-        },
-        {
-          title: "Обслуживание",
-          description: "Автомобиль проходит еженедельное ТО",
-          buttonColors: ["#281349", "#720c7b"],
-          backgroundImage: backImage4
-        }
-      ]
-    };
+    PageSlider
   }
 };
 </script>
 
 <style scoped lang="scss">
 @import "public/css/variables";
+@import "../../public/css/mixins";
 .page-wrapper {
   display: flex;
   flex-direction: row;
 }
 
 .main {
-  flex-grow: 1;
   width: auto;
   padding: 32px 64px 32px 64px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1 1 auto;
 }
 
 .main__header {
@@ -189,6 +122,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
+  @include buttonStulesByColor($main-accent-color);
 }
 
 .main__footer {
@@ -209,44 +143,13 @@ export default {
 .page-wrapper__slider {
   background-color: $black-color;
   height: 100vh;
-  flex-grow: 5;
+  flex: 1 0 40%;
   color: #fff;
 }
 
-.slider {
-  z-index: 0;
-}
-
-.slider-item {
-  background-repeat: no-repeat;
-}
-
-.item__content {
-  margin: auto;
-  max-width: 485px;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  line-height: 2;
-}
-
-.slide-content__title {
-  font-size: 40px;
-  font-weight: bold;
-}
-
-.slide-content__description {
-  font-size: 24px;
-}
-
-.slide-content__button {
-  width: 165px;
-  height: 48px;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 4px;
-  margin-top: 32px;
-  border: none;
+@media (max-width: 1024px) {
+  .page-wrapper__slider {
+    display: none;
+  }
 }
 </style>

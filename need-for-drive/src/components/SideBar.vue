@@ -1,7 +1,13 @@
 <template>
   <div class="side-bar">
-    <div class="side-bar__menu-wrapper menu-wrapper" v-on:click="isActive = !isActive">
-      <div class="menu-wrapper__hamburger-menu hamburger-menu" v-bind:class="{ 'hamburger-menu--active': isActive }"></div>
+    <div
+      class="side-bar__menu-wrapper menu-wrapper"
+      v-on:click="isActive = !isActive"
+    >
+      <div
+        class="menu-wrapper__hamburger-menu hamburger-menu"
+        v-bind:class="{ 'hamburger-menu--active': isActive }"
+      ></div>
     </div>
     <button class="side-bar__lang-button">
       Eng
@@ -51,6 +57,10 @@ export default {
     color: #fff;
     border-color: #fff;
     transition: all 0.3s;
+  }
+
+  &:active {
+    color: $main-accent-color;
   }
 }
 
