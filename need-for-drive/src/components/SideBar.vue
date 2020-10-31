@@ -1,7 +1,7 @@
 <template>
   <div class="side-bar">
     <Menu />
-    <button class="side-bar__lang-button">
+    <button class="lang-button">
       Eng
     </button>
   </div>
@@ -11,7 +11,9 @@
 import Menu from "./Menu";
 export default {
   name: "SideBar",
-  components: {Menu},
+  components: {
+    Menu
+  }
 };
 </script>
 
@@ -29,7 +31,7 @@ export default {
   padding: 38px 0 20px 0;
 }
 
-.side-bar__lang-button {
+.lang-button {
   background-color: #151b1f;
   color: $main-accent-color;
   font-size: 13px;

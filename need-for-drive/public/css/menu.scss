@@ -2,6 +2,8 @@ $bar-width: 24px;
 $bar-height: 3px;
 $bar-spacing: 8px;
 $bar-border-rad: 2px;
+$bar-color-light: #fff;
+$bar-color-dark: #000;
 
 .side-bar__menu-wrapper {
   cursor: pointer;
@@ -10,6 +12,9 @@ $bar-border-rad: 2px;
 }
 
 .menu-wrapper {
+  position: absolute;
+  top: 40px;
+  left: 20px;
   z-index: 2;
   cursor: pointer;
   width: $bar-width;
@@ -26,7 +31,7 @@ $bar-border-rad: 2px;
 
 .hamburger-menu {
   transform: translateY($bar-spacing);
-  background: rgb(255, 255, 255);
+  background: $bar-color-light;
   transition: all 0ms 300ms;
 
   &.hamburger-menu--active {
@@ -39,7 +44,7 @@ $bar-border-rad: 2px;
   position: absolute;
   left: 0;
   bottom: $bar-spacing;
-  background: rgb(255, 255, 255);
+  background: $bar-color-light;
   transition: bottom 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1),
   transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -49,7 +54,7 @@ $bar-border-rad: 2px;
   position: absolute;
   left: 0;
   top: $bar-spacing;
-  background: rgb(255, 255, 255);
+  background: $bar-color-light;
   transition: top 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1),
   transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }

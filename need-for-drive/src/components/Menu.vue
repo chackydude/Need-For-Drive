@@ -80,7 +80,7 @@
             </svg>
           </a>
         </div>
-        <button class="side-bar__lang-button">
+        <button class="lang-button">
           Eng
         </button>
       </div>
@@ -99,8 +99,35 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "public/css/variables";
+@import "public/css/menu";
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #151b1f;
+  height: 100vh;
+  width: 100vw;
+  display: none;
+}
+
+.nav-bar--active {
+  z-index: 1;
+  display: block;
+  opacity: 1;
+  animation: menu 0.1s;
+}
+
+@keyframes menu {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
 
 .nav-bar__links {
   margin-left: 100px;
@@ -113,6 +140,10 @@ export default {
 
   .page-link {
     margin-top: 30px;
+  }
+
+  .links__social-media {
+    margin-top: 40px;
   }
 }
 
@@ -132,7 +163,6 @@ export default {
 }
 
 .links__social-media {
-  margin-top: 40px;
   display: flex;
   flex-direction: row;
 
@@ -147,7 +177,7 @@ export default {
   }
 }
 
-.side-bar__lang-button {
+.lang-button {
   display: none;
   position: absolute;
   bottom: 30px;
@@ -173,111 +203,6 @@ export default {
   }
 }
 
-$bar-width: 24px;
-$bar-height: 3px;
-$bar-spacing: 8px;
-$bar-border-rad: 2px;
-$bar-color-light: #fff;
-$bar-color-dark: #000;
-
-.side-bar__menu-wrapper {
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.menu-wrapper {
-  position: absolute;
-  top: 40px;
-  left: 20px;
-  z-index: 2;
-  cursor: pointer;
-  width: $bar-width;
-  height: $bar-height + $bar-spacing * 2;
-}
-
-.hamburger-menu,
-.hamburger-menu:after,
-.hamburger-menu:before {
-  width: $bar-width;
-  height: $bar-height;
-  border-radius: $bar-border-rad;
-}
-
-.hamburger-menu {
-  transform: translateY($bar-spacing);
-  background: $bar-color-light;
-  transition: all 0ms 300ms;
-
-  &.hamburger-menu--active {
-    background: rgba(255, 255, 255, 0);
-  }
-}
-
-.hamburger-menu:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: $bar-spacing;
-  background: $bar-color-light;
-  transition: bottom 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.hamburger-menu:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: $bar-spacing;
-  background: $bar-color-light;
-  transition: top 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.hamburger-menu.hamburger-menu--active:after {
-  top: 0;
-  transform: rotate(45deg);
-  transition: top 300ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.hamburger-menu.hamburger-menu--active:before {
-  bottom: 0;
-  transform: rotate(-45deg);
-  transition: bottom 300ms cubic-bezier(0.23, 1, 0.32, 1),
-    transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.nav-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #151b1f;
-  height: 100vh;
-  width: 100vw;
-  display: none;
-}
-
-.nav-bar--active {
-  z-index: 1;
-  display: block;
-  opacity: 0.98;
-  animation: menu 0.1s;
-}
-
-@keyframes menu {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0.9;
-  }
-}
-
-.nav-bar__links {
-  height: 100vh;
-}
-
 @media (max-width: 1024px) {
   .page-link {
     font-size: 28px;
@@ -289,12 +214,11 @@ $bar-color-dark: #000;
 }
 
 @media (max-width: 768px) {
-
-
-  .nav-bar__links {
-    margin-left: 25px;
-    margin-top: 60px;
-    justify-content: flex-start;
+  .nav-bar {
+    .nav-bar__links {
+      margin-left: 25px;
+      margin-top: 60px;
+    }
   }
 
   .menu-wrapper {
@@ -302,17 +226,20 @@ $bar-color-dark: #000;
   }
 
   .nav-bar__links {
+    justify-content: flex-start;
+
     .page-link {
       font-size: 22px;
       margin-top: 15px;
     }
   }
 
-
-
-  .side-bar__lang-button {
+  .lang-button {
     display: block;
   }
+
+  // need to fix, going to remove color styles from the component
+  // and add way of styling with using modifiers
 
   .hamburger-menu,
   .hamburger-menu:after,

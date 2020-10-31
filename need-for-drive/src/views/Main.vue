@@ -12,7 +12,7 @@
           </div>
         </div>
       </header>
-      <main class="main__welcome-area welcome">
+      <main class="main__welcome-area welcome-area">
         <div class="welcome-area__title title">
           <p class="title__first-phrase">Каршеринг</p>
           <p class="title__second-phrase">Need for drive</p>
@@ -117,7 +117,7 @@ export default {
 
 .welcome-area__button {
   margin-top: 66px;
-  background-color: $main-accent-color;
+  background: $main-accent-color;
   border: none;
   color: white;
   border-radius: 8px;
@@ -126,7 +126,7 @@ export default {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  @include buttonStulesByColor($main-accent-color);
+  @include buttonStylesByColor($main-accent-color);
 }
 
 .main__footer {
