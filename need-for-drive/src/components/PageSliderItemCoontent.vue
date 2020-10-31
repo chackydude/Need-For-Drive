@@ -45,7 +45,7 @@ export default {
 @import "public/css/mixins";
 .slider__item-wrapper {
   background-repeat: no-repeat;
-  padding: 0 5vw 0 5vw;
+  padding: 0 8vw 0 8vw;
 }
 
 .item__content {
@@ -54,16 +54,18 @@ export default {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  line-height: 1.5;
+  line-height: 1;
 }
 
 .slide-content__title {
   font-size: 40px;
+  margin-bottom: 22px;
   font-weight: bold;
 }
 
 .slide-content__description {
   font-size: 24px;
+  font-family: Roboto-Light, sans-serif;
 }
 
 .slide-content__button {

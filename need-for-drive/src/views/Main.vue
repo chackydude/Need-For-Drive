@@ -24,7 +24,7 @@
       </main>
       <footer class="main__footer footer">
         <p class="footer__copyright">© 2016-2019 «Need for drive»</p>
-        <p class="footer__telephone">8 (495) 234-22-44</p>
+        <a class="footer__telephone" href="tel:+84952342244">8 (495) 234-22-44</a>
       </footer>
     </div>
     <div class="page-wrapper__slider">
@@ -112,6 +112,7 @@ export default {
   color: $gray-color;
   font-size: 26px;
   margin-top: 35px;
+  font-family: Roboto-Light, sans-serif;
 }
 
 .welcome-area__button {
@@ -140,7 +141,12 @@ export default {
 }
 
 .footer__telephone {
+  text-decoration: none;
   color: $black-color;
+
+  &:hover {
+    color: $main-accent-color;
+  }
 }
 
 .page-wrapper__slider {
@@ -149,7 +155,7 @@ export default {
   flex: 1 0 40%;
 }
 
-.mobile-menu {
+.page-wrapper__mobile-menu {
   display: none;
 }
 
