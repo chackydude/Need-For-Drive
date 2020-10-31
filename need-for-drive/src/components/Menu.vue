@@ -12,12 +12,16 @@
     <div class="nav-bar" v-bind:class="{ 'nav-bar--active': isActive }">
       <div class="nav-bar__links links">
         <div class="links__pages">
-          <!--          <a href="">ПАРКОВКА</a>-->
-          <!--          <a href="">СТРАХОВАНИЕ</a>-->
-          <!--          <a href="">БЕНЗИН</a>-->
-          <!--          <a href="">ОБСЛУЖИВАНИЕ</a>-->
+          <a href="" class="page-link">ПАРКОВКА</a>
+          <a href="" class="page-link">СТРАХОВАНИЕ</a>
+          <a href="" class="page-link">БЕНЗИН</a>
+          <a href="" class="page-link">ОБСЛУЖИВАНИЕ</a>
         </div>
-        <div class="links__social-media"></div>
+        <div class="links__social-media">
+          <img src="@/assets/icons/telegram.svg" alt="current-city" />
+          <img src="@/assets/icons/facebook.svg" alt="current-city" />
+          <img src="@/assets/icons/instagram.svg" alt="current-city" />
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +40,48 @@ export default {
 
 <style lang="scss">
 @import "public/css/variables";
+
+
+
+.nav-bar__links {
+  margin-left: 100px;
+  height: 100vh;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  .page-link {
+    margin-top: 30px;
+  }
+}
+
+.links__pages {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-link {
+  text-decoration: none;
+  font-size: 32px;
+  color: #fff;
+
+  &:hover {
+    color: $main-accent-color;
+  }
+}
+
+.links__social-media {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+
+  img {
+    margin-right: 24px;
+  }
+}
+
 $bar-width: 24px;
 $bar-height: 3px;
 $bar-spacing: 8px;
@@ -135,7 +181,6 @@ $bar-color-dark: #000;
 
 .nav-bar__links {
   height: 100vh;
-  background-color: $black-color;
 }
 
 @media (max-width: 768px) {
