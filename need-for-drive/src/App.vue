@@ -5,6 +5,24 @@
 </template>
 
 <style lang="scss">
+@font-face {
+  font-family: "Roboto";
+  src: url("../public/fonts/Roboto-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../public/fonts/Roboto-Medium.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../public/fonts/Roboto-Light.ttf");
+  font-weight: 300;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -12,23 +30,4 @@
   font-family: Roboto, sans-serif;
   outline: none;
 }
-
-@font-face {
-  font-family: 'Roboto';
-  src: url("../public/fonts/Roboto-Bold.ttf");
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url("../public/fonts/Roboto-Medium.ttf");
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: 'Roboto-Light';
-  src: url("../public/fonts/Roboto-Light.ttf");
-  font-weight: 300;
-}
-
 </style>

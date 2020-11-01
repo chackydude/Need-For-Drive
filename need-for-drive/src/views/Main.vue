@@ -112,7 +112,8 @@ export default {
   color: $gray-color;
   font-size: 26px;
   margin-top: 35px;
-  font-family: Roboto-Light, sans-serif;
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
 }
 
 .welcome-area__button {
