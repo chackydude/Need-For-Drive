@@ -1,6 +1,6 @@
 <template>
   <div class="side-bar">
-    <Menu />
+    <Menu class="side-bar__menu" />
     <button class="lang-button">
       Eng
     </button>

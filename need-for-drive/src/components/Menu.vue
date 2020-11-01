@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div
       class="side-bar__menu-wrapper menu-wrapper"
       :class="{ 'is-dark': dark }"

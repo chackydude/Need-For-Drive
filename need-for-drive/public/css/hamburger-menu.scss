@@ -12,10 +12,8 @@ $bar-color-dark: #000;
 }
 
 .menu-wrapper {
-  position: absolute;
-  top: 40px;
-  left: 20px;
-  z-index: 2;
+  position: relative;
+  z-index: 100;
   cursor: pointer;
   width: $bar-width;
   height: $bar-height + $bar-spacing * 2;
@@ -78,6 +76,9 @@ $bar-color-dark: #000;
   .hamburger-menu:after,
   .hamburger-menu:before {
     background: $bar-color-dark;
+  }
+  .hamburger-menu--active {
+    background: rgba(255, 255, 255, 0);
   }
 
   .hamburger-menu--active:after,

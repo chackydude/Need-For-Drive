@@ -1,9 +1,9 @@
 <template>
   <div class="page-wrapper">
-    <Menu class="page-wrapper__mobile-menu" dark/>
     <SideBar class="page-wrapper__sidebar" />
     <div class="page-wrapper__main main">
       <header class="main__header header">
+        <Menu class="page-wrapper__mobile-menu" dark />
         <p class="header__title">Need for drive</p>
         <div class="header__current-city">
           <img src="@/assets/icons/place_icon.svg" alt="current-city" />
@@ -24,7 +24,9 @@
       </main>
       <footer class="main__footer footer">
         <p class="footer__copyright">© 2016-2019 «Need for drive»</p>
-        <a class="footer__telephone" href="tel:+84952342244">8 (495) 234-22-44</a>
+        <a class="footer__telephone" href="tel:+84952342244"
+          >8 (495) 234-22-44</a
+        >
       </footer>
     </div>
     <div class="page-wrapper__slider">
@@ -177,6 +179,9 @@ export default {
 
   .page-wrapper__mobile-menu {
     display: block;
+    position: absolute;
+    left: 16px;
+    top: 0;
   }
 
   .main {
