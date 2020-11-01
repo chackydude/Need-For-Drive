@@ -65,7 +65,7 @@ export default {
 
 .slide-content__description {
   font-size: 24px;
-  font-family: Roboto-Light, sans-serif;
+  font-weight: 300;
 }
 
 .slide-content__button {

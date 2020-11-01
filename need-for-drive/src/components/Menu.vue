@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div
       class="side-bar__menu-wrapper menu-wrapper"
-      v-on:click="isActive = !isActive"
+      :class="{ 'is-dark': dark }"
+      @click="isActive = !isActive"
     >
       <div
         class="menu-wrapper__hamburger-menu hamburger-menu"
-        v-bind:class="{ 'hamburger-menu--active': isActive }"
+        :class="{ 'hamburger-menu--active': isActive }"
       ></div>
     </div>
     <div class="nav-bar" v-bind:class="{ 'nav-bar--active': isActive }">
@@ -95,13 +96,19 @@ export default {
     return {
       isActive: false
     };
+  },
+  props: {
+    dark: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 @import "public/css/variables";
-@import "public/css/menu";
+@import "../../public/css/hamburger-menu";
 
 .nav-bar {
   position: fixed;
@@ -236,21 +243,6 @@ export default {
 
   .lang-button {
     display: block;
-  }
-
-  // need to fix, going to remove color styles from the component
-  // and add way of styling with using modifiers
-
-  .hamburger-menu,
-  .hamburger-menu:after,
-  .hamburger-menu:before {
-    background: $bar-color-dark;
-  }
-
-  .hamburger-menu--active,
-  .hamburger-menu--active:after,
-  .hamburger-menu--active:before {
-    background: $bar-color-light;
   }
 }
 </style>

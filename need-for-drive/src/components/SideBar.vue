@@ -1,6 +1,6 @@
 <template>
   <div class="side-bar">
-    <Menu />
+    <Menu class="side-bar__menu" />
     <button class="lang-button">
       Eng
     </button>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../public/css/menu";
+@import "../../public/css/hamburger-menu";
 @import "public/css/variables";
 .side-bar {
   display: flex;
