@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../public/css/menu";
+@import "../../public/css/hamburger-menu";
 @import "public/css/variables";
 .side-bar {
   display: flex;

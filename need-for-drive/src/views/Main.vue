@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <Menu class="page-wrapper__mobile-menu"/>
+    <Menu class="page-wrapper__mobile-menu" dark/>
     <SideBar class="page-wrapper__sidebar" />
     <div class="page-wrapper__main main">
       <header class="main__header header">
