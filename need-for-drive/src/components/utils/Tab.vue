@@ -7,7 +7,8 @@ export default {
   name: "Tab",
   props: {
     name: String,
-    selected: { default: false }
+    selected: { default: false },
+    isLast: { default: false },
   },
 
   data() {

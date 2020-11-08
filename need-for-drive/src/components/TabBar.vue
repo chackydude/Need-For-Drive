@@ -10,6 +10,7 @@
           {{ tab.name }}
         </a>
         <img
+          v-if="!tab.isLast"
           class="links__icon icon"
           src="@/assets/icons/next.svg"
           alt="next"
@@ -48,21 +49,28 @@ export default {
 
 <style scoped lang="scss">
 @import "../../public/css/variables";
+
+$padding: 64px;
+
 .tabs {
-  padding: 0 64px 0 64px;
   display: flex;
   flex-direction: column;
 }
 
 .links {
-  height: 32px;
+  padding: 0 $padding 0 $padding;
   border-top: 1px solid $gray-light-color;
   border-bottom: 1px solid $gray-light-color;
+  height: 32px;
   align-items: center;
   display: flex;
   flex-direction: row;
   font-size: 14px;
   font-weight: bold;
+}
+
+.tabs-details {
+  padding: 0 $padding 0 $padding;
 }
 
 .link {

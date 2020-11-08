@@ -4,10 +4,11 @@
     <div class="order-page__content">
       <Header />
       <TabBar>
-        <tab name="Местоположение" link="#place" :selected="true"></tab>
+        <tab name="Местоположение" link="#place" :selected="true">
+        </tab>
         <tab name="Модель" link="#model"></tab>
         <tab name="Дополнительно" link="#more"></tab>
-        <tab name="Итого" link="#result"></tab>
+        <tab name="Итого" link="#result" :is-last="true"></tab>
       </TabBar>
     </div>
   </div>
