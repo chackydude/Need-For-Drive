@@ -107,8 +107,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/variables";
-@import "../../public/css/hamburger-menu";
+@import "../../../public/css/variables";
+@import "../../../public/css/hamburger-menu";
 
 .nav-bar {
   position: fixed;

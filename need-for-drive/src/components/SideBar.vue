@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Menu from "./Menu";
+import Menu from "./utils/Menu";
 export default {
   name: "SideBar",
   components: {

@@ -42,7 +42,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
+@import "../../../public/css/mixins";
 .slider__item-wrapper {
   background-repeat: no-repeat;
   padding: 0 8vw 0 8vw;
