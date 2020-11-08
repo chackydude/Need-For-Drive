@@ -228,10 +228,6 @@ export default {
     }
   }
 
-  .menu-wrapper {
-    top: 20px;
-  }
-
   .nav-bar__links {
     justify-content: flex-start;
 

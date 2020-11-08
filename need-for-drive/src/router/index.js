@@ -9,13 +9,18 @@ const routes = [
     path: "/",
     name: "main",
     component: Main
+  },
+  {
+    path: "/order",
+    name: "order",
+    component: () => import("../views/Order")
   }
 ];
 
 const router = new VueRouter({
+  routes,
   mode: "history",
-  base: process.env.BASE_URL,
-  routes
+  base: process.env.BASE_URL
 });
 
 export default router;
