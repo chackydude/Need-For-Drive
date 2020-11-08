@@ -50,18 +50,19 @@ export default {
 @import "../../public/css/variables";
 .tabs {
   padding: 0 64px 0 64px;
-  height: 32px;
   display: flex;
-  border-top: 1px solid $gray-light-color;
-  border-bottom: 1px solid $gray-light-color;
+  flex-direction: column;
 }
 
 .links {
+  height: 32px;
+  border-top: 1px solid $gray-light-color;
+  border-bottom: 1px solid $gray-light-color;
+  align-items: center;
   display: flex;
   flex-direction: row;
   font-size: 14px;
   font-weight: bold;
-  align-self: center;
 }
 
 .link {
