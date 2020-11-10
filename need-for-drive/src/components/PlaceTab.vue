@@ -34,10 +34,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@mixin fontStyles() {
-  font-size: 14px;
-  font-weight: lighter;
-}
+@import "public/css/mixins";
+@import "public/css/variables";
 
 .place-tab__inputs {
   margin-top: 32px;
@@ -64,22 +62,22 @@ export default {
 .input-field__title {
   text-align: right;
   min-width: 92px;
-  @include fontStyles;
+  @include fontStylesLight;
 }
 
 .input-field__input {
   border: none;
-  border-bottom: 1px solid;
-  @include fontStyles;
+  border-bottom: 1px solid $gray-color;
+  @include fontStylesLight;
   min-width: 224px;
 }
 
 .place-tab__map {
-    margin-top: 45px;
+  margin-top: 45px;
 }
 
 .map-area__title {
-  @include fontStyles;
-    margin-bottom: 16px;
+  @include fontStylesLight;
+  margin-bottom: 16px;
 }
 </style>

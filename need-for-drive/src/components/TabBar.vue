@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="tabs-details">
+    <div class="page-content">
       <slot></slot>
     </div>
   </div>
@@ -69,7 +69,7 @@ $padding: 64px;
   font-weight: bold;
 }
 
-.tabs-details {
+.page-content {
   padding: 0 $padding 0 $padding;
 }
 

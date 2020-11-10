@@ -8,7 +8,7 @@ export default {
   props: {
     name: String,
     selected: { default: false },
-    isLast: { default: false },
+    isLast: { default: false }
   },
 
   data() {

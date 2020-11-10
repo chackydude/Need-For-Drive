@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div>
     <div
-      class="side-bar__menu-wrapper menu-wrapper"
+      class="menu-wrapper"
       :class="{ 'is-dark': dark }"
       @click="isActive = !isActive"
     >

@@ -1,20 +1,22 @@
 <template>
   <div class="order-page">
-    <SideBar class="order-page__sidebar"/>
+    <SideBar class="order-page__sidebar" />
     <div class="order-page__content">
       <Header />
-      <TabBar>
-        <tab name="Местоположение" link="#place" :selected="true">
-          <div class="place-tab">
-            <div class="place-tab__inputs inputs">
-              <PlaceTab />
+      <div class="order-page__main-content">
+        <TabBar class="tabs">
+          <tab name="Местоположение" link="#place" :selected="true">
+            <div class="place-tab">
+              <div class="place-tab__inputs inputs">
+                <PlaceTab />
+              </div>
             </div>
-          </div>
-        </tab>
-        <tab name="Модель" link="#model"></tab>
-        <tab name="Дополнительно" link="#more"></tab>
-        <tab name="Итого" link="#result" :is-last="true"></tab>
-      </TabBar>
+          </tab>
+          <tab name="Модель" link="#model"></tab>
+          <tab name="Дополнительно" link="#more"></tab>
+          <tab name="Итого" link="#result" is-last="true"></tab>
+        </TabBar>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +47,15 @@ export default {
 }
 
 .order-page__content {
+  flex-grow: 1;
+}
+
+.order-page__main-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs {
   flex-grow: 1;
 }
 </style>
