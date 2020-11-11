@@ -23,7 +23,7 @@
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
     </div>
-    <button class="users-order__button order-button">
+    <button class="users-order__button order-button" @click="unlockNextStep">
       Выбрать модель
     </button>
   </div>
@@ -41,9 +41,15 @@ export default {
     rentalTime: String,
     userTariff: String,
     extraServices: Array
+    // add vuex pls 0_0
   },
   components: {
     OderListItem
+  },
+  methods: {
+    unlockNextStep() {
+
+    }
   }
 };
 </script>

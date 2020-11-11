@@ -8,7 +8,8 @@
         <div
           v-for="tab in tabs"
           :class="{
-            'is-active': tab.isActive
+            'is-active': tab.isActive,
+            'is-blocked': tab.isBlocked
           }"
           :key="tab.name"
         >
@@ -79,21 +80,25 @@ export default {
         {
           name: "Местоположение",
           isActive: true,
+          isBlocked: false,
           isLast: false
         },
         {
           name: "Модель",
           isActive: false,
+          isBlocked: false,
           isLast: false
         },
         {
           name: "Дополнительно",
           isActive: false,
+          isBlocked: true,
           isLast: false
         },
         {
           name: "Итог",
           isActive: false,
+          isBlocked: true,
           isLast: true
         }
       ]
@@ -129,7 +134,7 @@ $padding: 64px;
 .link {
   text-decoration: none;
   cursor: pointer;
-  color: $gray-color;
+  color: $black-color;
 }
 
 .tabs {
@@ -162,6 +167,11 @@ $padding: 64px;
 
 .is-active a {
   color: $main-accent-color;
+}
+
+.is-blocked a {
+  pointer-events: none;
+  color: $gray-color;
 }
 
 .tabs-content {
