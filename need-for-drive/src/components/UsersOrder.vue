@@ -2,33 +2,23 @@
   <div class="users-order">
     <p class="users-order__title">Ваш заказ:</p>
     <div class="users-order__current-list list">
-      <OderListItem class="list__order-item">
-        <div slot="name"><br />Пункт выдачи</div>
-        <div slot="value">
-          Ульяновск, <br />
-          Нариманова 42
-        </div>
+      <OderListItem class="list__order-item" name="Пункт выдачи">
+        Ульяновск, <br />
+        Нариманова 42
       </OderListItem>
-      <OderListItem class="list__order-item">
-        <template slot="name">Модель</template>
-        <template slot="value">Hyndai, i30 N</template>
-      </OderListItem>
-      <OderListItem class="list__order-item">
-        <template slot="name">Цвет</template>
-        <template slot="value">Голубой</template>
-      </OderListItem>
-      <OderListItem class="list__order-item">
-        <template slot="name">Длительность аренды</template>
-        <template slot="value">1д 2ч</template>
-      </OderListItem>
-      <OderListItem class="list__order-item">
-        <template slot="name">Тариф</template>
-        <template slot="value">На сутки</template>
-      </OderListItem>
-      <OderListItem class="list__order-item">
-        <template slot="name">Полный бак</template>
-        <template slot="value">Да</template>
-      </OderListItem>
+      <OderListItem
+        class="list__order-item"
+        name="Модель"
+        value="Hyndai, i30 N"
+      />
+      <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
+      <OderListItem
+        class="list__order-item"
+        name="Длительность аренды"
+        value="1д 2ч"
+      />
+      <OderListItem class="list__order-item" name="Тариф" value="На сутки" />
+      <OderListItem class="list__order-item" name="Полный бак" value="Да" />
     </div>
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
@@ -43,17 +33,15 @@
 import OderListItem from "./utils/OderListItem";
 export default {
   name: "UsersOrder",
+  props: {
+    orderPlace: String,
+    orderModel: String,
+    modelColor: String,
+    rentalTime: String,
+    extraServices: Array
+  },
   components: {
     OderListItem
-  },
-  data() {
-    return {
-      orderPlace: "",
-      orderModel: "",
-      modelColor: "",
-      rentalTime: "",
-      extraServices: []
-    };
   }
 };
 </script>

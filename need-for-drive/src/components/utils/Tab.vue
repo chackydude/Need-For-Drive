@@ -8,13 +8,8 @@ export default {
   props: {
     name: String,
     selected: { default: false },
-    isLast: { default: false }
-  },
-
-  data() {
-    return {
-      isActive: false
-    };
+    isLast: { default: false },
+    isActive: Boolean
   },
 
   mounted() {
