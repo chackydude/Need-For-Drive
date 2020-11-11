@@ -51,7 +51,7 @@ export default {
 @import "public/css/variables";
 .users-order {
   padding: 32px;
-  max-width: 319px;
+  max-width: 350px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -88,6 +88,7 @@ export default {
   background-color: $main-accent-color;
   font-size: 16px;
   cursor: pointer;
+  align-self: center;
   @include buttonStylesByColor($main-accent-color);
 }
 

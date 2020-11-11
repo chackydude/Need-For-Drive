@@ -2,7 +2,7 @@
   <div class="order-page">
     <SideBar class="order-page__sidebar" />
     <div class="order-page__content">
-      <Header />
+      <Header class="order-page__header"/>
 
       <div class="order-page__tabs tabs">
         <div
@@ -111,6 +111,8 @@ $padding: 64px;
 
 .order-page__content {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .link {
@@ -149,5 +151,9 @@ $padding: 64px;
 
 .is-active a {
   color: $main-accent-color;
+}
+
+.tabs-content {
+  flex: 1;
 }
 </style>
