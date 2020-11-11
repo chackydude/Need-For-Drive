@@ -36,6 +36,7 @@
         <tab :is-active="tabs[3].isActive"> </tab>
 
         <UsersOrder
+          class="users-order"
           order-city="Ульяновск"
           order-place="Нариманова 42"
           order-model="Hyndai, i30 N"
@@ -165,5 +166,58 @@ $padding: 64px;
 
 .tabs-content {
   flex: 1;
+}
+
+@media (max-width: 1024px) {
+  .order-page__sidebar {
+    position: fixed;
+  }
+
+  .order-page__content {
+    margin-left: 45px;
+  }
+
+  .order-page__tabs {
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 32px;
+    height: auto;
+  }
+
+  .tabs-content {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-page__sidebar {
+    display: none !important;
+  }
+
+  .order-page__content {
+    margin-left: 0;
+  }
+
+  .order-page__tabs {
+    padding: 0 10px 0 10px;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .order-page__tabs > div {
+    margin: 8px;
+    font-size: 12px;
+  }
+
+  .tabs-content {
+    padding: 0 10px 0 10px;
+  }
+
+  .users-order {
+    margin-top: 20px;
+  }
 }
 </style>

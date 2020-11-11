@@ -97,4 +97,11 @@ export default {
 .users-order__button {
   margin-top: 26px;
 }
+
+@media (max-width: 1024px) {
+  .users-order {
+    border-left: none;
+    padding: 10px;
+  }
+}
 </style>

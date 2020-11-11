@@ -20,9 +20,11 @@
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <div class="map-area__map">
-        <img src="@/assets/images/map-example.png" alt="" />
-      </div>
+      <img
+        src="@/assets/images/map-example.png"
+        alt="map"
+        class="map-area__map"
+      />
     </div>
   </div>
 </template>
@@ -79,5 +81,19 @@ export default {
 .map-area__title {
   @include fontStylesLight;
   margin-bottom: 16px;
+}
+
+.map-area__map {
+  width: 40vw;
+}
+
+@media (max-width: 768px) {
+  .map-area__map {
+    width: 300px;
+  }
+
+  .input-field__input {
+    min-width: 150px;
+  }
 }
 </style>
