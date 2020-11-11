@@ -2,20 +2,22 @@
   <div class="order-page">
     <SideBar class="order-page__sidebar" />
     <div class="order-page__content">
-      <Header class="order-page__header"/>
+      <Header class="order-page__header" />
 
       <div class="order-page__tabs tabs">
         <div
           v-for="tab in tabs"
-          :class="{ 'is-active': tab.isActive }"
+          :class="{
+            'is-active': tab.isActive
+          }"
           :key="tab.name"
         >
-          <a class="links__link link" @click="selectTab(tab)">
+          <a class="tab__link link" @click="selectTab(tab)">
             {{ tab.name }}
           </a>
           <img
             v-if="!tab.isLast"
-            class="links__icon icon"
+            class="tab__icon icon"
             src="@/assets/icons/next.svg"
             alt="next"
           />
@@ -33,7 +35,14 @@
 
         <tab :is-active="tabs[3].isActive"> </tab>
 
-        <UsersOrder />
+        <UsersOrder
+          order-city="Ульяновск"
+          order-place="Нариманова 42"
+          order-model="Hyndai, i30 N"
+          model-color="Голубой"
+          rental-time="1д 2ч"
+          user-tariff="На сутки"
+        />
       </div>
     </div>
   </div>
@@ -58,6 +67,7 @@ export default {
   data() {
     return {
       usersOrder: {
+        orderCty: "",
         orderPlace: "",
         orderModel: "",
         modelColor: "",
@@ -140,8 +150,8 @@ $padding: 64px;
   justify-content: space-between;
 }
 
-.links__link,
-.links__icon {
+.tab__link,
+.tab__icon {
   margin-right: 18px;
 }
 

@@ -3,21 +3,21 @@
     <p class="users-order__title">Ваш заказ:</p>
     <div class="users-order__current-list list">
       <OderListItem class="list__order-item" name="Пункт выдачи">
-        Ульяновск, <br />
-        Нариманова 42
+        {{ orderCity }}, <br />
+        {{ orderPlace }}
       </OderListItem>
       <OderListItem
         class="list__order-item"
         name="Модель"
-        value="Hyndai, i30 N"
+        :value="orderModel"
       />
       <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
       <OderListItem
         class="list__order-item"
         name="Длительность аренды"
-        value="1д 2ч"
+        :value="rentalTime"
       />
-      <OderListItem class="list__order-item" name="Тариф" value="На сутки" />
+      <OderListItem class="list__order-item" name="Тариф" :value="userTariff" />
       <OderListItem class="list__order-item" name="Полный бак" value="Да" />
     </div>
     <div class="users-order__price">
@@ -34,10 +34,12 @@ import OderListItem from "./utils/OderListItem";
 export default {
   name: "UsersOrder",
   props: {
+    orderCity: String,
     orderPlace: String,
     orderModel: String,
     modelColor: String,
     rentalTime: String,
+    userTariff: String,
     extraServices: Array
   },
   components: {
