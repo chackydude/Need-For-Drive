@@ -18,9 +18,9 @@
           <p class="title__second-phrase">Need for drive</p>
           <p class="title__description">Поминутная аренда авто твоего города</p>
         </div>
-        <button class="welcome-area__button">
+        <router-link tag="button" to="/order" class="welcome-area__button">
           Забронировать
-        </button>
+        </router-link>
       </main>
       <footer class="main__footer footer">
         <p class="footer__copyright">© 2016-2019 «Need for drive»</p>
@@ -38,7 +38,7 @@
 <script>
 import SideBar from "../components/SideBar";
 import PageSlider from "../components/PageSlider";
-import Menu from "../components/Menu";
+import Menu from "../components/utils/Menu";
 
 export default {
   name: "Main",
@@ -181,7 +181,7 @@ export default {
     display: block;
     position: absolute;
     left: 16px;
-    top: 0;
+    top: 20px;
   }
 
   .main {

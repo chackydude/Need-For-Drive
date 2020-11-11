@@ -17,3 +17,8 @@
     background-color: darken($color, 20%);
   }
 }
+
+@mixin fontStylesLight() {
+  font-size: 14px;
+  font-weight: lighter;
+}

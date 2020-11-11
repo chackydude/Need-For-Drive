@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div>
     <div
-      class="side-bar__menu-wrapper menu-wrapper"
+      class="menu-wrapper"
       :class="{ 'is-dark': dark }"
       @click="isActive = !isActive"
     >
@@ -107,8 +107,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/variables";
-@import "../../public/css/hamburger-menu";
+@import "../../../public/css/variables";
+@import "../../../public/css/hamburger-menu";
 
 .nav-bar {
   position: fixed;
@@ -226,10 +226,6 @@ export default {
       margin-left: 25px;
       margin-top: 60px;
     }
-  }
-
-  .menu-wrapper {
-    top: 20px;
   }
 
   .nav-bar__links {

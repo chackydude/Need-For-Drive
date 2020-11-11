@@ -1,14 +1,14 @@
 <template>
   <div class="side-bar">
     <Menu class="side-bar__menu" />
-    <button class="lang-button">
+    <button class="side-bar__lang-button lang-button">
       Eng
     </button>
   </div>
 </template>
 
 <script>
-import Menu from "./Menu";
+import Menu from "./utils/Menu";
 export default {
   name: "SideBar",
   components: {

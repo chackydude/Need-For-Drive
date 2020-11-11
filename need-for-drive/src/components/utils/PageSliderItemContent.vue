@@ -13,7 +13,9 @@
       <p class="slide-content__description">
         {{ description }}
       </p>
-      <button
+      <router-link
+        to="/order"
+        tag="button"
         class="slide-content__button"
         :style="
           'background: linear-gradient(90deg,' +
@@ -24,7 +26,7 @@
         "
       >
         Подробнее
-      </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -37,12 +39,12 @@ export default {
     description: String,
     backgroundImage: String,
     buttonColors: Array
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
+@import "../../../public/css/mixins";
 .slider__item-wrapper {
   background-repeat: no-repeat;
   padding: 0 8vw 0 8vw;
