@@ -38,12 +38,10 @@
 
         <UsersOrder
           class="users-order"
-          order-city="Ульяновск"
-          order-place="Нариманова 42"
-          order-model="Hyndai, i30 N"
-          model-color="Голубой"
-          rental-time="1д 2ч"
-          user-tariff="На сутки"
+          :order-model="usersOrder.orderModel"
+          :model-color="usersOrder.modelColor"
+          :rental-time="usersOrder.rentalTime"
+          :user-tariff="usersOrder.userTariff"
         />
       </div>
     </div>
@@ -69,12 +67,13 @@ export default {
   data() {
     return {
       usersOrder: {
-        orderCty: "",
-        orderPlace: "",
-        orderModel: "",
-        modelColor: "",
-        rentalTime: "",
-        extraServices: []
+        orderCty: "Ульяновск",
+        orderPlace: "Нариманова 42",
+        orderModel: "Hyndai, i30 N",
+        modelColor: "Голубой",
+        rentalTime: "1д 2ч",
+        extraServices: [],
+        userTariff: "На сутки"
       },
       tabs: [
         {

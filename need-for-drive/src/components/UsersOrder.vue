@@ -2,9 +2,13 @@
   <div class="users-order">
     <p class="users-order__title">Ваш заказ:</p>
     <div class="users-order__current-list list">
-      <OderListItem class="list__order-item" name="Пункт выдачи">
-        {{ orderCity }}, <br />
-        {{ orderPlace }}
+      <OderListItem
+        class="list__order-item"
+        name="Пункт выдачи"
+        v-if="getCity !== ''"
+      >
+        {{ getCity }}, <br />
+        {{ getPlace }}
       </OderListItem>
       <OderListItem
         class="list__order-item"
@@ -23,7 +27,7 @@
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
     </div>
-    <button class="users-order__button order-button" @click="unlockNextStep">
+    <button class="users-order__button order-button">
       Выбрать модель
     </button>
   </div>
@@ -31,6 +35,8 @@
 
 <script>
 import OderListItem from "./utils/OderListItem";
+import { mapGetters } from "vuex";
+
 export default {
   name: "UsersOrder",
   props: {
@@ -41,15 +47,12 @@ export default {
     rentalTime: String,
     userTariff: String,
     extraServices: Array
-    // add vuex pls 0_0
   },
   components: {
     OderListItem
   },
-  methods: {
-    unlockNextStep() {
-
-    }
+  computed: {
+    ...mapGetters(["getCity", "getPlace"])
   }
 };
 </script>
