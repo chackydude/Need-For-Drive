@@ -6,7 +6,7 @@
 
       <div class="order-page__tabs tabs">
         <div
-          v-for="tab in tabs"
+          v-for="tab in getTabs"
           :class="{
             'is-active': tab.isActive,
             'is-blocked': tab.isBlocked
@@ -26,15 +26,15 @@
       </div>
 
       <div class="tabs-content">
-        <tab :is-active="tabs[0].isActive" :selected="true">
+        <tab :is-active="getTabs[0].isActive" :selected="true">
           <PlaceTab />
         </tab>
 
-        <tab :is-active="tabs[1].isActive"> </tab>
+        <tab :is-active="getTabs[1].isActive"> </tab>
 
-        <tab :is-active="tabs[2].isActive"> </tab>
+        <tab :is-active="getTabs[2].isActive"> </tab>
 
-        <tab :is-active="tabs[3].isActive"> </tab>
+        <tab :is-active="getTabs[3].isActive"> </tab>
 
         <UsersOrder
           class="users-order"
@@ -54,6 +54,7 @@ import Header from "../components/Header";
 import Tab from "../components/utils/Tab";
 import PlaceTab from "../components/PlaceTab";
 import UsersOrder from "../components/UsersOrder";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Order",
@@ -74,42 +75,14 @@ export default {
         rentalTime: "1д 2ч",
         extraServices: [],
         userTariff: "На сутки"
-      },
-      tabs: [
-        {
-          name: "Местоположение",
-          isActive: true,
-          isBlocked: false,
-          isLast: false
-        },
-        {
-          name: "Модель",
-          isActive: false,
-          isBlocked: false,
-          isLast: false
-        },
-        {
-          name: "Дополнительно",
-          isActive: false,
-          isBlocked: true,
-          isLast: false
-        },
-        {
-          name: "Итог",
-          isActive: false,
-          isBlocked: true,
-          isLast: true
-        }
-      ]
+      }
     };
   },
   methods: {
-    selectTab(selectedTab) {
-      this.tabs.forEach(tab => {
-        tab.isActive = tab.name === selectedTab.name;
-      });
-      console.log(selectedTab.name);
-    }
+    ...mapMutations(["selectTab"])
+  },
+  computed: {
+    ...mapGetters(["getTabs", "getCurrentTab"])
   }
 };
 </script>

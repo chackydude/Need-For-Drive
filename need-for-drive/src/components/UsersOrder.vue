@@ -27,19 +27,20 @@
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
     </div>
-    <button class="users-order__button order-button">
-      Выбрать модель
+    <button class="users-order__button order-button" @click="unlockTab">
+      {{ buttonText[getCurrentTab.id] }}
     </button>
   </div>
 </template>
 
 <script>
 import OderListItem from "./utils/OderListItem";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "UsersOrder",
   props: {
+    // replace by the order-object or remove and use vuex
     orderCity: String,
     orderPlace: String,
     orderModel: String,
@@ -48,11 +49,23 @@ export default {
     userTariff: String,
     extraServices: Array
   },
+
+  data() {
+    return {
+      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"]
+    };
+  },
   components: {
     OderListItem
   },
   computed: {
-    ...mapGetters(["getCity", "getPlace"])
+    ...mapGetters(["getCity", "getPlace", "getCurrentTab"])
+  },
+  methods: {
+    ...mapMutations(["unlockNextTab"]),
+    unlockTab() {
+      this.unlockNextTab();
+    }
   }
 };
 </script>

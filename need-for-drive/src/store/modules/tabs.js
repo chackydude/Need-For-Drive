@@ -1,25 +1,30 @@
 export default {
   state: {
+    currentTab: 0,
     tabs: [
       {
+        id: 0,
         name: "Местоположение",
         isActive: true,
         isBlocked: false,
         isLast: false
       },
       {
+        id: 1,
         name: "Модель",
         isActive: false,
-        isBlocked: false,
+        isBlocked: true,
         isLast: false
       },
       {
+        id: 2,
         name: "Дополнительно",
         isActive: false,
         isBlocked: true,
         isLast: false
       },
       {
+        id: 3,
         name: "Итог",
         isActive: false,
         isBlocked: true,
@@ -28,29 +33,31 @@ export default {
     ]
   },
   mutations: {
-    updateTab (state, city) {
-      state.orderCity = city;
-    },
-
-    updatePlace(state, place) {
-      state.orderPlace = place;
-    }
-  },
-  actions: {
-    selectTab(selectedTab) {
-      this.tabs.forEach(tab => {
+    selectTab(state, selectedTab) {
+      state.tabs.forEach(tab => {
         tab.isActive = tab.name === selectedTab.name;
       });
-      console.log(selectedTab.name);
-    }
-  },
-  getters: {
-    getCity(state) {
-      return state.orderCity;
     },
 
-    getPlace(state) {
-      return state.orderPlace;
+    unlockNextTab(state) {
+      for (let i = 0; i < state.tabs.length; i++) {
+        if (state.tabs[i].isActive && i < state.tabs.length - 1) {
+          state.tabs[i].isActive = false;
+          state.tabs[i + 1].isBlocked = false;
+          state.tabs[i + 1].isActive = true;
+          break;
+        }
+      }
+    }
+  },
+  actions: {},
+  getters: {
+    getTabs(state) {
+      return state.tabs;
+    },
+
+    getCurrentTab(state) {
+      return state.tabs.filter(tab => tab.isActive)[0];
     }
   }
 };
