@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import OderListItem from "./elements/OderListItem";
+import OderListItem from "./elements/OrderListItem";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {

@@ -7,7 +7,7 @@
           type="search"
           class="input-field__input"
           placeholder="Ваш город"
-          v-model="userCity"
+          v-model.trim="userCity"
           @input="updateUserCity"
         />
       </div>
@@ -17,7 +17,7 @@
           type="search"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
-          v-model="userAddress"
+          v-model.trim="userAddress"
           @input="updateUserPlace"
         />
       </div>
@@ -46,11 +46,11 @@ export default {
   methods: {
     ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
     updateUserCity() {
-      this.updateCity(this.userCity.trim());
+      this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
     },
     updateUserPlace() {
-      this.updatePlace(this.userAddress.trim());
+      this.updatePlace(this.userAddress);
       this.updateFillStatus(this.isFilled);
     }
   },
