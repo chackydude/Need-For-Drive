@@ -14,7 +14,10 @@
           }"
           :key="tab.name"
         >
-          <a class="tab__link link" @click="!tab.isBlocked ? selectTab(tab) : () => {}">
+          <a
+            class="tab__link link"
+            @click="!tab.isBlocked ? selectTab(tab) : () => {}"
+          >
             {{ tab.name }}
           </a>
           <img
