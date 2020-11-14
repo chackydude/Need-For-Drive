@@ -5,7 +5,9 @@ export default {
     orderModel: "",
     modelColor: "",
     rentalTime: "",
-    extraServices: []
+    extraServices: [],
+    minPrice: 0,
+    maxPrice: 0
   },
   mutations: {
     updateCity(state, city) {

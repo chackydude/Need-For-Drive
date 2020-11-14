@@ -36,13 +36,7 @@
 
         <tab :is-active="getTabs[3].isActive"> </tab>
 
-        <UsersOrder
-          class="users-order"
-          :order-model="usersOrder.orderModel"
-          :model-color="usersOrder.modelColor"
-          :rental-time="usersOrder.rentalTime"
-          :user-tariff="usersOrder.userTariff"
-        />
+        <UsersOrder class="users-order" :order="usersOrder" />
       </div>
     </div>
   </div>
@@ -51,7 +45,7 @@
 <script>
 import SideBar from "../components/SideBar";
 import Header from "../components/Header";
-import Tab from "../components/utils/Tab";
+import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/PlaceTab";
 import UsersOrder from "../components/UsersOrder";
 import { mapMutations, mapGetters } from "vuex";

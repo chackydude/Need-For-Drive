@@ -1,34 +1,37 @@
 export default {
   state: {
-    currentTab: 0,
     tabs: [
       {
         id: 0,
         name: "Местоположение",
         isActive: true,
         isBlocked: false,
-        isLast: false
+        isLast: false,
+        isFilled: false
       },
       {
         id: 1,
         name: "Модель",
         isActive: false,
         isBlocked: true,
-        isLast: false
+        isLast: false,
+        isFilled: false
       },
       {
         id: 2,
         name: "Дополнительно",
         isActive: false,
         isBlocked: true,
-        isLast: false
+        isLast: false,
+        isFilled: false
       },
       {
         id: 3,
         name: "Итог",
         isActive: false,
         isBlocked: true,
-        isLast: true
+        isLast: true,
+        isFilled: false
       }
     ]
   },
@@ -46,6 +49,14 @@ export default {
           state.tabs[i + 1].isBlocked = false;
           state.tabs[i + 1].isActive = true;
           break;
+        }
+      }
+    },
+
+    updateFillStatus(state, isFilled) {
+      for (let i = 0; i < state.tabs.length; i++) {
+        if (state.tabs[i].isActive) {
+          state.tabs[i].isFilled = isFilled;
         }
       }
     }

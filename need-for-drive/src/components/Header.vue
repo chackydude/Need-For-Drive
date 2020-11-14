@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Menu from "./utils/Menu";
+import Menu from "./elements/Menu";
 export default {
   name: "Header",
   components: {

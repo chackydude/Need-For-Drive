@@ -44,16 +44,21 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateCity", "updatePlace"]),
+    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
     updateUserCity() {
       this.updateCity(this.userCity.trim());
+      this.updateFillStatus(this.isFilled);
     },
     updateUserPlace() {
       this.updatePlace(this.userAddress.trim());
+      this.updateFillStatus(this.isFilled);
     }
   },
   computed: {
-    ...mapGetters(["getCity", "getPlace"])
+    ...mapGetters(["getCity", "getPlace", "getCurrentTab"]),
+    isFilled() {
+      return this.getPlace != "" && this.getCity != "";
+    }
   },
   mounted() {
     this.userCity = this.getCity;

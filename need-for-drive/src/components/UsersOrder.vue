@@ -13,41 +13,38 @@
       <OderListItem
         class="list__order-item"
         name="Модель"
-        :value="orderModel"
+        :value="order.orderModel"
       />
       <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
       <OderListItem
         class="list__order-item"
         name="Длительность аренды"
-        :value="rentalTime"
+        :value="order.rentalTime"
       />
-      <OderListItem class="list__order-item" name="Тариф" :value="userTariff" />
+      <OderListItem class="list__order-item" name="Тариф" :value="order.userTariff" />
       <OderListItem class="list__order-item" name="Полный бак" value="Да" />
     </div>
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
     </div>
-    <button class="users-order__button order-button" @click="unlockTab">
+    <button
+      class="users-order__button order-button"
+      @click="unlockTab"
+      :class="{ 'is-blocked': !getCurrentTab.isFilled }"
+    >
       {{ buttonText[getCurrentTab.id] }}
     </button>
   </div>
 </template>
 
 <script>
-import OderListItem from "./utils/OderListItem";
+import OderListItem from "./elements/OderListItem";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "UsersOrder",
   props: {
-    // replace by the order-object or remove and use vuex
-    orderCity: String,
-    orderPlace: String,
-    orderModel: String,
-    modelColor: String,
-    rentalTime: String,
-    userTariff: String,
-    extraServices: Array
+    order: Object
   },
 
   data() {
@@ -114,6 +111,10 @@ export default {
   cursor: pointer;
   align-self: center;
   @include buttonStylesByColor($main-accent-color);
+}
+
+.is-blocked {
+  @include buttonBlocked;
 }
 
 .users-order__button {
