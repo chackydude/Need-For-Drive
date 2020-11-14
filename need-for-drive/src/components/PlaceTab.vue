@@ -7,6 +7,8 @@
           type="search"
           class="input-field__input"
           placeholder="Ваш город"
+          v-model.trim="userCity"
+          @input="updateUserCity"
         />
       </div>
       <div class="inputs__input input-field">
@@ -15,6 +17,8 @@
           type="search"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
+          v-model.trim="userAddress"
+          @input="updateUserPlace"
         />
       </div>
     </div>
@@ -30,8 +34,36 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from "vuex";
 export default {
-  name: "PlaceTab"
+  name: "PlaceTab",
+  data() {
+    return {
+      userCity: "",
+      userAddress: ""
+    };
+  },
+  methods: {
+    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
+    updateUserCity() {
+      this.updateCity(this.userCity);
+      this.updateFillStatus(this.isFilled);
+    },
+    updateUserPlace() {
+      this.updatePlace(this.userAddress);
+      this.updateFillStatus(this.isFilled);
+    }
+  },
+  computed: {
+    ...mapGetters(["getCity", "getPlace", "getCurrentTab"]),
+    isFilled() {
+      return this.getPlace != "" && this.getCity != "";
+    }
+  },
+  mounted() {
+    this.userCity = this.getCity;
+    this.userAddress = this.getPlace;
+  }
 };
 </script>
 

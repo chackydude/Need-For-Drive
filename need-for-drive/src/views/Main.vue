@@ -38,7 +38,7 @@
 <script>
 import SideBar from "../components/SideBar";
 import PageSlider from "../components/PageSlider";
-import Menu from "../components/utils/Menu";
+import Menu from "../components/elements/Menu";
 
 export default {
   name: "Main",

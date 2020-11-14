@@ -6,13 +6,18 @@
 
       <div class="order-page__tabs tabs">
         <div
-          v-for="tab in tabs"
+          v-for="tab in getTabs"
+          class="tabs__tab tab"
           :class="{
-            'is-active': tab.isActive
+            'tab--active': tab.isActive,
+            'tab--blocked': tab.isBlocked
           }"
           :key="tab.name"
         >
-          <a class="tab__link link" @click="selectTab(tab)">
+          <a
+            class="tab__link link"
+            @click="!tab.isBlocked ? selectTab(tab) : () => {}"
+          >
             {{ tab.name }}
           </a>
           <img
@@ -25,25 +30,17 @@
       </div>
 
       <div class="tabs-content">
-        <tab :is-active="tabs[0].isActive" :selected="true">
+        <tab :is-active="getTabs[0].isActive" :selected="true">
           <PlaceTab />
         </tab>
 
-        <tab :is-active="tabs[1].isActive"> </tab>
+        <tab :is-active="getTabs[1].isActive"> </tab>
 
-        <tab :is-active="tabs[2].isActive"> </tab>
+        <tab :is-active="getTabs[2].isActive"> </tab>
 
-        <tab :is-active="tabs[3].isActive"> </tab>
+        <tab :is-active="getTabs[3].isActive"> </tab>
 
-        <UsersOrder
-          class="users-order"
-          order-city="Ульяновск"
-          order-place="Нариманова 42"
-          order-model="Hyndai, i30 N"
-          model-color="Голубой"
-          rental-time="1д 2ч"
-          user-tariff="На сутки"
-        />
+        <UsersOrder class="users-order" :order="usersOrder" />
       </div>
     </div>
   </div>
@@ -52,9 +49,10 @@
 <script>
 import SideBar from "../components/SideBar";
 import Header from "../components/Header";
-import Tab from "../components/utils/Tab";
+import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/PlaceTab";
 import UsersOrder from "../components/UsersOrder";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Order",
@@ -68,44 +66,21 @@ export default {
   data() {
     return {
       usersOrder: {
-        orderCty: "",
-        orderPlace: "",
-        orderModel: "",
-        modelColor: "",
-        rentalTime: "",
-        extraServices: []
-      },
-      tabs: [
-        {
-          name: "Местоположение",
-          isActive: true,
-          isLast: false
-        },
-        {
-          name: "Модель",
-          isActive: false,
-          isLast: false
-        },
-        {
-          name: "Дополнительно",
-          isActive: false,
-          isLast: false
-        },
-        {
-          name: "Итог",
-          isActive: false,
-          isLast: true
-        }
-      ]
+        orderCty: "Ульяновск",
+        orderPlace: "Нариманова 42",
+        orderModel: "Hyndai, i30 N",
+        modelColor: "Голубой",
+        rentalTime: "1д 2ч",
+        extraServices: [],
+        userTariff: "На сутки"
+      }
     };
   },
   methods: {
-    selectTab(selectedTab) {
-      this.tabs.forEach(tab => {
-        tab.isActive = tab.name === selectedTab.name;
-      });
-      console.log(selectedTab.name);
-    }
+    ...mapMutations(["selectTab"])
+  },
+  computed: {
+    ...mapGetters(["getTabs", "getCurrentTab"])
   }
 };
 </script>
@@ -129,7 +104,7 @@ $padding: 64px;
 .link {
   text-decoration: none;
   cursor: pointer;
-  color: $gray-color;
+  color: $black-color;
 }
 
 .tabs {
@@ -160,8 +135,13 @@ $padding: 64px;
   display: none;
 }
 
-.is-active a {
+.tab--active a {
   color: $main-accent-color;
+}
+
+.tab--blocked a {
+  pointer-events: none;
+  color: $gray-color;
 }
 
 .tabs-content {
