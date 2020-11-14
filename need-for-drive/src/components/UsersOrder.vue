@@ -30,7 +30,7 @@
     <button
       class="users-order__button order-button"
       @click="unlockTab"
-      :class="{ 'is-blocked': !getCurrentTab.isFilled }"
+      :class="{ 'order-button--blocked': !getCurrentTab.isFilled }"
     >
       {{ buttonText[getCurrentTab.id] }}
     </button>
@@ -113,7 +113,7 @@ export default {
   @include buttonStylesByColor($main-accent-color);
 }
 
-.is-blocked {
+.order-button--blocked {
   @include buttonBlocked;
 }
 

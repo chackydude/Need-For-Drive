@@ -7,9 +7,10 @@
       <div class="order-page__tabs tabs">
         <div
           v-for="tab in getTabs"
+          class="tabs__tab tab"
           :class="{
-            'is-active': tab.isActive,
-            'is-blocked': tab.isBlocked
+            'tab--active': tab.isActive,
+            'tab--blocked': tab.isBlocked
           }"
           :key="tab.name"
         >
@@ -131,11 +132,11 @@ $padding: 64px;
   display: none;
 }
 
-.is-active a {
+.tab--active a {
   color: $main-accent-color;
 }
 
-.is-blocked a {
+.tab--blocked a {
   pointer-events: none;
   color: $gray-color;
 }
