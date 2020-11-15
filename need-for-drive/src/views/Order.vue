@@ -40,7 +40,7 @@
 
         <tab :is-active="getTabs[3].isActive"> </tab>
 
-        <UsersOrder class="users-order" :order="usersOrder" />
+        <OrderList class="users-order" :order="usersOrder" />
       </div>
     </div>
   </div>
@@ -51,13 +51,13 @@ import SideBar from "../components/SideBar";
 import Header from "../components/Header";
 import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/PlaceTab";
-import UsersOrder from "../components/UsersOrder";
+import OrderList from "../components/OrderList";
 import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "Order",
   components: {
-    UsersOrder,
+    OrderList,
     PlaceTab,
     Tab,
     Header,

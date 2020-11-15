@@ -9,7 +9,10 @@
           placeholder="Ваш город"
           v-model.trim="userCity"
           @input="updateUserCity"
+          list="cities"
         />
+        <datalist id="cities">
+        </datalist>
       </div>
       <div class="inputs__input input-field">
         <p class="input-field__title">Пункт выдачи</p>
