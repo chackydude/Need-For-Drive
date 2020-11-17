@@ -6,7 +6,7 @@ export default {
       { id: 3, name: "Самара", coordinates: [] }
     ],
     currentPoints: ["Нариманова 42", "Ленина 35", "Маркса 79"],
-
+    currentCoordinates: []
   },
   mutations: {
     updateCities(state, cities) {
@@ -15,6 +15,10 @@ export default {
 
     updatePoints(state, points) {
       state.currentPoints = points;
+    },
+
+    updateCoordinates(state, coordinates) {
+      state.currentCoordinates = coordinates;
     }
   },
   actions: {
@@ -22,17 +26,21 @@ export default {
 
     fetchPoints() {},
 
-    getPlaceCoordinates(ctx, address) {
-      fetch(process.env.VUE_APP_GEOCEDE_URL + address)
+    // getting coordinates with using yandex-geocode
+    generatePlaceCoordinates({ commit }, address) {
+      console.log(address);
+      fetch(
+          process.env.VUE_APP_GEOCODE_URL +
+          address
+      )
         .then(response => response.json())
-        .then(result =>
-          console.log(
-            result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
-              .split(" ")
-              .reverse()
-              .map(element => parseFloat(element))
-          )
-        );
+        .then(result => {
+          let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+            .split(" ")
+            .reverse()
+            .map(element => parseFloat(element));
+          commit("updateCoordinates", coords);
+        });
     }
   },
   getters: {
@@ -42,6 +50,10 @@ export default {
 
     getPoints(state) {
       return state.currentPoints;
+    },
+
+    getCoordinates(state) {
+      return state.currentCoordinates;
     }
   }
 };

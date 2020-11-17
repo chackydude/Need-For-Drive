@@ -12,8 +12,12 @@
           list="cities"
         />
         <datalist id="cities">
-          <option v-for="city in getCities" v-bind:key="city" :value="city">
-            {{ city }}
+          <option
+            v-for="city in getCities"
+            v-bind:key="city.name"
+            :value="city.name"
+          >
+            {{ city.name }}
           </option>
         </datalist>
       </div>
@@ -36,18 +40,25 @@
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-<!--      <img-->
-<!--        src="@/assets/images/map-example.png"-->
-<!--        alt="map"-->
-<!--        class="map-area__map"-->
-<!--      />-->
-      <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad946e926b15d4d56810ed15b1e2723f43e29e96e15e778a9a76f8dbe02ab0204&amp;source=constructor" width="736" height="352" frameborder="0"></iframe>
+      <!--      <img-->
+      <!--        src="@/assets/images/map-example.png"-->
+      <!--        alt="map"-->
+      <!--        class="map-area__map"-->
+      <!--      />-->
+      <iframe
+        src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad946e926b15d4d56810ed15b1e2723f43e29e96e15e778a9a76f8dbe02ab0204&amp;source=constructor"
+        width="736"
+        height="352"
+        frameborder="0"
+      ></iframe>
     </div>
+    <button @click="updateCoordinates">current coordinates</button>
+    <p v-if="getCoordinates.length !== 0"> {{ getCoordinates }} </p>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "PlaceTab",
   data() {
@@ -58,6 +69,7 @@ export default {
   },
   methods: {
     ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
+    ...mapActions(["generatePlaceCoordinates"]),
     updateUserCity() {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
@@ -65,6 +77,9 @@ export default {
     updateUserPlace() {
       this.updatePlace(this.userAddress);
       this.updateFillStatus(this.isFilled);
+    },
+    updateCoordinates() {
+      if (this.isFilled) this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
   computed: {
@@ -73,7 +88,8 @@ export default {
       "getPoint",
       "getCurrentTab",
       "getCities",
-      "getPoints"
+      "getPoints",
+      "getCoordinates"
     ]),
     isFilled() {
       return this.getPoint != "" && this.getCity != "";
