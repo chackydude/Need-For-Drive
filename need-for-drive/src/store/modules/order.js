@@ -24,7 +24,7 @@ export default {
       return state.orderCity;
     },
 
-    getPlace(state) {
+    getPoint(state) {
       return state.orderPlace;
     }
   }

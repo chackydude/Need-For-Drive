@@ -8,7 +8,7 @@
         v-if="getCity !== ''"
       >
         {{ getCity }}, <br />
-        {{ getPlace }}
+        {{ getPoint }}
       </OderListItem>
       <OderListItem
         class="list__order-item"
@@ -56,7 +56,7 @@ export default {
     OderListItem
   },
   computed: {
-    ...mapGetters(["getCity", "getPlace", "getCurrentTab"])
+    ...mapGetters(["getCity", "getPoint", "getCurrentTab"])
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
