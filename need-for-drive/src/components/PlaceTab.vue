@@ -53,7 +53,6 @@
       ></iframe>
     </div>
     <button @click="updateCoordinates">current coordinates</button>
-    <p v-if="getCoordinates.length !== 0"> {{ getCoordinates }} </p>
   </div>
 </template>
 
