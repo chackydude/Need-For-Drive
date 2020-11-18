@@ -1,14 +1,21 @@
 export default {
   state: {
-    cities: [
-      { id: 1, name: "Ульяновск", coordinates: [] },
-      { id: 2, name: "Казань", coordinates: [] },
-      { id: 3, name: "Самара", coordinates: [] }
-    ],
-    currentPoints: ["Нариманова 42", "Ленина 35", "Маркса 79"],
-    currentCoordinates: []
+    cities: [],
+    currentPoints: [],
+    currentCity: {},
+    currentPoint: {},
+    currentCoordinates: [],
+    pointsCoordinates: []
   },
   mutations: {
+    updateCity(state, city) {
+      state.orderCity = city;
+    },
+
+    updatePlace(state, place) {
+      state.orderPlace = place;
+    },
+
     updateCities(state, cities) {
       state.cities = cities;
     },
@@ -19,20 +26,54 @@ export default {
 
     updateCoordinates(state, coordinates) {
       state.currentCoordinates = coordinates;
+    },
+
+    updatePointsCoordinates(state, payload) {
+      if (payload.status == "add") {
+        state.pointsCoordinates.push(payload.coordinates);
+      } else {
+        state.pointsCoordinates = [];
+      }
     }
   },
   actions: {
-    fetchCities() {},
+    fetchCities({ commit }) {
+      return fetch(process.env.VUE_APP_BASE_URL + "db/city", {
+        headers: {
+          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+          Authorization: "4cbcea96de"
+        },
+        contentType: "application/json"
+      })
+        .then(res => res.json())
+        .then(result => {
+          commit("updateCities", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
 
-    fetchPoints() {},
+    fetchPoints({ commit }) {
+      return fetch(process.env.VUE_APP_BASE_URL + "db/point", {
+        headers: {
+          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+          Authorization: "4cbcea96de"
+        },
+        contentType: "application/json"
+      })
+        .then(res => res.json())
+        .then(result => {
+          commit("updatePoints", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
 
     // getting coordinates with using yandex-geocode
     generatePlaceCoordinates({ commit }, address) {
-      console.log(address);
-      fetch(
-          process.env.VUE_APP_GEOCODE_URL +
-          address
-      )
+      fetch("https://geocode-maps.yandex.ru/1.x/?apikey=458a38da-81ff-410e-8e5b-5dcc22463029&format=json&geocode=" + address)
         .then(response => response.json())
         .then(result => {
           let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -40,7 +81,28 @@ export default {
             .reverse()
             .map(element => parseFloat(element));
           commit("updateCoordinates", coords);
-        });
+          console.log(coords)
+        })
+        .catch(error => console.log(error.message));
+    },
+
+    generateCoordinatesForPoints({ commit }, points) {
+      commit("updatePointsCoordinates", { status: "clear", coordinates: [] });
+      for (let i = 0; i < points.length; i++) {
+        fetch(process.env.VUE_APP_GEOCODE_URL + points[i].cityId.name + points[i].address)
+          .then(response => response.json())
+          .then(result => {
+            let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
+              .split(" ")
+              .reverse()
+              .map(element => parseFloat(element));
+            commit("updatePointsCoordinates", {
+              status: "add",
+              coordinates: coords
+            });
+          })
+          .catch(error => console.log(error.message));
+      }
     }
   },
   getters: {
@@ -54,6 +116,10 @@ export default {
 
     getCoordinates(state) {
       return state.currentCoordinates;
-    }
+    },
+
+    getPointsCoordinates(state) {
+      return state.pointsCoordinates;
+    },
   }
 };

@@ -4,7 +4,6 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Город</p>
         <input
-          type="search"
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
@@ -12,11 +11,7 @@
           list="cities"
         />
         <datalist id="cities">
-          <option
-            v-for="city in getCities"
-            v-bind:key="city.name"
-            :value="city.name"
-          >
+          <option v-for="city in getCities" :key="city.id">
             {{ city.name }}
           </option>
         </datalist>
@@ -24,7 +19,6 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Пункт выдачи</p>
         <input
-          type="search"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
           v-model.trim="userAddress"
@@ -32,53 +26,69 @@
           list="points"
         />
         <datalist id="points">
-          <option v-for="point in getPoints" v-bind:key="point" :value="point">
-            {{ point }}
+          <option v-for="point in getPointsForCurrentCity" :key="point.name">
+            {{ point.address }}
           </option>
         </datalist>
       </div>
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <!--      <img-->
-      <!--        src="@/assets/images/map-example.png"-->
-      <!--        alt="map"-->
-      <!--        class="map-area__map"-->
-      <!--      />-->
-      <iframe
-        src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad946e926b15d4d56810ed15b1e2723f43e29e96e15e778a9a76f8dbe02ab0204&amp;source=constructor"
-        width="736"
-        height="352"
-        frameborder="0"
-      ></iframe>
+      <Map
+              :center="getCityCoordinates"
+      />
     </div>
-    <button @click="updateCoordinates">current coordinates</button>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import Map from "./elements/Map";
 export default {
   name: "PlaceTab",
+  components: {
+    Map
+  },
   data() {
     return {
       userCity: "",
-      userAddress: ""
+      userAddress: "",
+      marks_example: [
+        {
+          name: "Ульяновск, Нариманова 1",
+          center: [54.3335, 48.384285]
+        },
+        {
+          name: "Ульяновск, Московское шоссе 34",
+          center: [54.300985, 48.288264]
+        },
+        {
+          name: "Ульяновск, Гончарова 27",
+          center: [54.320883, 48.399934]
+        }
+      ]
     };
   },
   methods: {
     ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
-    ...mapActions(["generatePlaceCoordinates"]),
+    ...mapActions([
+      "generatePlaceCoordinates",
+      "fetchCities",
+      "fetchPoints",
+      "generateCoordinatesForPoints"
+    ]),
     updateUserCity() {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
     },
     updateUserPlace() {
       this.updatePlace(this.userAddress);
       this.updateFillStatus(this.isFilled);
     },
-    updateCoordinates() {
-      if (this.isFilled) this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
+
+    updateCityCoordinates() {
+      this.generatePlaceCoordinates(this.getCity);
     }
   },
   computed: {
@@ -88,15 +98,30 @@ export default {
       "getCurrentTab",
       "getCities",
       "getPoints",
-      "getCoordinates"
+      "getCoordinates",
+      "getCurrentCity",
+      "getPoints",
+      "getFullAddress",
+      "getPointsCoordinates"
     ]),
     isFilled() {
       return this.getPoint != "" && this.getCity != "";
+    },
+    getPointsForCurrentCity() {
+      return this.getPoints.filter(point => point.cityId.name === this.getCity);
+    },
+    getCityCoordinates() {
+      if (this.getCoordinates.length === 0) {
+        return [55.751574, 37.573856]
+      } else return this.getCoordinates;
     }
   },
   mounted() {
     this.userCity = this.getCity;
     this.userAddress = this.getPoint;
+    this.fetchCities();
+    this.fetchPoints();
+    console.log(this.generatePlaceCoordinates("Ульяновск"));
   }
 };
 </script>
