@@ -121,7 +121,6 @@ export default {
     this.userAddress = this.getPoint;
     this.fetchCities();
     this.fetchPoints();
-    console.log(this.generatePlaceCoordinates("Ульяновск"));
   }
 };
 </script>

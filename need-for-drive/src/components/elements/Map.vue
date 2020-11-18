@@ -70,6 +70,12 @@ export default {
   mounted() {
     // eslint-disable-next-line no-undef
     ymaps.ready(this.init);
+  },
+  watch: {
+    center: function () {
+      // eslint-disable-next-line no-undef
+      ymaps.ready(this.init);
+    }
   }
 };
 </script>
