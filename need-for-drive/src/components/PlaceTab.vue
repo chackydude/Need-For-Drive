@@ -41,6 +41,8 @@
         :placemarks="getCoordinatesForCurrentPoints"
       />
     </div>
+    // for test
+    <button @click="checkPointsNamesCoords">get points</button>
   </div>
 </template>
 
@@ -66,6 +68,7 @@ export default {
       "fetchPoints",
       "generateCoordinatesForPoints"
     ]),
+
     updateUserCity() {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
@@ -81,6 +84,10 @@ export default {
 
     updateCityCoordinates() {
       this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
+    },
+
+    checkPointsNamesCoords() {
+      console.log(this.getPointsCoordinatesWithNames);
     }
   },
   computed: {
@@ -119,13 +126,14 @@ export default {
       }
     },
 
+    // working
     getPointsCoordinatesWithNames() {
       let points = this.getPointsForCurrentCity;
       let pointCoordinates = this.getCoordinatesForCurrentPoints;
       let result = [];
       for (let i = 0; i < pointCoordinates.length; i++) {
         result.push({
-          name: points[i].names,
+          name: points[i].address,
           center: pointCoordinates[i]
         });
       }

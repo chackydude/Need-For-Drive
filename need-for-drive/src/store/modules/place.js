@@ -120,6 +120,6 @@ export default {
 
     getPointsCoordinates(state) {
       return state.pointsCoordinates;
-    },
+    }
   }
 };
