@@ -42,8 +42,6 @@
         @updatePoint="updateUserPlaceFromMap($event)"
       />
     </div>
-<!--    for test-->
-    <button @click="checkPointsNamesCoords">get points</button>
   </div>
 </template>
 
