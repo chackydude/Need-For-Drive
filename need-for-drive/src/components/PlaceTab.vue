@@ -4,6 +4,7 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Город</p>
         <input
+          type="search"
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
@@ -19,6 +20,7 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Пункт выдачи</p>
         <input
+          type="search"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
           v-model.trim="userAddress"
@@ -34,7 +36,10 @@
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <Map :center="getCityCoordinates" :placemarks="marks_example"/>
+      <Map
+        :center="getCityCoordinates"
+        :placemarks="getCoordinatesForCurrentPoints"
+      />
     </div>
   </div>
 </template>
@@ -50,21 +55,7 @@ export default {
   data() {
     return {
       userCity: "",
-      userAddress: "",
-      marks_example: [
-        {
-          name: "Ульяновск, Нариманова 1",
-          center: [54.3335, 48.384285]
-        },
-        {
-          name: "Ульяновск, Московское шоссе 34",
-          center: [54.300985, 48.288264]
-        },
-        {
-          name: "Ульяновск, Гончарова 27",
-          center: [54.320883, 48.399934]
-        }
-      ]
+      userAddress: ""
     };
   },
   methods: {
@@ -79,14 +70,17 @@ export default {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+      this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
     },
+
     updateUserPlace() {
       this.updatePlace(this.userAddress);
       this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
     },
 
     updateCityCoordinates() {
-      this.generatePlaceCoordinates(this.getCity);
+      this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
   computed: {
@@ -110,10 +104,32 @@ export default {
     getPointsForCurrentCity() {
       return this.getPoints.filter(point => point.cityId.name === this.getCity);
     },
+
     getCityCoordinates() {
       if (this.getCoordinates.length === 0) {
         return [55.751574, 37.573856];
       } else return this.getCoordinates;
+    },
+
+    getCoordinatesForCurrentPoints() {
+      if (this.getPointsCoordinates.length === 0) {
+        return [];
+      } else {
+        return this.getPointsCoordinates;
+      }
+    },
+
+    getPointsCoordinatesWithNames() {
+      let points = this.getPointsForCurrentCity;
+      let pointCoordinates = this.getCoordinatesForCurrentPoints;
+      let result = [];
+      for (let i = 0; i < pointCoordinates.length; i++) {
+        result.push({
+          name: points[i].names,
+          center: pointCoordinates[i]
+        });
+      }
+      return result;
     }
   },
   mounted() {

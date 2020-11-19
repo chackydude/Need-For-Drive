@@ -17,14 +17,16 @@ export default {
       type: Array,
       // eslint-disable-next-line vue/require-valid-default-prop
       default: function() {
-        return new Array();
+        return [];
       }
     },
     city: String
   },
   name: "Map",
   data() {
-    return {};
+    return {
+      myMap: {} // instance of the map
+    };
   },
   methods: {
     ...mapActions(["generatePlaceCoordinates"]),
@@ -32,7 +34,7 @@ export default {
       let currentPlacemarks = this.placemarks;
       // Создание экземпляра карты.
       // eslint-disable-next-line no-undef
-      var myMap = new ymaps.Map(
+      this.myMap = new ymaps.Map(
         "map",
         {
           center: this.center,
@@ -42,6 +44,8 @@ export default {
         {}
       );
 
+      let currentMap = this.myMap;
+
       // добавили на карту метки из коллекции
       // eslint-disable-next-line no-undef
       let example_collection = new ymaps.GeoObjectCollection(null);
@@ -49,77 +53,69 @@ export default {
       for (let i = 0; i < currentPlacemarks.length; i++) {
         // eslint-disable-next-line no-undef
         let placemark = new ymaps.Placemark(
-          currentPlacemarks[i].center,
-          { hintContent: currentPlacemarks[i].name },
+          currentPlacemarks[i],
+          // { hintContent: currentPlacemarks[i].name },
+          {},
           {
             preset: "islands#darkGreenCircleIcon"
           }
         );
         placemark.events.add("click", function() {
-          myMap.setCenter(currentPlacemarks[i].center, 13, {
+          currentMap.setCenter(currentPlacemarks[i], 13, {
             duration: 500
           });
         });
         example_collection.add(placemark);
-        myMap.geoObjects.add(example_collection);
+        currentMap.geoObjects.add(example_collection);
       }
 
       // выставляем масштаб карты чтобы были видны все группы.
-      if (currentPlacemarks.length !== 0)
-        myMap.setBounds(myMap.geoObjects.getBounds(), {
-          zoomMargin: 50
-        });
+      // if (currentPlacemarks.length !== 0)
+      //   myMap.setBounds(myMap.geoObjects.getBounds(), {
+      //     zoomMargin: 50,
+      //     checkZoomRange: true,
+      //   });
+      this.myMap.setCenter(this.center, 12);
     },
-    init2() {
-      let currentCity = this.city;
-      // eslint-disable-next-line no-undef
-      var myMap = new ymaps.Map(
-        "map",
-        {
-          center: this.center,
-          zoom: 10,
-          controls: []
-        },
-        {}
-      );
-      // eslint-disable-next-line no-undef
-      ymaps
-        .geocode(currentCity, {
-          results: 1
-        })
-        .then(function(res) {
-          // Выбираем первый результат геокодирования.
-          var firstGeoObject = res.geoObjects.get(0),
-            // Координаты геообъекта.
-            // eslint-disable-next-line no-unused-vars
-            coords = firstGeoObject.geometry.getCoordinates(),
-            // Область видимости геообъекта.
-            bounds = firstGeoObject.properties.get("boundedBy");
-
-          firstGeoObject.options.set(
-            "preset",
-            "islands#darkBlueDotIconWithCaption"
-          );
-          // Получаем строку с адресом и выводим в иконке геообъекта.
-          firstGeoObject.properties.set(
-            "iconCaption",
-            firstGeoObject.getAddressLine()
-          );
-
-          // Добавляем первый найденный геообъект на карту.
-          myMap.geoObjects.add(firstGeoObject);
-          // Масштабируем карту на область видимости геообъекта.
-          myMap.setBounds(bounds, {
-            // Проверяем наличие тайлов на данном масштабе.
-            checkZoomRange: true
-          });
-        });
-    }
   },
   mounted() {
     // eslint-disable-next-line no-undef
+    // eslint-disable-next-line no-undef
     ymaps.ready(this.init1);
   },
+  watch: {
+    center: function() {
+      this.myMap.setCenter(this.center, 12, {
+        duration: 500
+      });
+    },
+    placemarks: function() {
+      let currentPlacemarks = this.placemarks;
+      let map = this.myMap;
+      // eslint-disable-next-line no-undef
+      let example_collection = new ymaps.GeoObjectCollection(null);
+
+      for (let i = 0; i < currentPlacemarks.length; i++) {
+        // eslint-disable-next-line no-undef
+        let placemark = new ymaps.Placemark(
+          currentPlacemarks[i],
+          // { hintContent: currentPlacemarks[i].name },
+          {},
+          {
+            preset: "islands#darkGreenCircleIcon"
+          }
+        );
+        placemark.events.add("click", function() {
+          map.setCenter(currentPlacemarks[i], 13, {
+            duration: 500
+          });
+          console.log(currentPlacemarks[i]);
+        });
+        example_collection.add(placemark);
+        map.geoObjects.add(example_collection);
+      }
+    }
+  }
 };
 </script>
 
