@@ -34,9 +34,7 @@
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <Map
-              :center="getCityCoordinates"
-      />
+      <Map :center="getCityCoordinates" :placemarks="marks_example"/>
     </div>
   </div>
 </template>
@@ -107,12 +105,14 @@ export default {
     isFilled() {
       return this.getPoint != "" && this.getCity != "";
     },
+
+    // here u can add array of objects like: {name: "Kazan, Pyshkina 1", center: [55.1234, 49.1231]}
     getPointsForCurrentCity() {
       return this.getPoints.filter(point => point.cityId.name === this.getCity);
     },
     getCityCoordinates() {
       if (this.getCoordinates.length === 0) {
-        return [55.751574, 37.573856]
+        return [55.751574, 37.573856];
       } else return this.getCoordinates;
     }
   },
