@@ -39,9 +39,10 @@
       <Map
         :center="getCityCoordinates"
         :placemarks="getCoordinatesForCurrentPoints"
+        @updatePoint="updateUserPlaceFromMap($event)"
       />
     </div>
-    // for test
+<!--    for test-->
     <button @click="checkPointsNamesCoords">get points</button>
   </div>
 </template>
@@ -74,10 +75,18 @@ export default {
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
+      console.log(this.getPointsForCurrentCity)
     },
 
     updateUserPlace() {
       this.updatePlace(this.userAddress);
+      this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+    },
+
+    updateUserPlaceFromMap(place) {
+      this.userAddress = place;
+      this.updatePlace(place);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
     },
@@ -98,7 +107,6 @@ export default {
       "getCities",
       "getPoints",
       "getCoordinates",
-      "getCurrentCity",
       "getPoints",
       "getFullAddress",
       "getPointsCoordinates"
@@ -126,7 +134,7 @@ export default {
       }
     },
 
-    // working
+    // working (wrong order)
     getPointsCoordinatesWithNames() {
       let points = this.getPointsForCurrentCity;
       let pointCoordinates = this.getCoordinatesForCurrentPoints;

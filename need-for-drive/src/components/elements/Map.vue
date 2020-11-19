@@ -30,8 +30,13 @@ export default {
   },
   methods: {
     ...mapActions(["generatePlaceCoordinates"]),
+    updatePoint(pointName) {
+      this.$emit("updatePoint", pointName);
+    },
     init1() {
       let currentPlacemarks = this.placemarks;
+
+      let update = this.updatePoint;
       // Создание экземпляра карты.
       // eslint-disable-next-line no-undef
       this.myMap = new ymaps.Map(
@@ -53,17 +58,17 @@ export default {
       for (let i = 0; i < currentPlacemarks.length; i++) {
         // eslint-disable-next-line no-undef
         let placemark = new ymaps.Placemark(
-          currentPlacemarks[i],
-          // { hintContent: currentPlacemarks[i].name },
-          {},
+          currentPlacemarks[i].center,
+          { hintContent: currentPlacemarks[i].name },
           {
             preset: "islands#darkGreenCircleIcon"
           }
         );
         placemark.events.add("click", function() {
-          currentMap.setCenter(currentPlacemarks[i], 13, {
+          currentMap.setCenter(currentPlacemarks[i].center, 12, {
             duration: 500
           });
+          update(currentPlacemarks[i].name);
         });
         example_collection.add(placemark);
         currentMap.geoObjects.add(example_collection);
@@ -76,7 +81,7 @@ export default {
       //     checkZoomRange: true,
       //   });
       this.myMap.setCenter(this.center, 12);
-    },
+    }
   },
   mounted() {
     // eslint-disable-next-line no-undef
@@ -92,24 +97,25 @@ export default {
     placemarks: function() {
       let currentPlacemarks = this.placemarks;
       let map = this.myMap;
+      let update = this.updatePoint;
       // eslint-disable-next-line no-undef
       let example_collection = new ymaps.GeoObjectCollection(null);
 
       for (let i = 0; i < currentPlacemarks.length; i++) {
         // eslint-disable-next-line no-undef
         let placemark = new ymaps.Placemark(
-          currentPlacemarks[i],
-          // { hintContent: currentPlacemarks[i].name },
-          {},
+          currentPlacemarks[i].center,
+          { hintContent: currentPlacemarks[i].name },
           {
             preset: "islands#darkGreenCircleIcon"
           }
         );
         placemark.events.add("click", function() {
-          map.setCenter(currentPlacemarks[i], 13, {
+          map.setCenter(currentPlacemarks[i].center, 12, {
             duration: 500
           });
           console.log(currentPlacemarks[i]);
+          update(currentPlacemarks[i].name);
         });
         example_collection.add(placemark);
         map.geoObjects.add(example_collection);
