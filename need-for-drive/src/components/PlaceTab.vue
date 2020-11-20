@@ -114,6 +114,7 @@ export default {
     getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
+      this.updateCityCoordinates();
     }
   }
 };
