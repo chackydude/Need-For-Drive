@@ -16,7 +16,7 @@
         >
           <a
             class="tab__link link"
-            @click="!tab.isBlocked ? selectTab(tab) : () => {}"
+            @click="selectTab(tab)"
           >
             {{ tab.name }}
           </a>
@@ -30,15 +30,15 @@
       </div>
 
       <div class="tabs-content">
-        <tab :is-active="getTabs[0].isActive" :selected="true">
+        <tab :is-active="getTabs[0].isActive" :selected="getTabs[0].isActive">
           <PlaceTab />
         </tab>
 
-        <tab :is-active="getTabs[1].isActive"> </tab>
+        <tab :is-active="getTabs[1].isActive" :selected="getTabs[1].isActive"> </tab>
 
-        <tab :is-active="getTabs[2].isActive"> </tab>
+        <tab :is-active="getTabs[2].isActive" :selected="getTabs[2].isActive"> </tab>
 
-        <tab :is-active="getTabs[3].isActive"> </tab>
+        <tab :is-active="getTabs[3].isActive"  :selected="getTabs[3].isActive"> </tab>
 
         <OrderList class="users-order" :order="usersOrder" />
       </div>
@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getTabs", "getCurrentTab"])
-  }
+  },
 };
 </script>
 
