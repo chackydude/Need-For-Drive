@@ -4,7 +4,7 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Город</p>
         <input
-          type="search"
+          type="text"
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
@@ -20,7 +20,7 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Пункт выдачи</p>
         <input
-          type="search"
+          type="text"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
           v-model.trim="userAddress"
@@ -73,10 +73,12 @@ export default {
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
-      console.log(this.getPointsForCurrentCity)
+      if (this.userCity.length === 0) this.userAddress = "";
     },
 
     updateUserPlace() {
+
+      console.log(this.userAddress);
       this.updatePlace(this.userAddress);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
@@ -92,10 +94,6 @@ export default {
     updateCityCoordinates() {
       this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     },
-
-    checkPointsNamesCoords() {
-      console.log(this.getPointsCoordinatesWithNames);
-    }
   },
   computed: {
     ...mapGetters([
@@ -109,6 +107,10 @@ export default {
       "getFullAddress",
       "getPointsCoordinates"
     ]),
+    currentUserAddress() {
+      return this.userCity == "" ? "" : this.userAddress
+    },
+
     isFilled() {
       return this.getPoint != "" && this.getCity != "";
     },

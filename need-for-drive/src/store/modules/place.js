@@ -73,7 +73,7 @@ export default {
 
     // getting coordinates with using yandex-geocode
     generatePlaceCoordinates({ commit }, address) {
-      fetch("https://geocode-maps.yandex.ru/1.x/?apikey=9685840a-8e70-4c8f-82b8-fd29b30fc4ee&format=json&geocode=" + address)
+      fetch("https://geocode-maps.yandex.ru/1.x/?apikey=54cd450a-1054-4e01-a554-a191e3d8f586&format=json&geocode=" + address)
         .then(response => response.json())
         .then(result => {
           let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -89,7 +89,7 @@ export default {
       commit("updatePointsCoordinates", { status: "clear", coordinates: [] });
       points.forEach(point => console.log(point.address));
       for (let i = 0; i < points.length; i++) {
-        fetch("https://geocode-maps.yandex.ru/1.x/?apikey=9685840a-8e70-4c8f-82b8-fd29b30fc4ee&format=json&geocode=" + points[i].cityId.name + points[i].address)
+        fetch("https://geocode-maps.yandex.ru/1.x/?apikey=54cd450a-1054-4e01-a554-a191e3d8f586&format=json&geocode=" + points[i].cityId.name + points[i].address)
           .then(response => response.json())
           .then(result => {
             let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
