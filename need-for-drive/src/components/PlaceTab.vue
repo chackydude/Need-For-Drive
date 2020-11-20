@@ -36,11 +36,7 @@
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <Map
-        :center="getCityCoordinates"
-        :placemarks="getCoordinatesForCurrentPoints"
-        @updatePoint="updateUserPlaceFromMap($event)"
-      />
+      <Map :center="getCoordinates" :placemarks="getPointsCoordinates" />
     </div>
   </div>
 </template>
@@ -73,79 +69,38 @@ export default {
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
-      if (this.userCity.length === 0) this.userAddress = "";
+      if (this.userCity.length === 0) {
+        this.userAddress = "";
+        this.updateUserPlace();
+      }
     },
 
     updateUserPlace() {
-
-      console.log(this.userAddress);
       this.updatePlace(this.userAddress);
-      this.updateFillStatus(this.isFilled);
-      this.updateCityCoordinates();
-    },
-
-    updateUserPlaceFromMap(place) {
-      this.userAddress = place;
-      this.updatePlace(place);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
     },
 
     updateCityCoordinates() {
       this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
-    },
+    }
   },
   computed: {
     ...mapGetters([
       "getCity",
       "getPoint",
-      "getCurrentTab",
       "getCities",
       "getPoints",
       "getCoordinates",
-      "getPoints",
-      "getFullAddress",
-      "getPointsCoordinates"
+      "getPointsCoordinates",
     ]),
-    currentUserAddress() {
-      return this.userCity == "" ? "" : this.userAddress
-    },
 
     isFilled() {
       return this.getPoint != "" && this.getCity != "";
     },
 
-    // here u can add array of objects like: {name: "Kazan, Pyshkina 1", center: [55.1234, 49.1231]}
     getPointsForCurrentCity() {
       return this.getPoints.filter(point => point.cityId.name === this.getCity);
-    },
-
-    getCityCoordinates() {
-      if (this.getCoordinates.length === 0) {
-        return [55.751574, 37.573856];
-      } else return this.getCoordinates;
-    },
-
-    getCoordinatesForCurrentPoints() {
-      if (this.getPointsCoordinates.length === 0) {
-        return [];
-      } else {
-        return this.getPointsCoordinates;
-      }
-    },
-
-    // working (wrong order)
-    getPointsCoordinatesWithNames() {
-      let points = this.getPointsForCurrentCity;
-      let pointCoordinates = this.getCoordinatesForCurrentPoints;
-      let result = [];
-      for (let i = 0; i < pointCoordinates.length; i++) {
-        result.push({
-          name: points[i].address,
-          center: pointCoordinates[i]
-        });
-      }
-      return result;
     }
   },
   mounted() {

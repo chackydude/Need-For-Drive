@@ -8,9 +8,6 @@ export default {
   props: {
     center: {
       type: Array,
-      default: function() {
-        return [55.751574, 37.573856];
-      }
     },
     placemarks: {
       type: Array,

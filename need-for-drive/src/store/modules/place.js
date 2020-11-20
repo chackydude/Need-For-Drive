@@ -2,20 +2,10 @@ export default {
   state: {
     cities: [],
     currentPoints: [],
-    currentCity: {},
-    currentPoint: {},
-    currentCoordinates: [],
+    currentCoordinates: [55.751574, 37.573856], // Moscow
     pointsCoordinates: []
   },
   mutations: {
-    updateCity(state, city) {
-      state.orderCity = city;
-    },
-
-    updatePlace(state, place) {
-      state.orderPlace = place;
-    },
-
     updateCities(state, cities) {
       state.cities = cities;
     },
@@ -43,8 +33,8 @@ export default {
     fetchCities({ commit }) {
       return fetch(process.env.VUE_APP_BASE_URL + "db/city", {
         headers: {
-          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-          Authorization: "4cbcea96de"
+          "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
+          Authorization: process.env.VUE_APP_SECRET_KEY
         },
         contentType: "application/json"
       })
@@ -60,8 +50,8 @@ export default {
     fetchPoints({ commit }) {
       return fetch(process.env.VUE_APP_BASE_URL + "db/point", {
         headers: {
-          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-          Authorization: "4cbcea96de"
+          "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
+          Authorization: process.env.VUE_APP_SECRET_KEY
         },
         contentType: "application/json"
       })
