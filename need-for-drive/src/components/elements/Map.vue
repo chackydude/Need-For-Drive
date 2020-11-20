@@ -1,5 +1,5 @@
 <template>
-    <div id="map"></div>
+  <div id="map"></div>
 </template>
 
 <script>
@@ -59,9 +59,24 @@ export default {
 #map {
   width: 756px;
   height: 352px;
+  margin: 0 auto;
 }
 
 [class*="ymaps-2"][class*="-ground-pane"] {
   -webkit-filter: grayscale(1);
+}
+
+@media (max-width: 1324px) {
+  #map {
+    width: 70vw;
+    height: 50vh;
+  }
+}
+
+@media (max-width: 768px) {
+  #map {
+    width: 85vw;
+    height: 50vh;
+  }
 }
 </style>
