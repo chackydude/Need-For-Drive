@@ -30,7 +30,10 @@ export default {
 
     updatePointsCoordinates(state, payload) {
       if (payload.status == "add") {
-        state.pointsCoordinates.push({ center: payload.coordinates, name: payload.name });
+        state.pointsCoordinates.push({
+          center: payload.coordinates,
+          name: payload.name
+        });
       } else {
         state.pointsCoordinates = [];
       }
@@ -73,7 +76,12 @@ export default {
 
     // getting coordinates with using yandex-geocode
     generatePlaceCoordinates({ commit }, address) {
-      fetch("https://geocode-maps.yandex.ru/1.x/?apikey=54cd450a-1054-4e01-a554-a191e3d8f586&format=json&geocode=" + address)
+      fetch(
+        process.env.VUE_APP_GEOCODE_URL +
+          process.env.VUE_APP_MAPS_API_KEY +
+          "&format=json&geocode=" +
+          address
+      )
         .then(response => response.json())
         .then(result => {
           let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -89,7 +97,13 @@ export default {
       commit("updatePointsCoordinates", { status: "clear", coordinates: [] });
       points.forEach(point => console.log(point.address));
       for (let i = 0; i < points.length; i++) {
-        fetch("https://geocode-maps.yandex.ru/1.x/?apikey=54cd450a-1054-4e01-a554-a191e3d8f586&format=json&geocode=" + points[i].cityId.name + points[i].address)
+        fetch(
+          process.env.VUE_APP_GEOCODE_URL +
+            process.env.VUE_APP_MAPS_API_KEY +
+            "&format=json&geocode=" +
+            points[i].cityId.name +
+            points[i].address
+        )
           .then(response => response.json())
           .then(result => {
             let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -99,9 +113,9 @@ export default {
             commit("updatePointsCoordinates", {
               status: "add",
               coordinates: coords,
-              name: points[i].address,
+              name: points[i].address
             });
-            console.log(points[i].address, coords)
+            console.log(points[i].address, coords);
           })
           .catch(error => console.log(error.message));
       }
