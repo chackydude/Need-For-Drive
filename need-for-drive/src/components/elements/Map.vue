@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   props: {
     center: {
@@ -22,67 +23,38 @@ export default {
     return {
       myMap: {}, // map instance
       mapCenter: this.center,
-      mapPlacemarks: this.placemarks,
+      mapPlacemarks: this.placemarks
     };
   },
   name: "Map",
   methods: {
-    // updating current point in the PlaceTab
-    emitUpdatePoint(pointName) {
-      this.$emit("updatePoint", pointName);
-    },
-    init() {
-      // eslint-disable-next-line no-undef
-      this.myMap = new ymaps.Map(
-        "map",
-        {
-          center: this.center,
-          zoom: 12,
-          controls: []
-        },
-        {}
-      );
-      this.myMap.setCenter(this.center, 12);
-    }
+    ...mapActions(["emitUpdatePoint"]),
+    ...mapMutations([
+      "updateCenter",
+      "updatePlacemarks",
+      "initMap",
+      "updateMapCenter",
+      "updateMapPlacemarksConfig"
+    ])
+  },
+  computed: {
+    ...mapGetters(["getCenter"])
   },
   mounted() {
+    this.updateCenter(this.center);
     // eslint-disable-next-line no-undef
-    ymaps.ready(this.init);
+    ymaps.ready(this.initMap);
   },
   watch: {
     center: function() {
-      this.myMap.setCenter(this.center, 12, {
-        duration: 500
-      });
+      this.updateCenter(this.center);
+      this.updateMapCenter();
     },
     placemarks: function() {
-      // FIXME: why this is still working?
-      let currentPlacemarks = this.placemarks;
-      let map = this.myMap;
-      let update = this.emitUpdatePoint;
-
-      // eslint-disable-next-line no-undef
-      let placemarksCollection = new ymaps.GeoObjectCollection(null);
-
-      for (let i = 0; i < currentPlacemarks.length; i++) {
-        // eslint-disable-next-line no-undef
-        let placemark = new ymaps.Placemark(
-          currentPlacemarks[i].center,
-          { hintContent: currentPlacemarks[i].name },
-          { preset: "islands#darkGreenCircleIcon" }
-        );
-        placemark.events.add("click", function() {
-          map.setCenter(currentPlacemarks[i].center, 12, {
-            duration: 500
-          });
-          console.log(currentPlacemarks[i]);
-          update(currentPlacemarks[i].name);
-        });
-        placemarksCollection.add(placemark);
-        map.geoObjects.add(placemarksCollection);
-      }
+      this.updatePlacemarks(this.placemarks);
+      this.updateMapPlacemarksConfig();
     }
-  },
+  }
 };
 </script>
 

@@ -1,6 +1,7 @@
 export default {
   state: {
     myMap: {},
+    // input coordinates (not map's attributes yet)
     center: [],
     placemarks: []
   },
@@ -11,26 +12,75 @@ export default {
 
     updatePlacemarks(state, placemarks) {
       state.placemarks = placemarks;
-    }
-  },
-  actions: {
+    },
 
     // initializing map
-    init() {
+    initMap(state) {
       // eslint-disable-next-line no-undef
-      this.myMap = new ymaps.Map(
+      state.myMap = new ymaps.Map(
         "map",
         {
-          center: this.center,
+          center: state.center,
           zoom: 12,
           controls: []
         },
         {}
       );
 
-      this.myMap.setCenter(this.center, 12);
+      // eslint-disable-next-line no-undef
+      let placemarksCollection = new ymaps.GeoObjectCollection(null);
+
+      for (let i = 0; i < state.placemarks.length; i++) {
+        // eslint-disable-next-line no-undef
+        let placemark = new ymaps.Placemark(
+          state.placemarks[i].center,
+          { hintContent: state.placemarks[i].name },
+          { preset: "islands#darkGreenCircleIcon" }
+        );
+        placemark.events.add("click", function() {
+          state.myMap.setCenter(state.placemarks[i].center, 12, {
+            duration: 500
+          });
+          console.log(state.placemarks[i]);
+        });
+        placemarksCollection.add(placemark);
+        state.myMap.geoObjects.add(placemarksCollection);
+      }
+    },
+
+    // refocus map on the new center
+    updateMapCenter(state) {
+      state.myMap.setCenter(state.center, 12, {
+        duration: 500
+      });
+    },
+
+    // adding placemarks ON THE map
+    updateMapPlacemarksConfig(state) {
+      // eslint-disable-next-line no-undef
+      let placemarksCollection = new ymaps.GeoObjectCollection(null);
+
+      for (let i = 0; i < state.placemarks.length; i++) {
+        // eslint-disable-next-line no-undef
+        let placemark = new ymaps.Placemark(
+          state.placemarks[i].center,
+          { hintContent: state.placemarks[i].name },
+          { preset: "islands#darkGreenCircleIcon" }
+        );
+        placemark.events.add("click", function() {
+          state.myMap.setCenter(state.placemarks[i].center, 12, {
+            duration: 500
+          });
+          console.log(state.placemarks[i]);
+        });
+        placemarksCollection.add(placemark);
+        state.myMap.geoObjects.add(placemarksCollection);
+      }
     }
   },
+
+  actions: {},
+
   getters: {
     getMap(state) {
       return state.myMap;
