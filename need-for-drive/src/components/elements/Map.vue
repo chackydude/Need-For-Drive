@@ -1,5 +1,5 @@
 <template>
-  <div id="map"></div>
+    <div id="map"></div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   props: {
     center: {
-      type: Array,
+      type: Array
     },
     placemarks: {
       type: Array,
@@ -35,7 +35,7 @@ export default {
     ])
   },
   computed: {
-    ...mapGetters(["getCenter"])
+    ...mapGetters(["getCenter", "getCurrentPoint"])
   },
   mounted() {
     this.updateCenter(this.center);

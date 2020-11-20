@@ -3,7 +3,8 @@ export default {
     myMap: {},
     // input coordinates (not map's attributes yet)
     center: [],
-    placemarks: []
+    placemarks: [],
+    currentPoint: ""
   },
   mutations: {
     updateCenter(state, center) {
@@ -41,7 +42,7 @@ export default {
           state.myMap.setCenter(state.placemarks[i].center, 12, {
             duration: 500
           });
-          console.log(state.placemarks[i]);
+          state.currentPoint = state.placemarks[i].name;
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
@@ -71,7 +72,7 @@ export default {
           state.myMap.setCenter(state.placemarks[i].center, 12, {
             duration: 500
           });
-          console.log(state.placemarks[i]);
+          state.currentPoint = state.placemarks[i].name;
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
@@ -79,7 +80,11 @@ export default {
     }
   },
 
-  actions: {},
+  actions: {
+    updateCurrentPoint(context, point) {
+      context.commit("updatePlace", point)
+    }
+  },
 
   getters: {
     getMap(state) {
@@ -92,6 +97,10 @@ export default {
 
     getPlacemarks(state) {
       return state.placemarks;
+    },
+
+    getCurrentPoint(state) {
+      return state.currentPoint;
     }
   }
 };

@@ -8,7 +8,7 @@
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
-          @input="updateUserCity"
+          @input="updateUserInput"
           list="cities"
         />
         <datalist id="cities">
@@ -23,8 +23,8 @@
           type="text"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
-          v-model.trim="userAddress"
-          @input="updateUserPlace"
+          v-model.trim="userPoint"
+          @input="updateUserPoint"
           list="points"
         />
         <datalist id="points">
@@ -52,31 +52,31 @@ export default {
   data() {
     return {
       userCity: "",
-      userAddress: ""
+      userPoint: ""
     };
   },
   methods: {
     ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
     ...mapActions([
-      "generatePlaceCoordinates",
       "fetchCities",
       "fetchPoints",
+      "generatePlaceCoordinates",
       "generateCoordinatesForPoints"
     ]),
 
-    updateUserCity() {
+    updateUserInput() {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
       if (this.userCity.length === 0) {
-        this.userAddress = "";
-        this.updateUserPlace();
+        this.userPoint = "";
+        this.updateUserPoint();
       }
     },
 
-    updateUserPlace() {
-      this.updatePlace(this.userAddress);
+    updateUserPoint() {
+      this.updatePlace(this.userPoint);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
     },
@@ -93,6 +93,7 @@ export default {
       "getPoints",
       "getCoordinates",
       "getPointsCoordinates",
+      "getCurrentPoint"
     ]),
 
     isFilled() {
@@ -105,9 +106,15 @@ export default {
   },
   mounted() {
     this.userCity = this.getCity;
-    this.userAddress = this.getPoint;
+    this.userPoint = this.getPoint;
     this.fetchCities();
     this.fetchPoints();
+  },
+  watch: {
+    getCurrentPoint: function() {
+      this.userPoint = this.getCurrentPoint;
+      this.updatePlace(this.getCurrentPoint);
+    }
   }
 };
 </script>

@@ -2,8 +2,8 @@ export default {
   state: {
     cities: [],
     currentPoints: [],
-    currentCoordinates: [55.751574, 37.573856], // Moscow
-    pointsCoordinates: []
+    currentCityCoordinates: [55.751574, 37.573856], // Moscow
+    pointsWithCoordinates: []
   },
   mutations: {
     updateCities(state, cities) {
@@ -14,18 +14,18 @@ export default {
       state.currentPoints = points;
     },
 
-    updateCoordinates(state, coordinates) {
-      state.currentCoordinates = coordinates;
+    updateCurrentCityCoordinates(state, coordinates) {
+      state.currentCityCoordinates = coordinates;
     },
 
-    updatePointsCoordinates(state, payload) {
+    updatePointsWithCoordinates(state, payload) {
       if (payload.status == "add") {
-        state.pointsCoordinates.push({
+        state.pointsWithCoordinates.push({
           center: payload.coordinates,
           name: payload.name
         });
       } else {
-        state.pointsCoordinates = [];
+        state.pointsWithCoordinates = [];
       }
     }
   },
@@ -64,7 +64,6 @@ export default {
         });
     },
 
-    // getting coordinates with using yandex-geocode
     generatePlaceCoordinates({ commit }, address) {
       fetch(
         process.env.VUE_APP_GEOCODE_URL +
@@ -78,13 +77,13 @@ export default {
             .split(" ")
             .reverse()
             .map(element => parseFloat(element));
-          commit("updateCoordinates", coords);
+          commit("updateCurrentCityCoordinates", coords);
         })
         .catch(error => console.log(error.message));
     },
 
     generateCoordinatesForPoints({ commit }, points) {
-      commit("updatePointsCoordinates", { status: "clear", coordinates: [] });
+      commit("updatePointsWithCoordinates", { status: "clear", coordinates: [] });
       points.forEach(point => console.log(point.address));
       for (let i = 0; i < points.length; i++) {
         fetch(
@@ -100,7 +99,7 @@ export default {
               .split(" ")
               .reverse()
               .map(element => parseFloat(element));
-            commit("updatePointsCoordinates", {
+            commit("updatePointsWithCoordinates", {
               status: "add",
               coordinates: coords,
               name: points[i].address
@@ -121,11 +120,11 @@ export default {
     },
 
     getCoordinates(state) {
-      return state.currentCoordinates;
+      return state.currentCityCoordinates;
     },
 
     getPointsCoordinates(state) {
-      return state.pointsCoordinates;
+      return state.pointsWithCoordinates;
     }
   }
 };

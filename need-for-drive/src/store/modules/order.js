@@ -26,10 +26,6 @@ export default {
 
     getPoint(state) {
       return state.orderPlace;
-    },
-
-    getFullAddress(state) {
-      return state.orderCity + " " + state.orderPlace;
     }
   }
 };
