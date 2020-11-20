@@ -14,7 +14,7 @@ const routes = [
     path: "/order",
     name: "order",
     component: () => import("../views/Order")
-  }
+  },
 ];
 
 const router = new VueRouter({

@@ -4,65 +4,118 @@
       <div class="inputs__input input-field">
         <p class="input-field__title">Город</p>
         <input
-          type="search"
+          type="text"
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
-          @input="updateUserCity"
+          @input="updateUserInput"
+          list="cities"
         />
+        <datalist id="cities">
+          <option v-for="city in getCities" :key="city.id">
+            {{ city.name }}
+          </option>
+        </datalist>
       </div>
       <div class="inputs__input input-field">
         <p class="input-field__title">Пункт выдачи</p>
         <input
-          type="search"
+          type="text"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
-          v-model.trim="userAddress"
-          @input="updateUserPlace"
+          v-model.trim="userPoint"
+          @input="updateUserPoint"
+          list="points"
         />
+        <datalist id="points">
+          <option v-for="point in getPointsForCurrentCity" :key="point.name">
+            {{ point.address }}
+          </option>
+        </datalist>
       </div>
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
-      <img
-        src="@/assets/images/map-example.png"
-        alt="map"
-        class="map-area__map"
-      />
+      <Map :center="getCoordinates" :placemarks="getPointsCoordinates" />
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
+import Map from "./elements/Map";
 export default {
   name: "PlaceTab",
+  components: {
+    Map
+  },
   data() {
     return {
       userCity: "",
-      userAddress: ""
+      userPoint: ""
     };
   },
   methods: {
     ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
-    updateUserCity() {
+    ...mapActions([
+      "fetchCities",
+      "fetchPoints",
+      "generatePlaceCoordinates",
+      "generateCoordinatesForPoints"
+    ]),
+
+    updateUserInput() {
       this.updateCity(this.userCity);
       this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+      this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
+      if (this.userCity.length === 0) {
+        this.userPoint = "";
+        this.updateUserPoint();
+      }
     },
-    updateUserPlace() {
-      this.updatePlace(this.userAddress);
+
+    updateUserPoint() {
+      this.updatePlace(this.userPoint);
       this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+    },
+
+    updateCityCoordinates() {
+      this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
   computed: {
-    ...mapGetters(["getCity", "getPlace", "getCurrentTab"]),
+    ...mapGetters([
+      "getCity",
+      "getPoint",
+      "getCities",
+      "getPoints",
+      "getCoordinates",
+      "getPointsCoordinates",
+      "getCurrentPoint"
+    ]),
+
     isFilled() {
-      return this.getPlace != "" && this.getCity != "";
+      return this.getPoint != "" && this.getCity != "";
+    },
+
+    getPointsForCurrentCity() {
+      return this.getPoints.filter(point => point.cityId.name === this.getCity);
     }
   },
   mounted() {
     this.userCity = this.getCity;
-    this.userAddress = this.getPlace;
+    this.userPoint = this.getPoint;
+    this.fetchCities();
+    this.fetchPoints();
+  },
+  watch: {
+    getCurrentPoint: function() {
+      this.userPoint = this.getCurrentPoint;
+      this.updatePlace(this.getCurrentPoint);
+      this.updateCityCoordinates();
+    }
   }
 };
 </script>
