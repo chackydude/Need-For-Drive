@@ -13,7 +13,7 @@ export default {
         id: 1,
         name: "Модель",
         isActive: false,
-        isBlocked: true,
+        isBlocked: false, // changed
         isLast: false,
         isFilled: false
       },

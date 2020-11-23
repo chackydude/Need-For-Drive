@@ -32,6 +32,7 @@
         </tab>
 
         <tab :is-active="getTabs[1].isActive" :selected="getTabs[1].isActive">
+          <ModelTab />
         </tab>
 
         <tab :is-active="getTabs[2].isActive" :selected="getTabs[2].isActive">
@@ -53,10 +54,12 @@ import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/PlaceTab";
 import OrderList from "../components/OrderList";
 import { mapMutations, mapGetters } from "vuex";
+import ModelTab from "../components/ModelTab";
 
 export default {
   name: "Order",
   components: {
+    ModelTab,
     OrderList,
     PlaceTab,
     Tab,
