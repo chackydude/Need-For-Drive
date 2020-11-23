@@ -82,7 +82,7 @@ export default {
     },
 
     updateCityCoordinates() {
-      this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
+      if (this.getCity.trim() !== "") this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
   computed: {
@@ -97,7 +97,7 @@ export default {
     ]),
 
     isFilled() {
-      return this.getPoint != "" && this.getCity != "";
+      return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
     },
 
     getPointsForCurrentCity() {

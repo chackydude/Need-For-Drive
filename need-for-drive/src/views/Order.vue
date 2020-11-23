@@ -14,10 +14,7 @@
           }"
           :key="tab.name"
         >
-          <a
-            class="tab__link link"
-            @click="selectTab(tab)"
-          >
+          <a class="tab__link link" @click="selectTab(tab)">
             {{ tab.name }}
           </a>
           <img
@@ -34,11 +31,14 @@
           <PlaceTab />
         </tab>
 
-        <tab :is-active="getTabs[1].isActive" :selected="getTabs[1].isActive"> </tab>
+        <tab :is-active="getTabs[1].isActive" :selected="getTabs[1].isActive">
+        </tab>
 
-        <tab :is-active="getTabs[2].isActive" :selected="getTabs[2].isActive"> </tab>
+        <tab :is-active="getTabs[2].isActive" :selected="getTabs[2].isActive">
+        </tab>
 
-        <tab :is-active="getTabs[3].isActive"  :selected="getTabs[3].isActive"> </tab>
+        <tab :is-active="getTabs[3].isActive" :selected="getTabs[3].isActive">
+        </tab>
 
         <OrderList class="users-order" :order="usersOrder" />
       </div>
@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getTabs", "getCurrentTab"])
-  },
+  }
 };
 </script>
 
