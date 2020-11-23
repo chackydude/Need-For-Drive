@@ -88,4 +88,23 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+@media (max-width: 1324px) {
+  .model-tab__car-models {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .model-tab__radio-buttons, .model-tab__car-models {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-tab__car-models {
+    width: 80%;
+  }
+}
 </style>
