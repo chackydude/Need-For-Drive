@@ -1,3 +1,6 @@
+import FetchApi from "../../utils/api/FetchApi";
+import Api from "../../utils/api/Api";
+
 export default {
   state: {
     cities: [],
@@ -31,14 +34,9 @@ export default {
   },
   actions: {
     fetchCities({ commit }) {
-      return fetch(process.env.VUE_APP_BASE_URL + "db/city", {
-        headers: {
-          "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
-          Authorization: process.env.VUE_APP_SECRET_KEY
-        },
-        contentType: "application/json"
-      })
-        .then(res => res.json())
+      let fetchApi = new Api(new FetchApi());
+      return fetchApi
+        .getRequest(process.env.VUE_APP_BASE_URL + "db/city", fetchApi.provider.headers)
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -48,14 +46,9 @@ export default {
     },
 
     fetchPoints({ commit }) {
-      return fetch(process.env.VUE_APP_BASE_URL + "db/point", {
-        headers: {
-          "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
-          Authorization: process.env.VUE_APP_SECRET_KEY
-        },
-        contentType: "application/json"
-      })
-        .then(res => res.json())
+      let fetchApi = new Api(new FetchApi());
+      return fetchApi
+        .getRequest(process.env.VUE_APP_BASE_URL + "db/point", fetchApi.provider.headers)
         .then(result => {
           commit("updatePoints", result.data);
         })
@@ -65,13 +58,14 @@ export default {
     },
 
     generatePlaceCoordinates({ commit }, address) {
-      fetch(
-        process.env.VUE_APP_GEOCODE_URL +
-          process.env.VUE_APP_MAPS_API_KEY +
-          "&format=json&geocode=" +
-          address
-      )
-        .then(response => response.json())
+      let fetchApi = new Api(new FetchApi());
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_GEOCODE_URL +
+            process.env.VUE_APP_MAPS_API_KEY +
+            "&format=json&geocode=" +
+            address
+        )
         .then(result => {
           let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
             .split(" ")
@@ -83,17 +77,21 @@ export default {
     },
 
     generateCoordinatesForPoints({ commit }, points) {
-      commit("updatePointsWithCoordinates", { status: "clear", coordinates: [] });
-      points.forEach(point => console.log(point.address));
+      commit("updatePointsWithCoordinates", {
+        status: "clear",
+        coordinates: []
+      });
+      let fetchApi = new Api(new FetchApi());
+
       for (let i = 0; i < points.length; i++) {
-        fetch(
-          process.env.VUE_APP_GEOCODE_URL +
-            process.env.VUE_APP_MAPS_API_KEY +
-            "&format=json&geocode=" +
-            points[i].cityId.name +
-            points[i].address
-        )
-          .then(response => response.json())
+        fetchApi
+          .getRequest(
+            process.env.VUE_APP_GEOCODE_URL +
+              process.env.VUE_APP_MAPS_API_KEY +
+              "&format=json&geocode=" +
+              points[i].cityId.name +
+              points[i].address
+          )
           .then(result => {
             let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
               .split(" ")
@@ -104,7 +102,6 @@ export default {
               coordinates: coords,
               name: points[i].address
             });
-            console.log(points[i].address, coords);
           })
           .catch(error => console.log(error.message));
       }
