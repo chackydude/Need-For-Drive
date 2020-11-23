@@ -97,7 +97,7 @@ export default {
     ]),
 
     isFilled() {
-      return this.getPoint != "" && this.getCity != "";
+      return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
     },
 
     getPointsForCurrentCity() {
