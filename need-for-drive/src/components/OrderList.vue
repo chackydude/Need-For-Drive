@@ -77,6 +77,7 @@ export default {
   display: flex;
   flex-direction: column;
   border-left: 1px solid $gray-light-color;
+  margin-bottom: 20px;
 }
 
 .users-order__title {

@@ -31,12 +31,12 @@ export default {
 .car-item {
   height: 224px;
   width: 369px;
-  box-sizing: border-box;
+  padding: 20px;
   border: 1px $gray-light-color solid;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
+  cursor: pointer;
 }
 
 .car-item:hover {
@@ -58,5 +58,11 @@ export default {
 
 .car-item__image {
   align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .car-item {
+    width: 300px;
+  }
 }
 </style>

@@ -6,7 +6,7 @@
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
     <div class="model-tab__car-models">
-      <CarItem v-for="car in cars" :key="car.he" :car="car" />
+      <CarItem v-for="car in cars" :key="car.id" :car="car" />
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   components: { CarItem, RadioButton },
   data() {
     return {
+      category: "",
       cars: [
         {
           name: "Hyundai, i30 N",
@@ -56,12 +57,6 @@ export default {
           minPrice: 5000,
           img: "@/assets/images/car-example.png"
         },
-        {
-          name: "Hyundai, i30 N",
-          maxPrice: 1000,
-          minPrice: 5000,
-          img: "@/assets/images/car-example.png"
-        }
       ]
     };
   },
@@ -83,7 +78,7 @@ export default {
 }
 
 .model-tab__car-models {
-  margin-top: 48px;
+  margin: 48px 0 32px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -93,11 +88,10 @@ export default {
   .model-tab__car-models {
     margin-left: auto;
     margin-right: auto;
-    max-width: 800px;
-    width: 100%;
   }
 
-  .model-tab__radio-buttons, .model-tab__car-models {
+  .model-tab__radio-buttons,
+  .model-tab__car-models {
     justify-content: center;
   }
 }

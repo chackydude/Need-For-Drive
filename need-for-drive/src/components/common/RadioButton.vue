@@ -77,4 +77,10 @@ input[type="radio"]:checked:after {
   visibility: visible;
   border: 3px solid $main-accent-color;
 }
+
+@media (max-width: 768px) {
+  .radio-button__label {
+    font-size: 12px;
+  }
+}
 </style>

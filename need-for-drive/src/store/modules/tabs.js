@@ -4,7 +4,7 @@ export default {
       {
         id: 0,
         name: "Местоположение",
-        isActive: false,
+        isActive: true,
         isBlocked: false,
         isLast: false,
         isFilled: false
@@ -12,8 +12,8 @@ export default {
       {
         id: 1,
         name: "Модель",
-        isActive: true,
-        isBlocked: false, // changed
+        isActive: false,
+        isBlocked: true,
         isLast: false,
         isFilled: false
       },
