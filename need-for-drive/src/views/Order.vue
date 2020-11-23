@@ -98,10 +98,16 @@ $padding: 64px;
   flex-direction: row;
 }
 
+.order-page__sidebar {
+  position: fixed;
+  z-index: 2;
+}
+
 .order-page__content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding-left: $padding;
 }
 
 .link {
@@ -154,10 +160,12 @@ $padding: 64px;
 @media (max-width: 1324px) {
   .order-page__sidebar {
     position: fixed;
+    z-index: 2;
   }
 
   .order-page__content {
     margin-left: 45px;
+    padding-left: 0;
   }
 
   .order-page__tabs {
