@@ -3,32 +3,64 @@ import FetchApi from "../../utils/api/FetchApi";
 
 export default {
   state: {
-    cars: []
+    cars: [],
+    carsAmount: 0
   },
   mutations: {
-    updateCars(state, cars) {
-      state.cars = cars;
+    updateCars(state, pageCars) {
+      state.cars.push(pageCars);
+    },
+
+    updateCarsAmount(state, amount) {
+      state.carsAmount = amount;
     }
   },
   actions: {
-    fetchCars({ commit }) {
+    fetchCarsAmount({ commit }) {
       let fetchApi = new Api(new FetchApi());
-      return fetchApi
+
+      fetchApi
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/car?limit=9",
+          process.env.VUE_APP_BASE_URL + "db/car",
           fetchApi.provider.headers
         )
         .then(result => {
-          commit("updateCars", result.data);
+          commit("updateCarsAmount", result.count);
         })
         .catch(error => {
           console.log(error.message);
         });
+    },
+
+    fetchCarsWithPagination({ commit }, { pagesAmount, onpageCarsAmount }) {
+      let fetchApi = new Api(new FetchApi());
+
+      for (let i = 1; i <= pagesAmount; i++) {
+        fetchApi
+          .getRequest(
+            process.env.VUE_APP_BASE_URL +
+              "db/car?page=" +
+              i +
+              "&limit=" +
+              onpageCarsAmount,
+            fetchApi.provider.headers
+          )
+          .then(result => {
+            commit("updateCars", result.data);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+      }
     }
   },
   getters: {
     getCars(state) {
       return state.cars;
+    },
+
+    getCarsAmount(state) {
+      return state.carsAmount;
     }
   }
 };

@@ -35,7 +35,7 @@ export default {
   actions: {
     fetchCities({ commit }) {
       let fetchApi = new Api(new FetchApi());
-      return fetchApi
+      fetchApi
         .getRequest(process.env.VUE_APP_BASE_URL + "db/city", fetchApi.provider.headers)
         .then(result => {
           commit("updateCities", result.data);
@@ -47,7 +47,7 @@ export default {
 
     fetchPoints({ commit }) {
       let fetchApi = new Api(new FetchApi());
-      return fetchApi
+      fetchApi
         .getRequest(process.env.VUE_APP_BASE_URL + "db/point", fetchApi.provider.headers)
         .then(result => {
           commit("updatePoints", result.data);

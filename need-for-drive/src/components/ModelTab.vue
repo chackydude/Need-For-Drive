@@ -7,7 +7,7 @@
     </div>
     <transition-group name="list" class="model-tab__car-models" tag="div">
       <CarItem
-        v-for="car in getCars"
+        v-for="car in getCars[currentPage]"
         :key="car.id"
         :name="car.name"
         :price-max="car.priceMax"
@@ -22,8 +22,7 @@
       prev-text="Назад"
       next-text="Вперед"
       :clickHandler="clickCallback"
-    >
-    </paginate>
+    ></paginate>
   </div>
 </template>
 
@@ -39,13 +38,12 @@ export default {
   data() {
     return {
       category: "",
-      cars: [],
-      onpageCarsAmount: 4,
-      currentPage: 1
+      currentPage: 1,
+      onpageCarsAmount: 4
     };
   },
   methods: {
-    ...mapActions(["fetchCars"]),
+    ...mapActions(["fetchCarsAmount", "fetchCarsWithPagination"]),
     changeCategory: function(newValue) {
       this.category = newValue;
     },
@@ -54,14 +52,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCars"]),
+    ...mapGetters(["getCars", "getCarsAmount"]),
     pagesAmount() {
-      return Math.ceil(this.getCars.length / this.onpageCarsAmount);
+      return Math.ceil(this.getCarsAmount / this.onpageCarsAmount);
     }
   },
   mounted() {
-    this.fetchCars();
-  }
+    this.fetchCarsAmount();
+    this.fetchCarsWithPagination({pagesAmount: this.pagesAmount, onpageCarsAmount: this.onpageCarsAmount});
+}
 };
 </script>
 
