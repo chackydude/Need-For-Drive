@@ -7,7 +7,7 @@
     </div>
     <transition-group name="list" class="model-tab__car-models" tag="div">
       <CarItem
-        v-for="car in cars"
+        v-for="car in getCars"
         :key="car.id"
         :car="car"
       />
@@ -18,6 +18,8 @@
 <script>
 import RadioButton from "./common/RadioButton";
 import CarItem from "./elements/CarItem";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "ModelTab",
   components: { CarItem, RadioButton },
@@ -28,55 +30,60 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["fetchCars"]),
     changeCategory: function(newValue) {
       this.category = newValue;
     }
   },
+  computed: {
+    ...mapGetters(["getCars"])
+  },
   mounted() {
-    this.cars = [
-      {
-        id: 1,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 2,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 3,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 4,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 5,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 6,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      }
-    ];
+    this.fetchCars();
+    // this.cars = [
+    //   {
+    //     id: 1,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   },
+    //   {
+    //     id: 2,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   },
+    //   {
+    //     id: 3,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   },
+    //   {
+    //     id: 4,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   },
+    //   {
+    //     id: 5,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   },
+    //   {
+    //     id: 6,
+    //     name: "Hyundai, i30 N",
+    //     maxPrice: 1000,
+    //     minPrice: 5000,
+    //     img: "@/assets/images/car-example.png"
+    //   }
+    // ];
   },
 };
 </script>

@@ -5,7 +5,7 @@
         {{ car.name }}
       </div>
       <div class="car-item__price">
-        {{ car.minPrice }} - {{ car.maxPrice }} ₽
+        {{ car.priceMin }} - {{ car.priceMax }} ₽
       </div>
     </div>
 
