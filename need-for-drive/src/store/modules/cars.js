@@ -32,7 +32,7 @@ export default {
         });
     },
 
-    fetchCarsWithPagination({ commit }, { pagesAmount, onpageCarsAmount }) {
+    async fetchCarsWithPagination({ commit }, { pagesAmount, onpageCarsAmount }) {
       let fetchApi = new Api(new FetchApi());
 
       for (let i = 1; i <= pagesAmount; i++) {

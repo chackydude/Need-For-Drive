@@ -5,9 +5,9 @@
       <RadioButton name="Эконом" id="eco" @change="changeCategory" />
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
-    <transition-group name="list" class="model-tab__car-models" tag="div">
+    <transition-group  class="model-tab__car-models" tag="div">
       <CarItem
-        v-for="car in getCars[currentPage]"
+        v-for="car in getCars[currentPage - 1]"
         :key="car.id"
         :name="car.name"
         :price-max="car.priceMax"
