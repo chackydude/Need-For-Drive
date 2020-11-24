@@ -6,94 +6,61 @@
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
     <transition-group name="list" class="model-tab__car-models" tag="div">
-            <CarItem
-              v-for="car in getCars"
-              :key="car.id"
-              :name="car.name"
-              :price-max="car.priceMax"
-              :price-min="car.priceMin"
-              :img="car.thumbnail.originalname"
-            />
-<!--      <CarItem-->
-<!--        v-for="car in getCars"-->
-<!--        :key="car.id"-->
-<!--        :name="car.name"-->
-<!--        :price-max="car.priceMax"-->
-<!--        :price-min="car.priceMin"-->
-<!--      />-->
+      <CarItem
+        v-for="car in getCars"
+        :key="car.id"
+        :name="car.name"
+        :price-max="car.priceMax"
+        :price-min="car.priceMin"
+        :img="car.thumbnail.path"
+        class=""
+      />
     </transition-group>
+    <paginate
+      :pageCount="pagesAmount"
+      :containerClass="'pagination'"
+      prev-text="Назад"
+      next-text="Вперед"
+      :clickHandler="clickCallback"
+    >
+    </paginate>
   </div>
 </template>
 
 <script>
 import RadioButton from "./common/RadioButton";
 import CarItem from "./elements/CarItem";
+import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ModelTab",
-  components: { CarItem, RadioButton },
+  components: { CarItem, RadioButton, Paginate },
   data() {
     return {
       category: "",
-      cars: []
+      cars: [],
+      onpageCarsAmount: 4,
+      currentPage: 1
     };
   },
   methods: {
     ...mapActions(["fetchCars"]),
     changeCategory: function(newValue) {
       this.category = newValue;
+    },
+    clickCallback: function(page) {
+      this.currentPage = page;
     }
   },
   computed: {
-    ...mapGetters(["getCars"])
+    ...mapGetters(["getCars"]),
+    pagesAmount() {
+      return Math.ceil(this.getCars.length / this.onpageCarsAmount);
+    }
   },
   mounted() {
     this.fetchCars();
-    // this.cars = [
-    //   {
-    //     id: 1,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   },
-    //   {
-    //     id: 4,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   },
-    //   {
-    //     id: 5,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   },
-    //   {
-    //     id: 6,
-    //     name: "Hyundai, i30 N",
-    //     maxPrice: 1000,
-    //     minPrice: 5000,
-    //     img: "@/assets/images/car-example.png"
-    //   }
-    // ];
   }
 };
 </script>
@@ -124,6 +91,17 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  @include fontStylesLight;
+  font-size: 17px;
+  margin: 0 0 20px 0;
 }
 
 @media (max-width: 1324px) {

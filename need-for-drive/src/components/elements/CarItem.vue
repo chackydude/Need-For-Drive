@@ -9,7 +9,7 @@
 
     <img
       :src="
-        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/files/' +
+        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
           img
       "
       alt="car-image"
