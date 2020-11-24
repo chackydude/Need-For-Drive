@@ -64,7 +64,7 @@ export default {
 
 .car-item__image {
   align-self: flex-end;
-  height: 120px;
+  height: 116px;
 }
 
 @media (max-width: 768px) {
