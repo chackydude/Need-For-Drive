@@ -15,7 +15,7 @@ export default {
       let fetchApi = new Api(new FetchApi());
       return fetchApi
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/car",
+          process.env.VUE_APP_BASE_URL + "db/car?limit=4",
           fetchApi.provider.headers
         )
         .then(result => {

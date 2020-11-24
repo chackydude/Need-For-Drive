@@ -7,20 +7,15 @@
       <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
 
-    <!--    <img-->
-    <!--      :src="-->
-    <!--        process.env.VUE_APP_BASE_URL +-->
-    <!--          img-->
-    <!--      "-->
-    <!--      alt="car-image"-->
-    <!--      class="car-item__image"-->
-    <!--      crossOrigin="anonymous"-->
-    <!--      referrerPolicy="origin"-->
-    <!--    />-->
     <img
-      src="@/assets/images/car-example.png"
+      :src="
+        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/files/' +
+          img
+      "
       alt="car-image"
       class="car-item__image"
+      crossOrigin="anonymous"
+      referrerPolicy="origin"
     />
   </div>
 </template>
@@ -69,6 +64,7 @@ export default {
 
 .car-item__image {
   align-self: flex-end;
+  height: 120px;
 }
 
 @media (max-width: 768px) {
