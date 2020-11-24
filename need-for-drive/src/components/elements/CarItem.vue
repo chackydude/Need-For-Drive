@@ -2,13 +2,21 @@
   <div class="car-item">
     <div class="car-item__info">
       <div class="car-item__name">
-        {{ car.name }}
+        {{ name }}
       </div>
-      <div class="car-item__price">
-        {{ car.priceMin }} - {{ car.priceMax }} ₽
-      </div>
+      <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
 
+    <!--    <img-->
+    <!--      :src="-->
+    <!--        process.env.VUE_APP_BASE_URL +-->
+    <!--          img-->
+    <!--      "-->
+    <!--      alt="car-image"-->
+    <!--      class="car-item__image"-->
+    <!--      crossOrigin="anonymous"-->
+    <!--      referrerPolicy="origin"-->
+    <!--    />-->
     <img
       src="@/assets/images/car-example.png"
       alt="car-image"
@@ -20,7 +28,10 @@
 export default {
   name: "CarItem",
   props: {
-    car: Object
+    name: String,
+    priceMin: Number,
+    priceMax: Number,
+    img: String
   }
 };
 </script>

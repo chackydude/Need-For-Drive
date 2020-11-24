@@ -6,10 +6,20 @@
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
     <transition-group name="list" class="model-tab__car-models" tag="div">
+      <!--      <CarItem-->
+      <!--        v-for="car in getCars"-->
+      <!--        :key="car.id"-->
+      <!--        :name="car.name"-->
+      <!--        :price-max="car.priceMax"-->
+      <!--        :price-min="car.priceMin"-->
+      <!--        :img="car.thumbnail.originalname"-->
+      <!--      />-->
       <CarItem
         v-for="car in getCars"
         :key="car.id"
-        :car="car"
+        :name="car.name"
+        :price-max="car.priceMax"
+        :price-min="car.priceMin"
       />
     </transition-group>
   </div>
@@ -84,7 +94,7 @@ export default {
     //     img: "@/assets/images/car-example.png"
     //   }
     // ];
-  },
+  }
 };
 </script>
 
