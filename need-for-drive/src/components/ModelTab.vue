@@ -42,11 +42,15 @@
       />
     </div>
     <paginate
-      :pageCount="pagesAmount"
+      :pageCount="3"
       :containerClass="'pagination'"
       prev-text="Назад"
       next-text="Вперед"
       :clickHandler="clickCallback"
+      :page-class="'page-item'"
+      :active-class="'page-item--active'"
+      :next-class="'nav-item'"
+      :prev-class="'nav-item'"
     ></paginate>
   </div>
 </template>
@@ -157,7 +161,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/variables";
 @import "public/css/mixins";
 
@@ -190,10 +194,31 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 10px;
   @include fontStylesLight;
   font-size: 17px;
   margin: 0 0 20px 0;
+}
+
+.page-item {
+  margin: 0 2px 0 2px;
+  padding: 1px 5px 1px 5px;
+  border-radius: 2px;
+}
+
+.nav-item {
+  margin: 0 5px 0 5px;
+  padding: 1px 4px 1px 4px;
+  border-radius: 2px;
+}
+
+.nav-item:active,
+.page-item:active {
+  background-color: darken($gray-light-color, 20);
+}
+
+.page-item--active {
+  color: #fff;
+  background-color: $main-accent-color;
 }
 
 @media (max-width: 1324px) {
