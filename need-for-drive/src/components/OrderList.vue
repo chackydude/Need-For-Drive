@@ -127,6 +127,7 @@ export default {
   .users-order {
     border-left: none;
     padding: 10px;
+    margin: 20px;
   }
 }
 </style>
