@@ -42,7 +42,7 @@
       />
     </div>
     <paginate
-      :pageCount="3"
+      :pageCount="pagesAmount"
       :containerClass="'pagination'"
       prev-text="Назад"
       next-text="Вперед"
@@ -197,6 +197,7 @@ export default {
   @include fontStylesLight;
   font-size: 17px;
   margin: 0 0 20px 0;
+  user-select: none;
 }
 
 .page-item {
