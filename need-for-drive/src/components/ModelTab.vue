@@ -5,7 +5,7 @@
       <RadioButton name="Эконом" id="eco" @change="changeCategory" />
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
-    <transition-group  class="model-tab__car-models" tag="div">
+    <transition-group class="model-tab__car-models" tag="div">
       <CarItem
         v-for="car in getCars[currentPage - 1]"
         :key="car.id"
@@ -59,8 +59,11 @@ export default {
   },
   mounted() {
     this.fetchCarsAmount();
-    this.fetchCarsWithPagination({pagesAmount: this.pagesAmount, onpageCarsAmount: this.onpageCarsAmount});
-}
+    this.fetchCarsWithPagination({
+      pagesAmount: this.pagesAmount,
+      onpageCarsAmount: this.onpageCarsAmount
+    });
+  }
 };
 </script>
 

@@ -6,11 +6,16 @@ export default {
     cities: [],
     currentPoints: [],
     currentCityCoordinates: [55.751574, 37.573856], // Moscow
+    currentCityId: "",
     pointsWithCoordinates: []
   },
   mutations: {
     updateCities(state, cities) {
       state.cities = cities;
+    },
+
+    updateCurrentCityId(state, id) {
+      state.currentCityId = id;
     },
 
     updatePoints(state, points) {
@@ -45,10 +50,10 @@ export default {
         });
     },
 
-    fetchPoints({ commit }) {
+    fetchPoints({ commit }, cityId) {
       let fetchApi = new Api(new FetchApi());
       fetchApi
-        .getRequest(process.env.VUE_APP_BASE_URL + "db/point", fetchApi.provider.headers)
+        .getRequest(process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId, fetchApi.provider.headers)
         .then(result => {
           commit("updatePoints", result.data);
         })
@@ -105,6 +110,14 @@ export default {
           })
           .catch(error => console.log(error.message));
       }
+    },
+
+    generateCurrentCityId({ commit, getters }, cityName) {
+      for (let i = 0; i < getters.getCities.length; i++) {
+        if (getters.getCities[i].name === cityName) {
+          commit("updateCurrentCityId", getters.getCities[i].id);
+        }
+      }
     }
   },
   getters: {
@@ -114,6 +127,10 @@ export default {
 
     getPoints(state) {
       return state.currentPoints;
+    },
+
+    getCurrentCityId(state) {
+      return state.currentCityId;
     },
 
     getCoordinates(state) {
