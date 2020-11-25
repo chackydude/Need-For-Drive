@@ -12,7 +12,7 @@
       }"
     >
       <pulse-loader
-        :loading="getAllCars.length == 0"
+        :loading="getAllCars.length === 0"
         color="#0ec261"
       ></pulse-loader>
       <CarItem
@@ -38,7 +38,7 @@
 import RadioButton from "./common/RadioButton";
 import CarItem from "./elements/CarItem";
 import Paginate from "vuejs-paginate";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
@@ -46,33 +46,76 @@ export default {
   components: { CarItem, RadioButton, Paginate, PulseLoader },
   data() {
     return {
-      category: "",
+      category: "Все модели",
       currentPage: 1,
       onpageCarsAmount: 4,
       cars: [
-        { name: "Test 1", priceMax: 2000, priceMin: 1000, id: 1 },
-        { name: "Test 2", priceMax: 2000, priceMin: 1000, id: 2 },
-        { name: "Test 3", priceMax: 2000, priceMin: 1000, id: 3 },
-        { name: "Test 4", priceMax: 2000, priceMin: 1000, id: 4 },
-        { name: "Test 5", priceMax: 2000, priceMin: 1000, id: 5 },
-        { name: "Test 6", priceMax: 2000, priceMin: 1000, id: 6 },
-        { name: "Test 7", priceMax: 2000, priceMin: 1000, id: 7 }
+        {
+          name: "Test 1",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 1,
+          categoryId: { name: "Премиум" }
+        },
+        {
+          name: "Test 2",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 2,
+          categoryId: { name: "Эконом" }
+        },
+        {
+          name: "Test 3",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 3,
+          categoryId: { name: "Премиум" }
+        },
+        {
+          name: "Test 4",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 4,
+          categoryId: { name: "Премиум" }
+        },
+        {
+          name: "Test 5",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 5,
+          categoryId: { name: "Эконом" }
+        },
+        {
+          name: "Test 6",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 6,
+          categoryId: { name: "Премиум" }
+        },
+        {
+          name: "Test 7",
+          priceMax: 2000,
+          priceMin: 1000,
+          id: 7,
+          categoryId: { name: "Эконом" }
+        }
       ]
     };
   },
   methods: {
-    ...mapActions(["fetchCarsAmount", "fetchCarsWithPagination"]),
+    ...mapActions(["fetchCars"]),
+    ...mapMutations(["updateCategory"]),
     changeCategory: function(newValue) {
-      this.category = newValue;
+      this.updateCategory(newValue);
     },
     clickCallback: function(page) {
       this.currentPage = page;
     }
   },
   computed: {
-    ...mapGetters(["getCars", "getCarsAmount", "getAllCars"]),
+    ...mapGetters(["getCarsAmount", "getAllCars"]),
     pagesAmount() {
-      return Math.ceil(this.getCarsAmount / this.onpageCarsAmount);
+      return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
     },
 
     getChunkedCars() {
@@ -92,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchCarsAmount();
+    this.fetchCars();
   }
 };
 </script>

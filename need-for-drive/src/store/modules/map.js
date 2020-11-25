@@ -82,7 +82,7 @@ export default {
 
   actions: {
     updateCurrentPoint({ commit }, point) {
-      commit("updatePlace", point)
+      commit("updatePlace", point);
     }
   },
 

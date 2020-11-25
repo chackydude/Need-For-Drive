@@ -7,7 +7,6 @@
       <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
     <img
-      slot="image"
       :src="
         'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
           img
@@ -26,7 +25,11 @@ export default {
     name: String,
     priceMin: Number,
     priceMax: Number,
-    img: String
+    img: String,
+    id: String
+  },
+  methods: {
+
   }
 };
 </script>
