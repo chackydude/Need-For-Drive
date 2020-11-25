@@ -16,6 +16,10 @@ export default {
 
     updatePlace(state, place) {
       state.orderPlace = place;
+    },
+
+    updateModel(state, model) {
+      state.orderModel = model;
     }
   },
   actions: {},

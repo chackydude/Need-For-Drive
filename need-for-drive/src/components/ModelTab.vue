@@ -1,9 +1,24 @@
 <template>
   <div class="model-tab">
     <div class="model-tab__radio-buttons">
-      <RadioButton name="Все модели" id="all" @change="changeCategory" />
-      <RadioButton name="Эконом" id="eco" @change="changeCategory" />
-      <RadioButton name="Премиум" id="premium" @change="changeCategory" />
+      <RadioButton
+        name="Все модели"
+        id="all"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Все модели'"
+      />
+      <RadioButton
+        name="Эконом"
+        id="eco"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Эконом'"
+      />
+      <RadioButton
+        name="Премиум"
+        id="premium"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Премиум'"
+      />
     </div>
     <div
       class="model-tab__car-models"
@@ -113,7 +128,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCarsAmount", "getAllCars"]),
+    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory"]),
     pagesAmount() {
       return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
     },

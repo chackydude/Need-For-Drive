@@ -74,6 +74,10 @@ export default {
       return state.carsAmount;
     },
 
+    getCategory(state) {
+      return state.category;
+    },
+
     getAllCars(state) {
       return state.allCars.filter(car =>
         state.category === "Все модели"
