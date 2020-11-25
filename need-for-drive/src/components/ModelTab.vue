@@ -5,7 +5,16 @@
       <RadioButton name="Эконом" id="eco" @change="changeCategory" />
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
-    <div class="model-tab__car-models">
+    <div
+      class="model-tab__car-models"
+      :class="{
+        'car-models--loading': getAllCars.length == 0
+      }"
+    >
+      <pulse-loader
+        :loading="getAllCars.length == 0"
+        color="#0ec261"
+      ></pulse-loader>
       <CarItem
         v-for="car in getChunkedCars[currentPage - 1]"
         :key="car.id"
@@ -30,10 +39,11 @@ import RadioButton from "./common/RadioButton";
 import CarItem from "./elements/CarItem";
 import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "ModelTab",
-  components: { CarItem, RadioButton, Paginate },
+  components: { CarItem, RadioButton, Paginate, PulseLoader },
   data() {
     return {
       category: "",
@@ -102,10 +112,17 @@ export default {
 }
 
 .model-tab__car-models {
-  margin: 48px 0 32px 0;
+  min-height: 60vh;
+  margin: 30px 0 18px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.car-models--loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination {
@@ -132,6 +149,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .model-tab {
+    width: auto;
+  }
+
   .model-tab__car-models {
     width: 80%;
   }

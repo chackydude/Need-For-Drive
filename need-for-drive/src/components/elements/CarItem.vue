@@ -6,8 +6,8 @@
       </div>
       <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
-
     <img
+      slot="image"
       :src="
         'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
           img
