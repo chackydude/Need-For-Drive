@@ -2,7 +2,7 @@ export default {
   state: {
     orderCity: "",
     orderPlace: "",
-    orderModel: "",
+    orderModel: {},
     modelColor: "",
     rentalTime: "",
     extraServices: [],
@@ -18,8 +18,8 @@ export default {
       state.orderPlace = place;
     },
 
-    updateModel(state, model) {
-      state.orderModel = model;
+    updateModel(state, payload) {
+      state.orderModel = payload;
     }
   },
   actions: {},

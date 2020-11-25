@@ -1,21 +1,21 @@
 <template>
-  <div class="car-item" @click="getCarData">
+  <div class="car-item" @click="updateCarData">
     <div class="car-item__info">
       <div class="car-item__name">
         {{ name }}
       </div>
       <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
-<!--    <img-->
-<!--      :src="-->
-<!--        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +-->
-<!--          img-->
-<!--      "-->
-<!--      alt="car-image"-->
-<!--      class="car-item__image"-->
-<!--      crossOrigin="anonymous"-->
-<!--      referrerPolicy="origin"-->
-<!--    />-->
+    <img
+      :src="
+        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
+          img
+      "
+      alt="car-image"
+      class="car-item__image"
+      crossOrigin="anonymous"
+      referrerPolicy="origin"
+    />
   </div>
 </template>
 <script>
@@ -27,12 +27,22 @@ export default {
     priceMin: Number,
     priceMax: Number,
     img: String,
-    id: Number
+    id: Number,
+    colors: Array,
+    number: String
   },
   methods: {
-    ...mapMutations(["updateModel"]),
-    getCarData() {
-      this.updateModel(this.name);
+    ...mapMutations(["updateModel", "updateFillStatus"]),
+    updateCarData() {
+      this.updateModel({
+        name: this.name,
+        id: this.id,
+        colors: this.colors,
+        number: this.number,
+        priceMax: this.priceMax,
+        priceMin: this.priceMin
+      });
+      this.updateFillStatus(true);
     }
   }
 };

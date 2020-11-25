@@ -13,8 +13,8 @@
       <OderListItem
         class="list__order-item"
         name="Модель"
-        :value="getModel"
-        v-if="getModel"
+        :value="getModel.name"
+        v-if="getModel.name"
       />
       <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
       <OderListItem
