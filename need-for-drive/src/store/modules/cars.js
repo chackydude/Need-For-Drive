@@ -4,11 +4,16 @@ import FetchApi from "../../utils/api/FetchApi";
 export default {
   state: {
     cars: [],
-    carsAmount: 0
+    carsAmount: 0,
+    allCars: []
   },
   mutations: {
     updateCars(state, pageCars) {
       state.cars.push(pageCars);
+    },
+
+    updateAllCars(state, cars) {
+      state.allCars = cars;
     },
 
     updateCarsAmount(state, amount) {
@@ -26,6 +31,7 @@ export default {
         )
         .then(result => {
           commit("updateCarsAmount", result.count);
+          commit("updateAllCars", result.data);
         })
         .catch(error => {
           console.log(error.message);
@@ -61,6 +67,10 @@ export default {
 
     getCarsAmount(state) {
       return state.carsAmount;
+    },
+
+    getAllCars(state) {
+      return state.allCars;
     }
   }
 };

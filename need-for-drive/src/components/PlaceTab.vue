@@ -97,7 +97,7 @@ export default {
       "getCoordinates",
       "getPointsCoordinates",
       "getCurrentPoint",
-      "getCurrentCityId"
+      "getCurrentCityId",
     ]),
 
     isFilled() {

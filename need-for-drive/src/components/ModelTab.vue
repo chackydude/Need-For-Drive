@@ -5,17 +5,16 @@
       <RadioButton name="Эконом" id="eco" @change="changeCategory" />
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
-    <transition-group class="model-tab__car-models" tag="div">
+    <div name="list" class="model-tab__car-models">
       <CarItem
-        v-for="car in getCars[currentPage - 1]"
+        v-for="car in getChunkedCars[currentPage - 1]"
         :key="car.id"
         :name="car.name"
         :price-max="car.priceMax"
         :price-min="car.priceMin"
         :img="car.thumbnail.path"
-        class=""
       />
-    </transition-group>
+    </div>
     <paginate
       :pageCount="pagesAmount"
       :containerClass="'pagination'"
@@ -39,7 +38,16 @@ export default {
     return {
       category: "",
       currentPage: 1,
-      onpageCarsAmount: 4
+      onpageCarsAmount: 4,
+      cars: [
+        { name: "Test 1", priceMax: 2000, priceMin: 1000, id: 1 },
+        { name: "Test 2", priceMax: 2000, priceMin: 1000, id: 2 },
+        { name: "Test 3", priceMax: 2000, priceMin: 1000, id: 3 },
+        { name: "Test 4", priceMax: 2000, priceMin: 1000, id: 4 },
+        { name: "Test 5", priceMax: 2000, priceMin: 1000, id: 5 },
+        { name: "Test 6", priceMax: 2000, priceMin: 1000, id: 6 },
+        { name: "Test 7", priceMax: 2000, priceMin: 1000, id: 7 }
+      ]
     };
   },
   methods: {
@@ -52,17 +60,33 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCars", "getCarsAmount"]),
+    ...mapGetters(["getCars", "getCarsAmount", "getAllCars"]),
     pagesAmount() {
       return Math.ceil(this.getCarsAmount / this.onpageCarsAmount);
+    },
+
+    getChunkedCars() {
+      let buffer = [];
+      let chunkedCars = [];
+      for (let i = 0; i < this.getAllCars.length; i++) {
+        if (buffer.length < this.onpageCarsAmount) {
+          buffer.push(this.getAllCars[i]);
+        } else {
+          chunkedCars.push(buffer);
+          buffer = [];
+          buffer.push(this.getAllCars[i]);
+        }
+      }
+      if (buffer.length !== 0) chunkedCars.push(buffer);
+      return chunkedCars;
     }
   },
   mounted() {
     this.fetchCarsAmount();
-    this.fetchCarsWithPagination({
-      pagesAmount: this.pagesAmount,
-      onpageCarsAmount: this.onpageCarsAmount
-    });
+    // this.fetchCarsWithPagination({
+    //   pagesAmount: this.pagesAmount,
+    //   onpageCarsAmount: this.onpageCarsAmount
+    // });
   }
 };
 </script>
@@ -71,16 +95,20 @@ export default {
 @import "public/css/variables";
 @import "public/css/mixins";
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.9s;
-  opacity: 1;
+.model-tab {
+  width: 60vw;
 }
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(10px);
-}
+
+/*.list-enter-active,*/
+/*.list-leave-active {*/
+/*  transition: all 1.5s;*/
+/*  opacity: 1;*/
+/*}*/
+/*.list-enter,*/
+/*.list-leave-to {*/
+/*  opacity: 0;*/
+/*  transform: translateX(10px);*/
+/*}*/
 
 .model-tab__radio-buttons {
   margin-top: 34px;
