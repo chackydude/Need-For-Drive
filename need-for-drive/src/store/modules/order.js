@@ -30,6 +30,10 @@ export default {
 
     getPoint(state) {
       return state.orderPlace;
+    },
+
+    getModel(state) {
+      return state.orderModel;
     }
   }
 };

@@ -30,13 +30,21 @@
         :loading="getAllCars.length === 0"
         color="#0ec261"
       ></pulse-loader>
+      <!--      <CarItem-->
+      <!--        v-for="car in getChunkedCars[currentPage - 1]"-->
+      <!--        :key="car.id"-->
+      <!--        :name="car.name"-->
+      <!--        :price-max="car.priceMax"-->
+      <!--        :price-min="car.priceMin"-->
+      <!--        :img="car.thumbnail.path"-->
+      <!--      />-->
       <CarItem
-        v-for="car in getChunkedCars[currentPage - 1]"
+        v-for="car in cars"
         :key="car.id"
+        :id="car.id"
         :name="car.name"
         :price-max="car.priceMax"
         :price-min="car.priceMin"
-        :img="car.thumbnail.path"
       />
     </div>
     <paginate
@@ -150,7 +158,7 @@ export default {
     }
   },
   mounted() {
-    this.fetchCars();
+    // this.fetchCars();
   }
 };
 </script>
