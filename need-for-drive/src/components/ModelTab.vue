@@ -5,7 +5,7 @@
       <RadioButton name="Эконом" id="eco" @change="changeCategory" />
       <RadioButton name="Премиум" id="premium" @change="changeCategory" />
     </div>
-    <div name="list" class="model-tab__car-models">
+    <div class="model-tab__car-models">
       <CarItem
         v-for="car in getChunkedCars[currentPage - 1]"
         :key="car.id"
@@ -83,10 +83,6 @@ export default {
   },
   mounted() {
     this.fetchCarsAmount();
-    // this.fetchCarsWithPagination({
-    //   pagesAmount: this.pagesAmount,
-    //   onpageCarsAmount: this.onpageCarsAmount
-    // });
   }
 };
 </script>
@@ -98,17 +94,6 @@ export default {
 .model-tab {
   width: 60vw;
 }
-
-/*.list-enter-active,*/
-/*.list-leave-active {*/
-/*  transition: all 1.5s;*/
-/*  opacity: 1;*/
-/*}*/
-/*.list-enter,*/
-/*.list-leave-to {*/
-/*  opacity: 0;*/
-/*  transform: translateX(10px);*/
-/*}*/
 
 .model-tab__radio-buttons {
   margin-top: 34px;
