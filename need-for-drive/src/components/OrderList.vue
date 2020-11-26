@@ -16,13 +16,13 @@
         :value="getModel.name"
         v-if="getModel.name"
       />
-      <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
+      <OderListItem v-if="getColor" class="list__order-item" name="Цвет" :value="getColor" />
       <OderListItem
         class="list__order-item"
         name="Длительность аренды"
         :value="order.rentalTime"
       />
-      <OderListItem class="list__order-item" name="Тариф" :value="order.userTariff" />
+      <OderListItem v-if="getTariff" class="list__order-item" name="Тариф" :value="getTariff" />
       <OderListItem class="list__order-item" name="Полный бак" value="Да" />
     </div>
     <div class="users-order__price">
@@ -57,7 +57,14 @@ export default {
     OderListItem
   },
   computed: {
-    ...mapGetters(["getCity", "getPoint", "getCurrentTab", "getModel"])
+    ...mapGetters([
+      "getCity",
+      "getPoint",
+      "getCurrentTab",
+      "getModel",
+      "getColor",
+            "getTariff"
+    ])
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),

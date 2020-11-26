@@ -3,11 +3,11 @@
     <input
       type="radio"
       class="radio-button__checker"
-      name="contact"
+      :name="groupName"
       :value="name"
       :id="id"
       @click="change"
-      :checked="isChecked"
+      :checked="getCheckState"
     />
     <label class="radio-button__label" :for="id"> {{ name }} </label>
   </div>
@@ -19,12 +19,18 @@ export default {
   props: {
     name: String,
     id: String,
-    model: String,
-    isChecked: Boolean
+    isChecked: Boolean,
+    comparingValue: String,
+    groupName: String
   },
   methods: {
     change() {
       this.$emit("change", this.name);
+    }
+  },
+  computed: {
+    getCheckState() {
+      return this.name === this.comparingValue;
     }
   }
 };

@@ -2,7 +2,7 @@
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
       <div class="inputs__input input-field">
-        <p class="input-field__title">Город</p>
+        <label class="input-field__title">Город</label>
         <input
           type="text"
           class="input-field__input"
@@ -18,7 +18,7 @@
         </datalist>
       </div>
       <div class="inputs__input input-field">
-        <p class="input-field__title">Пункт выдачи</p>
+        <label class="input-field__title">Пункт выдачи</label>
         <input
           type="text"
           class="input-field__input"

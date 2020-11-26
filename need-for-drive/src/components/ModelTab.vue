@@ -5,19 +5,22 @@
         name="Все модели"
         id="all"
         @change="changeCategory"
-        :isChecked="getCategory === 'Все модели'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
       <RadioButton
         name="Эконом"
         id="eco"
         @change="changeCategory"
-        :isChecked="getCategory === 'Эконом'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
       <RadioButton
         name="Премиум"
         id="premium"
         @change="changeCategory"
-        :isChecked="getCategory === 'Премиум'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
     </div>
     <div
@@ -147,7 +150,7 @@ export default {
   justify-content: center;
   @include fontStylesLight;
   font-size: 17px;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   user-select: none;
 }
 

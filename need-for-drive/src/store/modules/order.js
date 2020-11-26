@@ -5,6 +5,7 @@ export default {
     orderModel: {},
     modelColor: "",
     rentalTime: "",
+    tariff: "",
     extraServices: [],
     minPrice: 0,
     maxPrice: 0
@@ -20,6 +21,14 @@ export default {
 
     updateModel(state, payload) {
       state.orderModel = payload;
+    },
+
+    updateColor(state, color) {
+      state.modelColor = color;
+    },
+
+    updateTariff(state, tariff) {
+      state.tariff = tariff;
     }
   },
   actions: {},
@@ -34,6 +43,14 @@ export default {
 
     getModel(state) {
       return state.orderModel;
+    },
+
+    getColor(state) {
+      return state.modelColor;
+    },
+
+    getTariff(state) {
+      return state.tariff;
     }
   }
 };
