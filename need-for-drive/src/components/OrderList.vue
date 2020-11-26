@@ -2,11 +2,7 @@
   <div class="users-order">
     <p class="users-order__title">Ваш заказ:</p>
     <div class="users-order__current-list list">
-      <OderListItem
-        class="list__order-item"
-        name="Пункт выдачи"
-        v-if="getCity"
-      >
+      <OderListItem class="list__order-item" name="Пункт выдачи" v-if="getCity">
         {{ getCity }}, <br />
         {{ getPoint }}
       </OderListItem>
@@ -16,14 +12,32 @@
         :value="getModel.name"
         v-if="getModel.name"
       />
-      <OderListItem v-if="getColor" class="list__order-item" name="Цвет" :value="getColor" />
+      <OderListItem
+        v-if="getColor"
+        class="list__order-item"
+        name="Цвет"
+        :value="getColor"
+      />
       <OderListItem
         class="list__order-item"
         name="Длительность аренды"
         :value="order.rentalTime"
       />
-      <OderListItem v-if="getTariff" class="list__order-item" name="Тариф" :value="getTariff" />
-      <OderListItem class="list__order-item" name="Полный бак" value="Да" />
+      <OderListItem
+        v-if="getTariff"
+        class="list__order-item"
+        name="Тариф"
+        :value="getTariff"
+      />
+      <div v-if="getExtraServices.length !== 0">
+        <OderListItem
+          v-for="service in getExtraServices"
+          :key="service"
+          class="list__order-item"
+          :name="service"
+          value="Да"
+        />
+      </div>
     </div>
     <div class="users-order__price">
       <span class="price__title">Цена:</span> от 8000 до 12000 ₽
@@ -63,7 +77,8 @@ export default {
       "getCurrentTab",
       "getModel",
       "getColor",
-            "getTariff"
+      "getTariff",
+      "getExtraServices"
     ])
   },
   methods: {

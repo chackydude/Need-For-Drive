@@ -1,7 +1,7 @@
 <template>
   <div class="radio-button">
     <input
-      type="radio"
+      :type="inputType"
       class="radio-button__checker"
       :name="groupName"
       :value="name"
@@ -21,7 +21,10 @@ export default {
     id: String,
     isChecked: Boolean,
     comparingValue: String,
-    groupName: String
+    groupName: String,
+    inputType: {
+      default: "radio"
+    }
   },
   methods: {
     change() {

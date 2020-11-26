@@ -64,6 +64,35 @@
         />
       </div>
     </div>
+    <div class="additional-page__extra-services extra-services">
+      <p class="extra-services__title">Доп. услуги</p>
+      <div class="extra-services__items ">
+        <RadioButton
+          input-type="checkbox"
+          @change="addExtraService"
+          class="extras__item"
+          id="full-fuel"
+          name="Полный бак, 500р"
+          group-name="extra-services"
+        />
+        <RadioButton
+          input-type="checkbox"
+          @change="addExtraService"
+          class="extras__item"
+          id="kid-chair"
+          name="Детское кресло, 200р"
+          group-name="extra-services"
+        />
+        <RadioButton
+          input-type="checkbox"
+          @change="addExtraService"
+          class="extras__item"
+          id="right-rudder"
+          name="Правый руль, 1600р"
+          group-name="extra-services"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,7 +115,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateColor", "updateTariff"]),
+    ...mapMutations(["updateColor", "updateTariff", "updateServices"]),
     changeColor(color) {
       this.updateColor(color);
     },
@@ -100,6 +129,14 @@ export default {
       this.updateTariff(tariff);
     },
 
+    addExtraService(service) {
+      if (!(this.getExtraServices.indexOf(service) >= 0)) {
+        this.updateServices({ status: "add", service: service });
+      } else {
+        this.updateServices({ status: "remove", service: service });
+      }
+    },
+
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
@@ -108,7 +145,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getModel", "getColor", "getTariff"])
+    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices"])
   }
 };
 </script>
@@ -163,11 +200,13 @@ $margin-title: 34px 0 16px 0;
   min-width: 224px;
 }
 
-.tariff__title {
+.tariff__title,
+.extra-services__title {
   margin: $margin-title;
 }
 
-.tariffs__item {
+.tariffs__item,
+.extras__item {
   margin-top: 10px;
 }
 </style>

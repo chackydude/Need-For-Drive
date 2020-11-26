@@ -29,6 +29,17 @@ export default {
 
     updateTariff(state, tariff) {
       state.tariff = tariff;
+    },
+
+    updateServices(state, payload) {
+      if (payload.status == "add") {
+        state.extraServices.push(payload.service);
+      } else {
+        // TODO: optimize removing
+        state.extraServices = state.extraServices.filter(
+          items => items !== payload.service
+        );
+      }
     }
   },
   actions: {},
@@ -51,6 +62,10 @@ export default {
 
     getTariff(state) {
       return state.tariff;
+    },
+
+    getExtraServices(state) {
+      return state.extraServices;
     }
   }
 };
