@@ -6,7 +6,8 @@
       name="contact"
       :value="name"
       :id="id"
-      v-model="radioButtonValue"
+      @click="change"
+      :checked="isChecked"
     />
     <label class="radio-button__label" :for="id"> {{ name }} </label>
   </div>
@@ -18,17 +19,12 @@ export default {
   props: {
     name: String,
     id: String,
-    model: String
+    model: String,
+    isChecked: Boolean
   },
-  computed: {
-    radioButtonValue: {
-      get: function() {
-        return this.value
-      },
-      set: function() {
-        // Communicate the change to parent component so that selectedValue can be updated
-        this.$emit("change", this.name);
-      }
+  methods: {
+    change() {
+      this.$emit("change", this.name);
     }
   }
 };

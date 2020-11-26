@@ -1,99 +1,123 @@
 <template>
   <div class="model-tab">
     <div class="model-tab__radio-buttons">
-      <RadioButton name="Все модели" id="all" @change="changeCategory" />
-      <RadioButton name="Эконом" id="eco" @change="changeCategory" />
-      <RadioButton name="Премиум" id="premium" @change="changeCategory" />
-    </div>
-    <transition-group name="list" class="model-tab__car-models" tag="div">
-      <CarItem
-        v-for="car in cars"
-        :key="car.id"
-        :car="car"
+      <RadioButton
+        name="Все модели"
+        id="all"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Все модели'"
       />
-    </transition-group>
+      <RadioButton
+        name="Эконом"
+        id="eco"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Эконом'"
+      />
+      <RadioButton
+        name="Премиум"
+        id="premium"
+        @change="changeCategory"
+        :isChecked="getCategory === 'Премиум'"
+      />
+    </div>
+    <div
+      class="model-tab__car-models"
+      :class="{
+        'car-models--loading': getAllCars.length === 0
+      }"
+    >
+      <pulse-loader
+        :loading="getAllCars.length === 0"
+        color="#0ec261"
+      ></pulse-loader>
+      <CarItem
+        v-for="car in getChunkedCars[currentPage - 1]"
+        :key="car.id"
+        :name="car.name"
+        :price-max="car.priceMax"
+        :price-min="car.priceMin"
+        :img="car.thumbnail.path"
+        :colors="car.colors"
+        :number="car.number"
+      />
+    </div>
+    <paginate
+      :pageCount="pagesAmount"
+      :containerClass="'pagination'"
+      prev-text="Назад"
+      next-text="Вперед"
+      :clickHandler="clickCallback"
+      :page-class="'page-item'"
+      :active-class="'page-item--active'"
+      :next-class="'nav-item'"
+      :prev-class="'nav-item'"
+    ></paginate>
   </div>
 </template>
 
 <script>
 import RadioButton from "./common/RadioButton";
 import CarItem from "./elements/CarItem";
+import Paginate from "vuejs-paginate";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+
 export default {
   name: "ModelTab",
-  components: { CarItem, RadioButton },
+  components: { CarItem, RadioButton, Paginate, PulseLoader },
   data() {
     return {
-      category: "",
-      cars: []
+      currentPage: 1,
+      onpageCarsAmount: 4
     };
   },
   methods: {
+    ...mapActions(["fetchCars"]),
+    ...mapMutations(["updateCategory"]),
     changeCategory: function(newValue) {
-      this.category = newValue;
+      this.updateCategory(newValue);
+    },
+    clickCallback: function(page) {
+      this.currentPage = page;
     }
   },
-  mounted() {
-    this.cars = [
-      {
-        id: 1,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 2,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 3,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 4,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 5,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
-      },
-      {
-        id: 6,
-        name: "Hyundai, i30 N",
-        maxPrice: 1000,
-        minPrice: 5000,
-        img: "@/assets/images/car-example.png"
+  computed: {
+    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory"]),
+    pagesAmount() {
+      return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
+    },
+
+    getChunkedCars() {
+      let buffer = [];
+      let chunkedCars = [];
+      for (let i = 0; i < this.getAllCars.length; i++) {
+        if (buffer.length < this.onpageCarsAmount) {
+          buffer.push(this.getAllCars[i]);
+        } else {
+          chunkedCars.push(buffer);
+          buffer = [];
+          buffer.push(this.getAllCars[i]);
+        }
       }
-    ];
+      if (buffer.length !== 0) chunkedCars.push(buffer);
+      return chunkedCars;
+    }
   },
+  created() {
+    if (this.getAllCars.length === 0) {
+      console.log('fetching cars')
+      this.fetchCars();
+    }
+  }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/variables";
 @import "public/css/mixins";
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.9s;
-  opacity: 1;
-}
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(10px);
+.model-tab {
+  width: 60vw;
 }
 
 .model-tab__radio-buttons {
@@ -103,10 +127,50 @@ export default {
 }
 
 .model-tab__car-models {
-  margin: 48px 0 32px 0;
+  min-height: 60vh;
+  margin: 30px 0 18px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.car-models--loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  @include fontStylesLight;
+  font-size: 17px;
+  margin: 0 0 20px 0;
+  user-select: none;
+}
+
+.page-item {
+  margin: 0 2px 0 2px;
+  padding: 1px 5px 1px 5px;
+  border-radius: 2px;
+}
+
+.nav-item {
+  margin: 0 5px 0 5px;
+  padding: 1px 4px 1px 4px;
+  border-radius: 2px;
+}
+
+.nav-item:active,
+.page-item:active {
+  background-color: darken($gray-light-color, 20);
+}
+
+.page-item--active {
+  color: #fff;
+  background-color: $main-accent-color;
 }
 
 @media (max-width: 1324px) {
@@ -122,6 +186,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .model-tab {
+    width: auto;
+  }
+
   .model-tab__car-models {
     width: 80%;
   }

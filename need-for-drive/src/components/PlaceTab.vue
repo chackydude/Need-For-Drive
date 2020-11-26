@@ -28,7 +28,7 @@
           list="points"
         />
         <datalist id="points">
-          <option v-for="point in getPointsForCurrentCity" :key="point.name">
+          <option v-for="point in getPoints" :key="point.name">
             {{ point.address }}
           </option>
         </datalist>
@@ -61,14 +61,16 @@ export default {
       "fetchCities",
       "fetchPoints",
       "generatePlaceCoordinates",
-      "generateCoordinatesForPoints"
+      "generateCoordinatesForPoints",
+      "generateCurrentCityId"
     ]),
 
     updateUserInput() {
       this.updateCity(this.userCity);
+      this.generateCurrentCityId(this.userCity);
+      this.fetchPoints(this.getCurrentCityId);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
-      this.generateCoordinatesForPoints(this.getPointsForCurrentCity);
       if (this.userCity.length === 0) {
         this.userPoint = "";
         this.updateUserPoint();
@@ -82,7 +84,8 @@ export default {
     },
 
     updateCityCoordinates() {
-      if (this.getCity.trim() !== "") this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
+      if (this.getCity.trim() !== "")
+        this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
   computed: {
@@ -93,28 +96,32 @@ export default {
       "getPoints",
       "getCoordinates",
       "getPointsCoordinates",
-      "getCurrentPoint"
+      "getCurrentPoint",
+      "getCurrentCityId",
     ]),
 
     isFilled() {
       return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
-    },
-
-    getPointsForCurrentCity() {
-      return this.getPoints.filter(point => point.cityId.name === this.getCity);
     }
   },
-  mounted() {
+  created() {
     this.userCity = this.getCity;
     this.userPoint = this.getPoint;
-    this.fetchCities();
-    this.fetchPoints();
+    if (this.getCities.length === 0) {
+      console.log('fetching cities')
+      this.fetchCities();
+    }
   },
   watch: {
     getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
+      this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+    },
+
+    getPoints: function() {
+      this.generateCoordinatesForPoints(this.getPoints);
     }
   }
 };

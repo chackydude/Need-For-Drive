@@ -39,6 +39,7 @@
 import SideBar from "../components/SideBar";
 import PageSlider from "../components/PageSlider";
 import Menu from "../components/common/Menu";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Main",
@@ -47,6 +48,22 @@ export default {
     SideBar,
     PageSlider
   },
+  methods: {
+    ...mapActions(["fetchCities", "fetchCars"])
+  },
+  computed: {
+    ...mapGetters(["getCities", "getAllCars"])
+  },
+  created() {
+    if (this.getCities.length === 0) {
+      console.log('fetching cities')
+      this.fetchCities();
+    }
+    if (this.getAllCars.length === 0) {
+      console.log('fetching cars')
+      this.fetchCars();
+    }
+  }
 };
 </script>
 

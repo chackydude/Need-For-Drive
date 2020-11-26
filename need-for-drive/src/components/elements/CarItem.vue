@@ -1,26 +1,49 @@
 <template>
-  <div class="car-item">
+  <div class="car-item" @click="updateCarData">
     <div class="car-item__info">
       <div class="car-item__name">
-        {{ car.name }}
+        {{ name }}
       </div>
-      <div class="car-item__price">
-        {{ car.minPrice }} - {{ car.maxPrice }} ₽
-      </div>
+      <div class="car-item__price">{{ priceMin }} - {{ priceMax }} ₽</div>
     </div>
-
     <img
-      src="@/assets/images/car-example.png"
+      :src="
+        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
+          img
+      "
       alt="car-image"
       class="car-item__image"
+      crossOrigin="anonymous"
+      referrerPolicy="origin"
     />
   </div>
 </template>
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "CarItem",
   props: {
-    car: Object
+    name: String,
+    priceMin: Number,
+    priceMax: Number,
+    img: String,
+    id: Number,
+    colors: Array,
+    number: String
+  },
+  methods: {
+    ...mapMutations(["updateModel", "updateFillStatus"]),
+    updateCarData() {
+      this.updateModel({
+        name: this.name,
+        id: this.id,
+        colors: this.colors,
+        number: this.number,
+        priceMax: this.priceMax,
+        priceMin: this.priceMin
+      });
+      this.updateFillStatus(true);
+    }
   }
 };
 </script>
@@ -58,6 +81,7 @@ export default {
 
 .car-item__image {
   align-self: flex-end;
+  height: 116px;
 }
 
 @media (max-width: 768px) {

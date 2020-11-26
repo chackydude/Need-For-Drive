@@ -5,7 +5,7 @@
       <OderListItem
         class="list__order-item"
         name="Пункт выдачи"
-        v-if="getCity !== ''"
+        v-if="getCity"
       >
         {{ getCity }}, <br />
         {{ getPoint }}
@@ -13,7 +13,8 @@
       <OderListItem
         class="list__order-item"
         name="Модель"
-        :value="order.orderModel"
+        :value="getModel.name"
+        v-if="getModel.name"
       />
       <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
       <OderListItem
@@ -56,7 +57,7 @@ export default {
     OderListItem
   },
   computed: {
-    ...mapGetters(["getCity", "getPoint", "getCurrentTab"])
+    ...mapGetters(["getCity", "getPoint", "getCurrentTab", "getModel"])
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
@@ -126,6 +127,7 @@ export default {
   .users-order {
     border-left: none;
     padding: 10px;
+    margin: 20px;
   }
 }
 </style>

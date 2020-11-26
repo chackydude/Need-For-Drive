@@ -81,8 +81,8 @@ export default {
   },
 
   actions: {
-    updateCurrentPoint(context, point) {
-      context.commit("updatePlace", point)
+    updateCurrentPoint({ commit }, point) {
+      commit("updatePlace", point);
     }
   },
 
