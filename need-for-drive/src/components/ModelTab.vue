@@ -23,7 +23,7 @@
     <div
       class="model-tab__car-models"
       :class="{
-        'car-models--loading': getAllCars.length == 0
+        'car-models--loading': getAllCars.length === 0
       }"
     >
       <pulse-loader
@@ -67,60 +67,8 @@ export default {
   components: { CarItem, RadioButton, Paginate, PulseLoader },
   data() {
     return {
-      category: "Все модели",
       currentPage: 1,
-      onpageCarsAmount: 4,
-      cars: [
-        {
-          name: "Test 1",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 1,
-          categoryId: { name: "Премиум" }
-        },
-        {
-          name: "Test 2",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 2,
-          categoryId: { name: "Эконом" }
-        },
-        {
-          name: "Test 3",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 3,
-          categoryId: { name: "Премиум" }
-        },
-        {
-          name: "Test 4",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 4,
-          categoryId: { name: "Премиум" }
-        },
-        {
-          name: "Test 5",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 5,
-          categoryId: { name: "Эконом" }
-        },
-        {
-          name: "Test 6",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 6,
-          categoryId: { name: "Премиум" }
-        },
-        {
-          name: "Test 7",
-          priceMax: 2000,
-          priceMin: 1000,
-          id: 7,
-          categoryId: { name: "Эконом" }
-        }
-      ]
+      onpageCarsAmount: 4
     };
   },
   methods: {
@@ -155,8 +103,11 @@ export default {
       return chunkedCars;
     }
   },
-  mounted() {
-    this.fetchCars();
+  created() {
+    if (this.getAllCars.length === 0) {
+      console.log('fetching cars')
+      this.fetchCars();
+    }
   }
 };
 </script>

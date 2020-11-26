@@ -104,11 +104,13 @@ export default {
       return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
     }
   },
-  mounted() {
+  created() {
     this.userCity = this.getCity;
     this.userPoint = this.getPoint;
-    this.fetchCities();
-    // this.fetchPoints();
+    if (this.getCities.length === 0) {
+      console.log('fetching cities')
+      this.fetchCities();
+    }
   },
   watch: {
     getCurrentPoint: function() {

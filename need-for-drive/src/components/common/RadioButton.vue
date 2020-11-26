@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     change() {
-      // Communicate the change to parent component so that selectedValue can be updated
       this.$emit("change", this.name);
     }
   }
