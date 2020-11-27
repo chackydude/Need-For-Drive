@@ -149,7 +149,6 @@ export default {
     changeColor(color) {
       this.updateColor(color);
       this.updateFillStatus(this.isFilled);
-      console.log(this.isFilled);
     },
 
     upperFirst(str) {
@@ -160,15 +159,15 @@ export default {
     changeTariff(tariff) {
       this.updateTariff(tariff);
       this.updateFillStatus(this.isFilled);
-      console.log(this.isFilled);
     },
 
     updateCurrentDateFrom() {
-      if (this.dateFrom == null) {
+      if (this.dateFrom == null || this.dateFrom === "") {
         this.dateFrom = "";
         this.dateTo = "";
         this.updateRentalDateFrom(this.dateFrom);
         this.updateRentalTime(this.getDateDiff);
+        this.updateFillStatus(this.isFilled);
       }
       this.updateRentalDateFrom(this.dateFrom);
     },
@@ -219,7 +218,6 @@ export default {
 
     // TODO: add date handling
     isFilled() {
-      console.log(this.getColor, this.getTariff, this.getRentalTime);
       return (
         this.getColor !== "" &&
         this.getTariff !== "" &&
