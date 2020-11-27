@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "RadioButton",
+  name: "CheckInputItem",
   props: {
     name: String,
     id: String,

@@ -21,7 +21,7 @@
       <OderListItem
         class="list__order-item"
         name="Длительность аренды"
-        :value="order.rentalTime"
+        :value="getRentalTime | toDate"
       />
       <OderListItem
         v-if="getTariff"
@@ -64,7 +64,7 @@ export default {
 
   data() {
     return {
-      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"]
+      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"],
     };
   },
   components: {
@@ -78,13 +78,26 @@ export default {
       "getModel",
       "getColor",
       "getTariff",
-      "getExtraServices"
+      "getExtraServices",
+      "getRentalTime"
     ])
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
     unlockTab() {
       this.unlockNextTab();
+    }
+  },
+  filters: {
+    toDate (data) {
+      let dateFormat = ["д", "ч"];
+      let result = "";
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === 0) continue;
+        result += data[i] + dateFormat[i];
+        result += " ";
+      }
+      return result;
     }
   }
 };

@@ -4,7 +4,7 @@ export default {
     orderPlace: "",
     orderModel: {},
     modelColor: "",
-    rentalTime: "",
+    rentalTime: [],
     tariff: "",
     extraServices: [],
     minPrice: 0,
@@ -40,6 +40,10 @@ export default {
           items => items !== payload.service
         );
       }
+    },
+
+    updateRentalTime(state, time) {
+      state.rentalTime = time;
     }
   },
   actions: {},
@@ -66,6 +70,10 @@ export default {
 
     getExtraServices(state) {
       return state.extraServices;
+    },
+
+    getRentalTime(state) {
+      return state.rentalTime;
     }
   }
 };

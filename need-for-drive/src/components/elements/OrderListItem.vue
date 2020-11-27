@@ -16,7 +16,7 @@ export default {
   name: "OderListItem",
   props: {
     name: String,
-    value: String
+    value: [String, Array]
   }
 };
 </script>

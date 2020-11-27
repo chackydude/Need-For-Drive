@@ -3,7 +3,7 @@
     <div class="additional-page__color-option">
       <p class="color-option__title">Цвет</p>
       <div class="color-option__radio-buttons">
-        <RadioButton
+        <CheckInputItem
           v-for="color in getModel.colors"
           :key="color"
           :name="upperFirst(color)"
@@ -24,7 +24,6 @@
           type="datetime"
           :default-value="new Date().setHours(12, 0, 0, 0)"
           :disabled-date="notBeforeToday"
-          :disabled-time="notBeforeTodayTwelveOClock"
           value-type="format"
           placeholder="Введите дату и время"
           input-class="rent-item__input"
@@ -36,18 +35,18 @@
           v-model="dateTo"
           type="datetime"
           :default-value="new Date().setHours(12, 0, 0, 0)"
-          :disabled-date="notBeforeToday"
-          :disabled-time="notBeforeTodayTwelveOClock"
+          :disabled-date="notBeforeDateFrom"
           value-type="format"
           placeholder="Введите дату и время"
           input-class="rent-item__input"
+          @change="changeRentalTime"
         ></date-picker>
       </div>
     </div>
     <div class="additional-page__tariff tariff">
       <p class="tariff__title">Тариф:</p>
       <div class="tariff__items tariffs">
-        <RadioButton
+        <CheckInputItem
           @change="changeTariff"
           :comparingValue="getTariff"
           class="tariffs__item"
@@ -56,7 +55,7 @@
           value="Поминутно, 7₽/мин"
           group-name="tariff"
         />
-        <RadioButton
+        <CheckInputItem
           @change="changeTariff"
           :comparingValue="getTariff"
           class="tariffs__item"
@@ -70,7 +69,7 @@
     <div class="additional-page__extra-services extra-services">
       <p class="extra-services__title">Доп. услуги</p>
       <div class="extra-services__items ">
-        <RadioButton
+        <CheckInputItem
           input-type="checkbox"
           @change="addExtraService"
           class="extras__item"
@@ -80,7 +79,7 @@
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
-        <RadioButton
+        <CheckInputItem
           input-type="checkbox"
           @change="addExtraService"
           class="extras__item"
@@ -90,7 +89,7 @@
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
-        <RadioButton
+        <CheckInputItem
           input-type="checkbox"
           @change="addExtraService"
           class="extras__item"
@@ -106,15 +105,16 @@
 </template>
 
 <script>
-import RadioButton from "./common/RadioButton";
+import CheckInputItem from "./common/CheckInputItem";
 import { mapGetters, mapMutations } from "vuex";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
+import DateHadler from "../utils/date/DateHadler";
 
 export default {
   name: "AdditionalTab",
   components: {
-    RadioButton,
+    CheckInputItem,
     DatePicker
   },
   data() {
@@ -128,7 +128,8 @@ export default {
       "updateColor",
       "updateTariff",
       "updateServices",
-      "updateFillStatus"
+      "updateFillStatus",
+      "updateRentalTime"
     ]),
     changeColor(color) {
       this.updateColor(color);
@@ -147,6 +148,10 @@ export default {
       console.log(this.isFilled);
     },
 
+    changeRentalTime() {
+      this.updateRentalTime(this.getDateDiff);
+    },
+
     addExtraService(service) {
       if (!(this.getExtraServices.indexOf(service) >= 0)) {
         this.updateServices({ status: "add", service: service });
@@ -158,17 +163,26 @@ export default {
     notBeforeToday(date) {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
-    notBeforeTodayTwelveOClock(date) {
-      return date < new Date(new Date().setHours(12, 0, 0, 0));
+
+    notBeforeDateFrom(date) {
+      return date < new Date(this.dateFrom);
+    },
+
+    notBeforeDateFromHours(date) {
+      return date < new Date(new Date().setHours(this.dateFrom.getHours(), 0, 0, 0));
     }
   },
   computed: {
-    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices"]),
+    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices", "getRentalTime"]),
 
     // TODO: add date handling
     isFilled() {
       console.log(this.getColor, this.getTariff);
       return this.getColor !== "" && this.getTariff !== "";
+    },
+
+    getDateDiff() {
+      return new DateHadler().calcDateDiff(this.dateFrom, this.dateTo);
     }
   }
 };
@@ -221,7 +235,6 @@ $margin-title: 34px 0 16px 0;
   border: none;
   border-bottom: 1px solid $gray-color;
   @include fontStylesLight;
-  min-width: 224px;
 }
 
 .tariff__title,

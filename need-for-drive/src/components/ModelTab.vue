@@ -1,7 +1,7 @@
 <template>
   <div class="model-tab">
     <div class="model-tab__radio-buttons">
-      <RadioButton
+      <CheckInputItem
         name="Все модели"
         value="Все модели"
         id="all"
@@ -9,7 +9,7 @@
         :comparingValue="getCategory"
         group-name="category"
       />
-      <RadioButton
+      <CheckInputItem
         name="Эконом"
         value="Эконом"
         id="eco"
@@ -17,7 +17,7 @@
         :comparingValue="getCategory"
         group-name="category"
       />
-      <RadioButton
+      <CheckInputItem
         name="Премиум"
         value="Премиум"
         id="premium"
@@ -45,6 +45,7 @@
         :img="car.thumbnail.path"
         :colors="car.colors"
         :number="car.number"
+        @change-car="updateCarData"
       />
     </div>
     <paginate
@@ -62,7 +63,7 @@
 </template>
 
 <script>
-import RadioButton from "./common/RadioButton";
+import CheckInputItem from "./common/CheckInputItem";
 import CarItem from "./elements/CarItem";
 import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -70,21 +71,38 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "ModelTab",
-  components: { CarItem, RadioButton, Paginate, PulseLoader },
+  components: { CarItem, CheckInputItem, Paginate, PulseLoader },
   data() {
     return {
       currentPage: 1,
-      onpageCarsAmount: 4
+      onpageCarsAmount: 4,
+      // stub cars
+      cars: [
+        [
+          {
+            name: "Test",
+            priceMax: 12000,
+            priceMin: 1000,
+            number: "a123bc",
+            colors: ["green", "blue"],
+            thumbnail: { path: "@/assets/images/car-example.png" }
+          }
+        ]
+      ]
     };
   },
   methods: {
     ...mapActions(["fetchCars"]),
-    ...mapMutations(["updateCategory"]),
+    ...mapMutations(["updateCategory", "updateModel", "updateFillStatus"]),
     changeCategory: function(newValue) {
       this.updateCategory(newValue);
     },
     clickCallback: function(page) {
       this.currentPage = page;
+    },
+    updateCarData(carModel) {
+      this.updateModel(carModel);
+      this.updateFillStatus(true);
     }
   },
   computed: {
@@ -111,7 +129,7 @@ export default {
   },
   created() {
     if (this.getAllCars.length === 0) {
-      console.log('fetching cars')
+      console.log("fetching cars");
       this.fetchCars();
     }
   }
