@@ -200,10 +200,16 @@ export default {
 
     notBeforeDateFromHours(date) {
       let currentDate = new Date(this.dateFrom);
-      let currentMinutes = currentDate.getMinutes() == 60 ? 0 : currentDate.getMinutes();
+      let currentMinutes =
+        currentDate.getMinutes() === 60 ? 0 : currentDate.getMinutes();
       return (
-        // date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10)
-              date <= new Date(currentDate).setHours(currentDate.getHours(), currentMinutes + 10, 1 ,0)
+        date <=
+        new Date(currentDate).setHours(
+          currentDate.getHours(),
+          currentMinutes + 10,
+          1,
+          0
+        )
       );
     }
   },
@@ -301,8 +307,11 @@ $margin-title: 34px 0 16px 0;
     justify-content: center;
   }
 
-  .additional-page__rent-title, .rent-item__title, .tariff__title,
-  .extra-services__title, .color-option__title {
+  .additional-page__rent-title,
+  .rent-item__title,
+  .tariff__title,
+  .extra-services__title,
+  .color-option__title {
     text-align: center;
   }
 
