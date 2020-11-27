@@ -7,6 +7,7 @@
           v-for="color in getModel.colors"
           :key="color"
           :name="upperFirst(color)"
+          :value="upperFirst(color)"
           :id="color"
           @change="changeColor"
           :comparingValue="getColor"
@@ -123,9 +124,16 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateColor", "updateTariff", "updateServices"]),
+    ...mapMutations([
+      "updateColor",
+      "updateTariff",
+      "updateServices",
+      "updateFillStatus"
+    ]),
     changeColor(color) {
       this.updateColor(color);
+      this.updateFillStatus(this.isFilled);
+      console.log(this.isFilled);
     },
 
     upperFirst(str) {
@@ -135,6 +143,8 @@ export default {
 
     changeTariff(tariff) {
       this.updateTariff(tariff);
+      this.updateFillStatus(this.isFilled);
+      console.log(this.isFilled);
     },
 
     addExtraService(service) {
@@ -153,7 +163,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices"])
+    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices"]),
+
+    // TODO: add date handling
+    isFilled() {
+      console.log(this.getColor, this.getTariff);
+      return this.getColor !== "" && this.getTariff !== "";
+    }
   }
 };
 </script>
