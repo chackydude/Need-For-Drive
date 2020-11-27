@@ -4,7 +4,6 @@ export default class DateHandler {
     let currentTimeZoneOffsetInHours = new Date().getTimezoneOffset() / 60;
     let date1 = new Date(dateFrom);
     let date2 = new Date(dateTo);
-    // let diff = new Date(date2 - date1);
     let dayDiff = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
     let hoursDiff =
       new Date(date2 - date1).getHours() + currentTimeZoneOffsetInHours;

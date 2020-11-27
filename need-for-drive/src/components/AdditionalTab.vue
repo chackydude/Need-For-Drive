@@ -10,6 +10,7 @@
           @change="changeColor"
           :comparingValue="getColor"
           group-name="color"
+          class="color-button"
         />
         <CheckInputItem
           v-for="color in getModel.colors"
@@ -20,6 +21,7 @@
           @change="changeColor"
           :comparingValue="getColor"
           group-name="color"
+          class="color-button"
         />
       </div>
     </div>
@@ -199,8 +201,10 @@ export default {
 
     notBeforeDateFromHours(date) {
       let currentDate = new Date(this.dateFrom);
-      return date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10);
-    },
+      return (
+        date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10)
+      );
+    }
   },
   computed: {
     ...mapGetters([
@@ -246,6 +250,7 @@ $margin-title: 34px 0 16px 0;
 .color-option__radio-buttons {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   margin-top: 20px;
 }
 
@@ -287,5 +292,22 @@ $margin-title: 34px 0 16px 0;
 .tariffs__item,
 .extras__item {
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .additional-page {
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: center;
+  }
+
+  .additional-page__rent-title, .rent-item__title, .tariff__title,
+  .extra-services__title, .color-option__title {
+    text-align: center;
+  }
+
+  .color-button {
+    margin: 2px;
+  }
 }
 </style>
