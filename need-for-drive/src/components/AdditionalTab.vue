@@ -200,8 +200,10 @@ export default {
 
     notBeforeDateFromHours(date) {
       let currentDate = new Date(this.dateFrom);
+      let currentMinutes = currentDate.getMinutes() == 60 ? 0 : currentDate.getMinutes();
       return (
-        date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10)
+        // date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10)
+              date <= new Date(currentDate).setHours(currentDate.getHours(), currentMinutes + 10, 1 ,0)
       );
     }
   },
