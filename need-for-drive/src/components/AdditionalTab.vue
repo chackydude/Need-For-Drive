@@ -44,7 +44,7 @@
           v-model="dateTo"
           type="datetime"
           :default-value="new Date().setHours(12, 0, 0, 0)"
-          :disabled-date="notBeforeToday"
+          :disabled-date="notBeforeDateFrom"
           :disabled-time="notBeforeDateFromHours"
           value-type="format"
           placeholder="Введите дату и время"
@@ -52,7 +52,6 @@
           @change="changeRentalTime"
           :disabled="this.dateFrom == ''"
         ></date-picker>
-        <button @click="test">test</button>
       </div>
     </div>
     <div class="additional-page__tariff tariff">
@@ -194,20 +193,14 @@ export default {
       return date < new Date(new Date().setHours(0, 0, 0, 0));
     },
 
-    notBeforeDateFromHours(date) {
-      // return date < new Date(new Date().setHours(12, 0, 0, 0));
-      let currentDateFrom = new Date(this.dateFrom);
-      return date <= new Date(new Date().setHours(currentDateFrom.getHours(), currentDateFrom.getMinutes(), 0, 0));
+    notBeforeDateFrom(date) {
+      return date < new Date(new Date(this.dateFrom).setHours(0, 0, 0, 0));
     },
 
-    test() {
-      // let currentTimeZoneOffsetInHours = new Date().getTimezoneOffset() / 60;
-      console.log(this.dateFrom);
-      console.log(new Date(this.dateFrom));
-      console.log(new Date(this.dateFrom).getHours()); // getting hours
-      console.log(new Date(this.dateFrom).getDate());
-      // console.log(new Date(new Date(this.dateFrom) - new Date()).getMinutes());
-    }
+    notBeforeDateFromHours(date) {
+      let currentDate = new Date(this.dateFrom);
+      return date <= new Date(currentDate).setMinutes(currentDate.getMinutes() + 10);
+    },
   },
   computed: {
     ...mapGetters([
