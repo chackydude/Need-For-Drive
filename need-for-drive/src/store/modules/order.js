@@ -5,10 +5,10 @@ export default {
     orderModel: {},
     modelColor: "",
     rentalTime: [],
+    rentalDateFrom: "",
+    rentalDateTo: "",
     tariff: "",
-    extraServices: [],
-    minPrice: 0,
-    maxPrice: 0
+    extraServices: []
   },
   mutations: {
     updateCity(state, city) {
@@ -44,6 +44,15 @@ export default {
 
     updateRentalTime(state, time) {
       state.rentalTime = time;
+    },
+
+    // can replace by common mutation
+    updateRentalDateFrom(state, date) {
+      state.rentalDateFrom = date;
+    },
+
+    updateRentalDateTo(state, date) {
+      state.rentalDateTo = date;
     }
   },
   actions: {},
@@ -74,6 +83,14 @@ export default {
 
     getRentalTime(state) {
       return state.rentalTime;
+    },
+
+    getDateFrom(state) {
+      return state.rentalDateFrom;
+    },
+
+    getDateTo(state) {
+      return state.rentalDateTo;
     }
   }
 };

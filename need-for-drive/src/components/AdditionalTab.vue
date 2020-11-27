@@ -4,6 +4,14 @@
       <p class="color-option__title">Цвет</p>
       <div class="color-option__radio-buttons">
         <CheckInputItem
+          name="Любой"
+          value="Любой"
+          id="each"
+          @change="changeColor"
+          :comparingValue="getColor"
+          group-name="color"
+        />
+        <CheckInputItem
           v-for="color in getModel.colors"
           :key="color"
           :name="upperFirst(color)"
@@ -27,6 +35,7 @@
           value-type="format"
           placeholder="Введите дату и время"
           input-class="rent-item__input"
+          @change="updateCurrentDateFrom"
         ></date-picker>
       </div>
       <div class="rent-date__item rent-item">
@@ -129,7 +138,9 @@ export default {
       "updateTariff",
       "updateServices",
       "updateFillStatus",
-      "updateRentalTime"
+      "updateRentalTime",
+      "updateRentalDateFrom",
+      "updateRentalDateTo"
     ]),
     changeColor(color) {
       this.updateColor(color);
@@ -148,8 +159,24 @@ export default {
       console.log(this.isFilled);
     },
 
+    updateCurrentDateFrom() {
+      if (this.dateFrom == null) {
+        this.dateFrom = "";
+        this.dateTo = "";
+        this.updateRentalDateFrom(this.dateFrom);
+        this.updateRentalTime(this.getDateDiff);
+      }
+      this.updateRentalDateFrom(this.dateFrom);
+    },
+
     changeRentalTime() {
+      if (this.dateTo == null) {
+        this.dateFrom = "";
+        this.dateTo = "";
+      }
+      this.updateRentalDateTo(this.dateTo);
       this.updateRentalTime(this.getDateDiff);
+      this.updateFillStatus(this.isFilled);
     },
 
     addExtraService(service) {
@@ -169,16 +196,30 @@ export default {
     },
 
     notBeforeDateFromHours(date) {
-      return date < new Date(new Date().setHours(this.dateFrom.getHours(), 0, 0, 0));
+      return (
+        date < new Date(new Date().setHours(this.dateFrom.getHours(), 0, 0, 0))
+      );
     }
   },
   computed: {
-    ...mapGetters(["getModel", "getColor", "getTariff", "getExtraServices", "getRentalTime"]),
+    ...mapGetters([
+      "getModel",
+      "getColor",
+      "getTariff",
+      "getExtraServices",
+      "getRentalTime",
+      "getDateFrom",
+      "getDateTo"
+    ]),
 
     // TODO: add date handling
     isFilled() {
-      console.log(this.getColor, this.getTariff);
-      return this.getColor !== "" && this.getTariff !== "";
+      console.log(this.getColor, this.getTariff, this.getRentalTime);
+      return (
+        this.getColor !== "" &&
+        this.getTariff !== "" &&
+        this.getRentalTime.length !== 0
+      );
     },
 
     getDateDiff() {

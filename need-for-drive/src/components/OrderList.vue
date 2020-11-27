@@ -19,6 +19,7 @@
         :value="getColor"
       />
       <OderListItem
+        v-if="getRentalTime.length > 1"
         class="list__order-item"
         name="Длительность аренды"
         :value="getRentalTime | toDate"
@@ -64,7 +65,7 @@ export default {
 
   data() {
     return {
-      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"],
+      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"]
     };
   },
   components: {
@@ -89,8 +90,8 @@ export default {
     }
   },
   filters: {
-    toDate (data) {
-      let dateFormat = ["д", "ч"];
+    toDate(data) {
+      let dateFormat = ["д", "ч", "м"];
       let result = "";
       for (let i = 0; i < data.length; i++) {
         if (data[i] === 0) continue;
