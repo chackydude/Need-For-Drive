@@ -52,6 +52,7 @@
           class="tariffs__item"
           id="byMinute"
           name="Поминутно, 7₽/мин"
+          value="Поминутно, 7₽/мин"
           group-name="tariff"
         />
         <RadioButton
@@ -60,6 +61,7 @@
           class="tariffs__item"
           id="byDay"
           name="На сутки, 1999 ₽/сутки"
+          value="На сутки, 1999 ₽/сутки"
           group-name="tariff"
         />
       </div>
@@ -73,6 +75,7 @@
           class="extras__item"
           id="full-fuel"
           name="Полный бак, 500р"
+          value="Полный бак"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
@@ -82,6 +85,7 @@
           class="extras__item"
           id="kid-chair"
           name="Детское кресло, 200р"
+          value="Детское кресло"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
@@ -91,6 +95,7 @@
           class="extras__item"
           id="right-rudder"
           name="Правый руль, 1600р"
+          value="Правый руль"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />

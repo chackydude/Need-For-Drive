@@ -4,7 +4,7 @@
       :type="inputType"
       class="radio-button__checker"
       :name="groupName"
-      :value="name"
+      :value="value"
       :id="id"
       @click="change"
       :checked="getCheckState"
@@ -22,26 +22,27 @@ export default {
     isChecked: Boolean,
     comparingValue: [String, Array],
     groupName: String,
+    value: String,
     inputType: {
       default: "radio"
     }
   },
   methods: {
     change() {
-      this.$emit("change", this.name);
+      this.$emit("change", this.value);
     }
   },
   computed: {
     getCheckState() {
       if (this.comparingValue instanceof Array) {
-        this.comparingValue.forEach(item => {
-          if (item === this.name) {
+        for (let i = 0; i < this.comparingValue.length; i++) {
+          if (this.comparingValue[i] === this.value) {
             return true;
           }
-        });
+        }
         return false;
       } else {
-        return this.name === this.comparingValue;
+        return this.value === this.comparingValue;
       }
     }
   }

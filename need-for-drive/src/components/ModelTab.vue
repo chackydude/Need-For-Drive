@@ -3,6 +3,7 @@
     <div class="model-tab__radio-buttons">
       <RadioButton
         name="Все модели"
+        value="Все модели"
         id="all"
         @change="changeCategory"
         :comparingValue="getCategory"
@@ -10,6 +11,7 @@
       />
       <RadioButton
         name="Эконом"
+        value="Эконом"
         id="eco"
         @change="changeCategory"
         :comparingValue="getCategory"
@@ -17,6 +19,7 @@
       />
       <RadioButton
         name="Премиум"
+        value="Премиум"
         id="premium"
         @change="changeCategory"
         :comparingValue="getCategory"
