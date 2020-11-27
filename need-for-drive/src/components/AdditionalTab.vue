@@ -74,6 +74,7 @@
           id="full-fuel"
           name="Полный бак, 500р"
           group-name="extra-services"
+          :comparing-value="getExtraServices"
         />
         <RadioButton
           input-type="checkbox"
@@ -82,6 +83,7 @@
           id="kid-chair"
           name="Детское кресло, 200р"
           group-name="extra-services"
+          :comparing-value="getExtraServices"
         />
         <RadioButton
           input-type="checkbox"
@@ -90,6 +92,7 @@
           id="right-rudder"
           name="Правый руль, 1600р"
           group-name="extra-services"
+          :comparing-value="getExtraServices"
         />
       </div>
     </div>

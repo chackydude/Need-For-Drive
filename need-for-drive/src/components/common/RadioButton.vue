@@ -20,7 +20,7 @@ export default {
     name: String,
     id: String,
     isChecked: Boolean,
-    comparingValue: String,
+    comparingValue: [String, Array],
     groupName: String,
     inputType: {
       default: "radio"
@@ -33,7 +33,16 @@ export default {
   },
   computed: {
     getCheckState() {
-      return this.name === this.comparingValue;
+      if (this.comparingValue instanceof Array) {
+        this.comparingValue.forEach(item => {
+          if (item === this.name) {
+            return true;
+          }
+        });
+        return false;
+      } else {
+        return this.name === this.comparingValue;
+      }
     }
   }
 };
