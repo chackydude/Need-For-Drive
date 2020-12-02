@@ -40,19 +40,37 @@
         />
       </div>
     </div>
-    <div class="users-order__price" v-if="Object.keys(getModel).length !== 0 && getTariff !== '' && getRentalTime.length > 0">
-      <span class="price__title">Цена:</span> {{ getCurrentPrice }} ₽
+    <div
+      class="users-order__price"
+      v-if="
+        Object.keys(getModel).length !== 0 &&
+          getTariff !== '' &&
+          getRentalTime.length > 0
+      "
+    >
+      <span class="price__title">Цена: </span> {{ getCurrentPrice }} ₽
     </div>
-    <div class="users-order__price" v-if="Object.keys(getModel).length !== 0 && ( getTariff === '' || getRentalTime.length === 0 )">
-      <span class="price__title">Цена:</span> от {{ getModel.priceMin }} до {{ getModel.priceMax }} ₽
+    <div
+      class="users-order__price"
+      v-if="
+        Object.keys(getModel).length !== 0 &&
+          (getTariff === '' || getRentalTime.length === 0)
+      "
+    >
+      <span class="price__title">Цена:</span> от {{ getModel.priceMin }} до
+      {{ getModel.priceMax }} ₽
     </div>
+
     <button
       class="users-order__button order-button"
       @click="unlockTab"
-      :class="{ 'order-button--blocked': !getCurrentTab.isFilled }"
+      :class="{ 'order-button--blocked': ( !getCurrentTab.isFilled || error ) }"
     >
       {{ buttonText[getCurrentTab.id] }}
     </button>
+
+    <p v-if="error" class="users-order__error-message error-message">{{ error }}</p>
+
   </div>
 </template>
 
@@ -68,7 +86,7 @@ export default {
 
   data() {
     return {
-      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"],
+      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"]
     };
   },
   components: {
@@ -85,7 +103,18 @@ export default {
       "getExtraServices",
       "getRentalTime",
       "getCurrentPrice"
-    ])
+    ]),
+    error() {
+      if (this.getCurrentPrice > this.getModel.priceMax) {
+        return "Слишком большая стоимость";
+      }
+
+      if (this.getCurrentPrice < this.getModel.priceMin) {
+        return "Слишком низкая стоимость";
+      }
+
+      return "";
+    }
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
@@ -161,6 +190,26 @@ export default {
 
 .users-order__button {
   margin-top: 26px;
+}
+
+.error-message {
+  @include fontStylesLight;
+  max-width: 287px;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffe0e8;
+  color: $black-color;
+  border-radius: 8px;
+  align-self: center;
+}
+
+.users-order {
+  .error-message {
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 1024px) {
