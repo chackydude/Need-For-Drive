@@ -33,15 +33,18 @@
       <div v-if="getExtraServices.length !== 0">
         <OderListItem
           v-for="service in getExtraServices"
-          :key="service"
+          :key="service.text"
           class="list__order-item"
-          :name="service"
+          :name="service.text"
           value="Да"
         />
       </div>
     </div>
-    <div class="users-order__price">
-      <span class="price__title">Цена:</span> от 8000 до 12000 ₽
+    <div class="users-order__price" v-if="Object.keys(getModel).length !== 0 && getTariff !== '' && getRentalTime.length > 0">
+      <span class="price__title">Цена:</span> {{ getCurrentPrice }} ₽
+    </div>
+    <div class="users-order__price" v-if="Object.keys(getModel).length !== 0 && ( getTariff === '' || getRentalTime.length === 0 )">
+      <span class="price__title">Цена:</span> от {{ getModel.priceMin }} до {{ getModel.priceMax }} ₽
     </div>
     <button
       class="users-order__button order-button"
@@ -65,7 +68,7 @@ export default {
 
   data() {
     return {
-      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"]
+      buttonText: ["Выбрать модель", "Дополнительно", "Итого", "Заказать"],
     };
   },
   components: {
@@ -80,7 +83,8 @@ export default {
       "getColor",
       "getTariff",
       "getExtraServices",
-      "getRentalTime"
+      "getRentalTime",
+      "getCurrentPrice"
     ])
   },
   methods: {

@@ -3,7 +3,7 @@
     <div class="model-tab__radio-buttons">
       <CheckInputItem
         name="Все модели"
-        value="Все модели"
+        :value="{ text: 'Все модели' }"
         id="all"
         @change="changeCategory"
         :comparingValue="getCategory"
@@ -11,7 +11,7 @@
       />
       <CheckInputItem
         name="Эконом"
-        value="Эконом"
+        :value="{ text: 'Эконом' }"
         id="eco"
         @change="changeCategory"
         :comparingValue="getCategory"
@@ -19,7 +19,7 @@
       />
       <CheckInputItem
         name="Премиум"
-        value="Премиум"
+        :value="{ text: 'Премиум' }"
         id="premium"
         @change="changeCategory"
         :comparingValue="getCategory"
@@ -45,6 +45,7 @@
         :img="car.thumbnail.path"
         :colors="car.colors"
         :number="car.number"
+        :tank="car.tank"
         @change-car="updateCarData"
       />
     </div>
@@ -95,7 +96,7 @@ export default {
     ...mapActions(["fetchCars"]),
     ...mapMutations(["updateCategory", "updateModel", "updateFillStatus"]),
     changeCategory: function(newValue) {
-      this.updateCategory(newValue);
+      this.updateCategory(newValue.text);
     },
     clickCallback: function(page) {
       this.currentPage = page;

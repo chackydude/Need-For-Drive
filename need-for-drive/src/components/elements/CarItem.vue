@@ -29,7 +29,8 @@ export default {
     img: String,
     id: Number,
     colors: Array,
-    number: String
+    number: String,
+    tank: Number
   },
   methods: {
     ...mapMutations(["updateModel", "updateFillStatus"]),
@@ -52,7 +53,9 @@ export default {
         colors: this.colors,
         number: this.number,
         priceMax: this.priceMax,
-        priceMin: this.priceMin
+        priceMin: this.priceMin,
+        thumbnail: this.thumbnail,
+        tank: this.tank
       });
     }
   }

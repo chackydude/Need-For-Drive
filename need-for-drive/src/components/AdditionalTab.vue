@@ -5,7 +5,7 @@
       <div class="color-option__radio-buttons">
         <CheckInputItem
           name="Любой"
-          value="Любой"
+          :value="{ text: 'Любой' }"
           id="each"
           @change="changeColor"
           :comparingValue="getColor"
@@ -16,7 +16,7 @@
           v-for="color in getModel.colors"
           :key="color"
           :name="upperFirst(color)"
-          :value="upperFirst(color)"
+          :value="{ text: upperFirst(color) }"
           :id="color"
           @change="changeColor"
           :comparingValue="getColor"
@@ -32,7 +32,6 @@
         <date-picker
           v-model="dateFrom"
           type="datetime"
-          :default-value="new Date().setHours(12, 0, 0, 0)"
           :disabled-date="notBeforeToday"
           value-type="format"
           placeholder="Введите дату и время"
@@ -45,14 +44,13 @@
         <date-picker
           v-model="dateTo"
           type="datetime"
-          :default-value="new Date().setHours(12, 0, 0, 0)"
           :disabled-date="notBeforeDateFrom"
           :disabled-time="notBeforeDateFromHours"
           value-type="format"
           placeholder="Введите дату и время"
           input-class="rent-item__input"
           @change="changeRentalTime"
-          :disabled="this.dateFrom == ''"
+          :disabled="this.dateFrom === ''"
         ></date-picker>
       </div>
     </div>
@@ -65,7 +63,7 @@
           class="tariffs__item"
           id="byMinute"
           name="Поминутно, 7₽/мин"
-          value="Поминутно, 7₽/мин"
+          :value="{ text: 'Поминутно, 7₽/мин' }"
           group-name="tariff"
         />
         <CheckInputItem
@@ -74,7 +72,7 @@
           class="tariffs__item"
           id="byDay"
           name="На сутки, 1999 ₽/сутки"
-          value="На сутки, 1999 ₽/сутки"
+          :value="{ text: 'На сутки, 1999 ₽/сутки' }"
           group-name="tariff"
         />
       </div>
@@ -88,7 +86,7 @@
           class="extras__item"
           id="full-fuel"
           name="Полный бак, 500р"
-          value="Полный бак"
+          :value="{ text: 'Полный бак', amount: 500 }"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
@@ -98,7 +96,7 @@
           class="extras__item"
           id="kid-chair"
           name="Детское кресло, 200р"
-          value="Детское кресло"
+          :value="{ text: 'Детское кресло', amount: 200 }"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
@@ -108,7 +106,7 @@
           class="extras__item"
           id="right-rudder"
           name="Правый руль, 1600р"
-          value="Правый руль"
+          :value="{ text: 'Правый руль', amount: 1600 }"
           group-name="extra-services"
           :comparing-value="getExtraServices"
         />
@@ -147,7 +145,7 @@ export default {
       "updateRentalDateTo"
     ]),
     changeColor(color) {
-      this.updateColor(color);
+      this.updateColor(color.text);
       this.updateFillStatus(this.isFilled);
     },
 
@@ -157,7 +155,7 @@ export default {
     },
 
     changeTariff(tariff) {
-      this.updateTariff(tariff);
+      this.updateTariff(tariff.text);
       this.updateFillStatus(this.isFilled);
     },
 
@@ -183,7 +181,9 @@ export default {
     },
 
     addExtraService(service) {
-      if (!(this.getExtraServices.indexOf(service) >= 0)) {
+      console.log(this.getExtraServices);
+      console.log(this.getExtraServices.map(item => item.text));
+      if (!(this.getExtraServices.map(item => item.text).indexOf(service.text) >= 0)) {
         this.updateServices({ status: "add", service: service });
       } else {
         this.updateServices({ status: "remove", service: service });
@@ -236,6 +236,10 @@ export default {
     getDateDiff() {
       return new DateHadler().calcDateDiff(this.dateFrom, this.dateTo);
     }
+  },
+  created() {
+    this.dateFrom = this.getDateFrom;
+    this.dateTo = this.getDateTo;
   }
 };
 </script>

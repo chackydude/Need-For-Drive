@@ -1,3 +1,5 @@
+import PriceCalculator from "../../utils/price/PriceCalculator";
+
 export default {
   state: {
     orderCity: "",
@@ -8,7 +10,9 @@ export default {
     rentalDateFrom: "",
     rentalDateTo: "",
     tariff: "",
-    extraServices: []
+    extraServices: [],
+    currentPrice: 0,
+    calculator: new PriceCalculator(1999, 7)
   },
   mutations: {
     updateCity(state, city) {
@@ -37,7 +41,7 @@ export default {
       } else {
         // TODO: optimize removing
         state.extraServices = state.extraServices.filter(
-          items => items !== payload.service
+          items => items.text !== payload.service.text
         );
       }
     },
@@ -53,7 +57,7 @@ export default {
 
     updateRentalDateTo(state, date) {
       state.rentalDateTo = date;
-    }
+    },
   },
   actions: {},
   getters: {
@@ -91,6 +95,12 @@ export default {
 
     getDateTo(state) {
       return state.rentalDateTo;
+    },
+
+    getCurrentPrice(state) {
+      let tariff = state.tariff !== "На сутки, 1999 ₽/сутки" ? "minute" : "day";
+      let price = state.calculator.calcPrice(state.rentalTime, tariff, state.extraServices.map(item => item.amount));
+      return price;
     }
   }
 };

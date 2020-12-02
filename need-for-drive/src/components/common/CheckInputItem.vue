@@ -22,7 +22,7 @@ export default {
     isChecked: Boolean,
     comparingValue: [String, Array],
     groupName: String,
-    value: String,
+    value: Object,
     inputType: {
       default: "radio"
     }
@@ -36,13 +36,13 @@ export default {
     getCheckState() {
       if (this.comparingValue instanceof Array) {
         for (let i = 0; i < this.comparingValue.length; i++) {
-          if (this.comparingValue[i] === this.value) {
+          if (this.comparingValue[i].text === this.value.text) {
             return true;
           }
         }
         return false;
       } else {
-        return this.value === this.comparingValue;
+        return this.value.text === this.comparingValue;
       }
     }
   }
