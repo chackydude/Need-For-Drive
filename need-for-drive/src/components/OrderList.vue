@@ -64,13 +64,12 @@
     <button
       class="users-order__button order-button"
       @click="unlockTab"
-      :class="{ 'order-button--blocked': ( !getCurrentTab.isFilled || error ) }"
+      :class="{ 'order-button--blocked': ( !getCurrentTab.isFilled || ( error && getCurrentTab.name === 'Дополнительно')) }"
     >
       {{ buttonText[getCurrentTab.id] }}
     </button>
 
-    <p v-if="error" class="users-order__error-message error-message">{{ error }}</p>
-
+    <p v-if="error && getCurrentTab.isFilled" class="users-order__error-message error-message">{{ error }}</p>
   </div>
 </template>
 
