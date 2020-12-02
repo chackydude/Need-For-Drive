@@ -48,7 +48,7 @@
           getRentalTime.length > 0
       "
     >
-      <span class="price__title">Цена: </span> {{ getCurrentPrice | toPrice}} ₽
+      <span class="price__title">Цена: </span> {{ getCurrentPrice | toPrice }} ₽
     </div>
     <div
       class="users-order__price"
@@ -57,8 +57,8 @@
           (getTariff === '' || getRentalTime.length === 0)
       "
     >
-      <span class="price__title">Цена:</span> от {{ getModel.priceMin | toPrice}} до
-      {{ getModel.priceMax | toPrice}} ₽
+      <span class="price__title">Цена:</span> от
+      {{ getModel.priceMin | toPrice }} до {{ getModel.priceMax | toPrice }} ₽
     </div>
 
     <button

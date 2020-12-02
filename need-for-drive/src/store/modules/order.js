@@ -57,7 +57,7 @@ export default {
 
     updateRentalDateTo(state, date) {
       state.rentalDateTo = date;
-    },
+    }
   },
   actions: {},
   getters: {
@@ -99,7 +99,11 @@ export default {
 
     getCurrentPrice(state) {
       let tariff = state.tariff !== "На сутки, 1999 ₽/сутки" ? "minute" : "day";
-      let price = state.calculator.calcPrice(state.rentalTime, tariff, state.extraServices.map(item => item.amount));
+      let price = state.calculator.calcPrice(
+        state.rentalTime,
+        tariff,
+        state.extraServices.map(item => item.amount)
+      );
       return price;
     }
   }
