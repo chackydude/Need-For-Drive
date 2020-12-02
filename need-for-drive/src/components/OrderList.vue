@@ -48,7 +48,7 @@
           getRentalTime.length > 0
       "
     >
-      <span class="price__title">Цена: </span> {{ getCurrentPrice }} ₽
+      <span class="price__title">Цена: </span> {{ getCurrentPrice | toPrice}} ₽
     </div>
     <div
       class="users-order__price"
@@ -57,19 +57,28 @@
           (getTariff === '' || getRentalTime.length === 0)
       "
     >
-      <span class="price__title">Цена:</span> от {{ getModel.priceMin }} до
-      {{ getModel.priceMax }} ₽
+      <span class="price__title">Цена:</span> от {{ getModel.priceMin | toPrice}} до
+      {{ getModel.priceMax | toPrice}} ₽
     </div>
 
     <button
       class="users-order__button order-button"
       @click="unlockTab"
-      :class="{ 'order-button--blocked': ( !getCurrentTab.isFilled || ( error && getCurrentTab.name === 'Дополнительно')) }"
+      :class="{
+        'order-button--blocked':
+          !getCurrentTab.isFilled ||
+          (error && getCurrentTab.name === 'Дополнительно')
+      }"
     >
       {{ buttonText[getCurrentTab.id] }}
     </button>
 
-    <p v-if="error && getCurrentTab.isFilled" class="users-order__error-message error-message">{{ error }}</p>
+    <p
+      v-if="error && getCurrentTab.isFilled"
+      class="users-order__error-message error-message"
+    >
+      {{ error }}
+    </p>
   </div>
 </template>
 
@@ -131,6 +140,23 @@ export default {
         result += " ";
       }
       return result;
+    },
+
+    toPrice(str) {
+      str = str.toString().replace(/(\.(.*))/g, "");
+      var arr = str.split("");
+      var str_temp = "";
+      if (str.length > 3) {
+        for (var i = arr.length - 1, j = 1; i >= 0; i--, j++) {
+          str_temp = arr[i] + str_temp;
+          if (j % 3 === 0) {
+            str_temp = " " + str_temp;
+          }
+        }
+        return str_temp;
+      } else {
+        return str;
+      }
     }
   }
 };
