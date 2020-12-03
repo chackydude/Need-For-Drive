@@ -74,7 +74,7 @@
     </button>
 
     <p
-      v-if="error && getCurrentTab.isFilled"
+      v-if="error && getCurrentTab.isFilled && getCurrentTab.name === 'Дополнительно'"
       class="users-order__error-message error-message"
     >
       {{ error }}

@@ -11,8 +11,18 @@ export default {
     rentalDateTo: "",
     tariff: "",
     extraServices: [],
-    currentPrice: 0,
-    calculator: new PriceCalculator(1999, 7)
+    calculator: new PriceCalculator(1999, 7),
+    tabMap: {
+      orderCity: { tabId: 0, default: "" },
+      orderPlace: { tabId: 0, default: "" },
+      orderModel: { tabId: 1, default: {} },
+      modelColor: { tabId: 2, default: "" },
+      rentalTime: { tabId: 2, default: [] },
+      rentalDateFrom: { tabId: 2, default: "" },
+      rentalDateTo: { tabId: 2, default: "" },
+      tariff: { tabId: 2, default: "" },
+      extraServices: { tabId: 2, default: [] }
+    }
   },
   mutations: {
     updateCity(state, city) {
@@ -23,8 +33,8 @@ export default {
       state.orderPlace = place;
     },
 
-    updateModel(state, payload) {
-      state.orderModel = payload;
+    updateModel(state, model) {
+      state.orderModel = model;
     },
 
     updateColor(state, color) {
@@ -35,13 +45,14 @@ export default {
       state.tariff = tariff;
     },
 
+    // пушит и в tabMap?
     updateServices(state, payload) {
       if (payload.status == "add") {
-        state.extraServices.push(payload.service);
+        state.extraServices.push(payload.value);
       } else {
         // TODO: optimize removing
         state.extraServices = state.extraServices.filter(
-          items => items.text !== payload.service.text
+          items => items.text !== payload.value.text
         );
       }
     },
@@ -57,9 +68,24 @@ export default {
 
     updateRentalDateTo(state, date) {
       state.rentalDateTo = date;
+    },
+
+    // template
+    updateProperty(state, payload) {
+      state[payload.propertyName] = payload.value;
+      console.log("payload.value for " + payload.propertyName + ": " + payload.value)
     }
   },
-  actions: {},
+  actions: {
+    checkOrderProperties({ commit, state }, changedTab) {
+      // очистка всех последующих данных
+      for (let property in this.state.order.tabMap) {
+        if (state.tabMap[property].tabId > changedTab) {
+          commit("updateProperty", { propertyName: property, value: state.tabMap[property].default })
+        }
+      }
+    },
+  },
   getters: {
     getCity(state) {
       return state.orderCity;

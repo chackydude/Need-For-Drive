@@ -93,10 +93,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCars"]),
+    ...mapActions(["fetchCars", "checkOrderProperties"]),
     ...mapMutations(["updateCategory", "updateModel", "updateFillStatus"]),
     changeCategory: function(newValue) {
       this.updateCategory(newValue.text);
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
     clickCallback: function(page) {
       this.currentPage = page;
@@ -104,10 +105,11 @@ export default {
     updateCarData(carModel) {
       this.updateModel(carModel);
       this.updateFillStatus(true);
+      this.checkOrderProperties(this.getCurrentTab.id);
     }
   },
   computed: {
-    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory"]),
+    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory", "getCurrentTab"]),
     pagesAmount() {
       return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
     },
@@ -133,7 +135,15 @@ export default {
       console.log("fetching cars");
       this.fetchCars();
     }
-  }
+  },
+  // mounted() {
+  //   // eslint-disable-next-line no-unused-vars
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type !== "updateProperty") {
+  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
+  //     }
+  //   });
+  // },
 };
 </script>
 

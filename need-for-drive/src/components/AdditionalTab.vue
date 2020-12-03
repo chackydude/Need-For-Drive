@@ -117,7 +117,7 @@
 
 <script>
 import CheckInputItem from "./common/CheckInputItem";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import DateHadler from "../utils/date/DateHadler";
@@ -135,6 +135,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["checkOrderProperties", "checkOrderProperties"]),
     ...mapMutations([
       "updateColor",
       "updateTariff",
@@ -147,6 +148,7 @@ export default {
     changeColor(color) {
       this.updateColor(color.text);
       this.updateFillStatus(this.isFilled);
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     upperFirst(str) {
@@ -157,6 +159,7 @@ export default {
     changeTariff(tariff) {
       this.updateTariff(tariff.text);
       this.updateFillStatus(this.isFilled);
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     updateCurrentDateFrom() {
@@ -168,6 +171,7 @@ export default {
         this.updateFillStatus(this.isFilled);
       }
       this.updateRentalDateFrom(this.dateFrom);
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     changeRentalTime() {
@@ -178,16 +182,23 @@ export default {
       this.updateRentalDateTo(this.dateTo);
       this.updateRentalTime(this.getDateDiff);
       this.updateFillStatus(this.isFilled);
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     addExtraService(service) {
       console.log(this.getExtraServices);
       console.log(this.getExtraServices.map(item => item.text));
-      if (!(this.getExtraServices.map(item => item.text).indexOf(service.text) >= 0)) {
-        this.updateServices({ status: "add", service: service });
+      if (
+        !(
+          this.getExtraServices.map(item => item.text).indexOf(service.text) >=
+          0
+        )
+      ) {
+        this.updateServices({ status: "add", value: service });
       } else {
-        this.updateServices({ status: "remove", service: service });
+        this.updateServices({ status: "remove", value: service });
       }
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     notBeforeToday(date) {
@@ -221,10 +232,10 @@ export default {
       "getExtraServices",
       "getRentalTime",
       "getDateFrom",
-      "getDateTo"
+      "getDateTo",
+      "getCurrentTab"
     ]),
 
-    // TODO: add date handling
     isFilled() {
       return (
         this.getColor !== "" &&
@@ -240,7 +251,15 @@ export default {
   created() {
     this.dateFrom = this.getDateFrom;
     this.dateTo = this.getDateTo;
-  }
+  },
+  // mounted() {
+  //   // eslint-disable-next-line no-unused-vars
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type !== "updateProperty") {
+  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
+  //     }
+  //   });
+  // },
 };
 </script>
 

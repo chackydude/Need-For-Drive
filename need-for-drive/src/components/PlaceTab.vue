@@ -62,7 +62,8 @@ export default {
       "fetchPoints",
       "generatePlaceCoordinates",
       "generateCoordinatesForPoints",
-      "generateCurrentCityId"
+      "generateCurrentCityId",
+      "checkOrderProperties"
     ]),
 
     updateUserInput() {
@@ -75,12 +76,14 @@ export default {
         this.userPoint = "";
         this.updateUserPoint();
       }
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     updateUserPoint() {
       this.updatePlace(this.userPoint);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     updateCityCoordinates() {
@@ -98,6 +101,7 @@ export default {
       "getPointsCoordinates",
       "getCurrentPoint",
       "getCurrentCityId",
+      "getCurrentTab"
     ]),
 
     isFilled() {
@@ -108,16 +112,25 @@ export default {
     this.userCity = this.getCity;
     this.userPoint = this.getPoint;
     if (this.getCities.length === 0) {
-      console.log('fetching cities')
+      // console.log('fetching cities')
       this.fetchCities();
     }
   },
+  // mounted() {
+  //   // eslint-disable-next-line no-unused-vars
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type !== "updateProperty") {
+  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
+  //     }
+  //   });
+  // },
   watch: {
     getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
     },
 
     getPoints: function() {
