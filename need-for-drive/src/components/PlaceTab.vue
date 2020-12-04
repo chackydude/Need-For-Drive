@@ -26,6 +26,7 @@
           v-model.trim="userPoint"
           @input="updateUserPoint"
           list="points"
+          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"
         />
         <datalist id="points">
           <option v-for="point in getPoints" :key="point.name">
@@ -33,6 +34,7 @@
           </option>
         </datalist>
       </div>
+
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
@@ -81,11 +83,15 @@ export default {
     },
 
     updateUserPoint() {
-      this.updatePlace(this.userPoint);
-      this.updateFillStatus(this.isFilled);
-      this.updateCityCoordinates();
-      this.checkOrderProperties(this.getCurrentTab.id);
-      this.checkTabsState(this.getCurrentTab.id);
+      // console.log("points: " + this.getPoints.map(point => point.name));
+      // console.log("user-point: " + this.userPoint)
+      if (this.getPoints.map(point => point.address).indexOf(this.userPoint) !== -1) {
+        this.updatePlace(this.userPoint);
+        this.updateFillStatus(this.isFilled);
+        this.updateCityCoordinates();
+        this.checkOrderProperties(this.getCurrentTab.id);
+        this.checkTabsState(this.getCurrentTab.id);
+      }
     },
 
     updateCityCoordinates() {
