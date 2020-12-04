@@ -75,9 +75,6 @@ export default {
     // template
     updateProperty(state, payload) {
       state[payload.propertyName] = payload.value;
-      console.log(
-        "payload.value for " + payload.propertyName + ": " + payload.value
-      );
     }
   },
   actions: {

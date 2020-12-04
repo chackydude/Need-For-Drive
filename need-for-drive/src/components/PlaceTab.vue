@@ -83,8 +83,6 @@ export default {
     },
 
     updateUserPoint() {
-      // console.log("points: " + this.getPoints.map(point => point.name));
-      // console.log("user-point: " + this.userPoint)
       if (this.getPoints.map(point => point.address).indexOf(this.userPoint) !== -1) {
         this.updatePlace(this.userPoint);
         this.updateFillStatus(this.isFilled);
@@ -120,7 +118,6 @@ export default {
     this.userCity = this.getCity;
     this.userPoint = this.getPoint;
     if (this.getCities.length === 0) {
-      // console.log('fetching cities')
       this.fetchCities();
     }
   },

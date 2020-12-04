@@ -143,12 +143,14 @@ export default {
       "updateFillStatus",
       "updateRentalTime",
       "updateRentalDateFrom",
-      "updateRentalDateTo"
+      "updateRentalDateTo",
+      "checkTabsState"
     ]),
     changeColor(color) {
       this.updateColor(color.text);
       this.updateFillStatus(this.isFilled);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     upperFirst(str) {
@@ -160,6 +162,7 @@ export default {
       this.updateTariff(tariff.text);
       this.updateFillStatus(this.isFilled);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateCurrentDateFrom() {
@@ -172,6 +175,7 @@ export default {
       }
       this.updateRentalDateFrom(this.dateFrom);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     changeRentalTime() {
@@ -183,15 +187,22 @@ export default {
       this.updateRentalTime(this.getDateDiff);
       this.updateFillStatus(this.isFilled);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     addExtraService(service) {
-      if (!(this.getExtraServices.map(item => item.text).indexOf(service.text) >= 0)) {
+      if (
+        !(
+          this.getExtraServices.map(item => item.text).indexOf(service.text) >=
+          0
+        )
+      ) {
         this.updateServices({ status: "add", value: service });
       } else {
         this.updateServices({ status: "remove", value: service });
       }
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     notBeforeToday(date) {
@@ -244,7 +255,7 @@ export default {
   created() {
     this.dateFrom = this.getDateFrom;
     this.dateTo = this.getDateTo;
-  },
+  }
   // mounted() {
   //   // eslint-disable-next-line no-unused-vars
   //   this.$store.subscribe((mutation, state) => {

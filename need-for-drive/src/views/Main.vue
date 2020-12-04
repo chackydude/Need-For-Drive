@@ -56,11 +56,9 @@ export default {
   },
   created() {
     if (this.getCities.length === 0) {
-      console.log('fetching cities')
       this.fetchCities();
     }
     if (this.getAllCars.length === 0) {
-      console.log('fetching cars')
       this.fetchCars();
     }
   }

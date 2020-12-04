@@ -134,7 +134,6 @@ export default {
   },
   created() {
     if (this.getAllCars.length === 0) {
-      console.log("fetching cars");
       this.fetchCars();
     }
   },
