@@ -49,7 +49,7 @@ export default {
 
     // пушит и в tabMap?
     updateServices(state, payload) {
-      if (payload.status == "add") {
+      if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
         // TODO: optimize removing
@@ -82,7 +82,7 @@ export default {
       // очистка всех последующих данных
       for (let property in this.state.order.tabMap) {
         if (state.tabMap[property].tabId > changedTab) {
-          // поле extraServices вложенное в tabMap енялось паралельно с extraServices у корневого state
+          // поле extraServices вложенное в tabMap менялось паралельно с extraServices у корневого state
           // FIXME
           let value = property === "extraServices" ? [] : state.tabMap[property].default;
           commit("updateProperty", {

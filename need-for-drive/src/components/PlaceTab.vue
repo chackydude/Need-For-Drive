@@ -34,7 +34,6 @@
           </option>
         </datalist>
       </div>
-
     </div>
     <div class="place-tab__map map-area">
       <p class="map-area__title">Выберите на карте:</p>
@@ -58,7 +57,12 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus", "checkTabsState"]),
+    ...mapMutations([
+      "updateCity",
+      "updatePlace",
+      "updateFillStatus",
+      "checkTabsState"
+    ]),
     ...mapActions([
       "fetchCities",
       "fetchPoints",
@@ -83,7 +87,10 @@ export default {
     },
 
     updateUserPoint() {
-      if (this.getPoints.map(point => point.address).indexOf(this.userPoint) !== -1) {
+      if (
+        this.getPoints.map(point => point.address).indexOf(this.userPoint) !==
+        -1
+      ) {
         this.updatePlace(this.userPoint);
         this.updateFillStatus(this.isFilled);
         this.updateCityCoordinates();

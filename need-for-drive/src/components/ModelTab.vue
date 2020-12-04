@@ -76,20 +76,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      onpageCarsAmount: 4,
-      // stub cars
-      cars: [
-        [
-          {
-            name: "Test",
-            priceMax: 12000,
-            priceMin: 1000,
-            number: "a123bc",
-            colors: ["green", "blue"],
-            thumbnail: { path: "@/assets/images/car-example.png" }
-          }
-        ]
-      ]
+      onpageCarsAmount: 4
     };
   },
   methods: {
@@ -163,7 +150,7 @@ export default {
 }
 
 .model-tab__car-models {
-  min-height: 60vh;
+  min-height: 62vh;
   margin: 30px 0 18px 0;
   display: flex;
   flex-direction: row;

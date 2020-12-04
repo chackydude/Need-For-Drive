@@ -255,7 +255,7 @@ export default {
   created() {
     this.dateFrom = this.getDateFrom;
     this.dateTo = this.getDateTo;
-  }
+  },
   // mounted() {
   //   // eslint-disable-next-line no-unused-vars
   //   this.$store.subscribe((mutation, state) => {
