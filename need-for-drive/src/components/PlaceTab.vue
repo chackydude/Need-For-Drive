@@ -56,7 +56,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
+    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus", "checkTabsState"]),
     ...mapActions([
       "fetchCities",
       "fetchPoints",
@@ -77,6 +77,7 @@ export default {
         this.updateUserPoint();
       }
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateUserPoint() {
@@ -84,6 +85,7 @@ export default {
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateCityCoordinates() {
@@ -131,6 +133,7 @@ export default {
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     getPoints: function() {

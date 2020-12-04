@@ -59,6 +59,13 @@ export default {
           state.tabs[i].isFilled = isFilled;
         }
       }
+    },
+
+    checkTabsState(state, tabId) {
+      for (let i = tabId + 1; i < state.tabs.length; i++) {
+        state.tabs[i].isBlocked = true;
+        state.tabs[i].isFilled = false;
+      }
     }
   },
   actions: {},

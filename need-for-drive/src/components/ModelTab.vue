@@ -94,10 +94,11 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCars", "checkOrderProperties"]),
-    ...mapMutations(["updateCategory", "updateModel", "updateFillStatus"]),
+    ...mapMutations(["updateCategory", "updateModel", "updateFillStatus", "checkTabsState"]),
     changeCategory: function(newValue) {
       this.updateCategory(newValue.text);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
     clickCallback: function(page) {
       this.currentPage = page;
@@ -106,6 +107,7 @@ export default {
       this.updateModel(carModel);
       this.updateFillStatus(true);
       this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     }
   },
   computed: {
