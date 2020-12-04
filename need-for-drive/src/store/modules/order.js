@@ -1,6 +1,7 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
 
 export default {
+  namespaced: false,
   state: {
     orderCity: "",
     orderPlace: "",
@@ -24,6 +25,7 @@ export default {
       extraServices: { tabId: 2, default: [] }
     }
   },
+
   mutations: {
     updateCity(state, city) {
       state.orderCity = city;
@@ -51,9 +53,9 @@ export default {
         state.extraServices.push(payload.value);
       } else {
         // TODO: optimize removing
-        state.extraServices = state.extraServices.filter(
-          items => items.text !== payload.value.text
-        );
+        state.extraServices = state.extraServices.filter(items => {
+          items.text !== payload.value.text;
+        });
       }
     },
 
@@ -73,7 +75,9 @@ export default {
     // template
     updateProperty(state, payload) {
       state[payload.propertyName] = payload.value;
-      console.log("payload.value for " + payload.propertyName + ": " + payload.value)
+      console.log(
+        "payload.value for " + payload.propertyName + ": " + payload.value
+      );
     }
   },
   actions: {
@@ -81,10 +85,16 @@ export default {
       // очистка всех последующих данных
       for (let property in this.state.order.tabMap) {
         if (state.tabMap[property].tabId > changedTab) {
-          commit("updateProperty", { propertyName: property, value: state.tabMap[property].default })
+          // поле extraServices вложенное в tabMap енялось паралельно с extraServices у корневого state
+          // FIXME
+          let value = property === "extraServices" ? [] : state.tabMap[property].default;
+          commit("updateProperty", {
+            propertyName: property,
+            value: value
+          });
         }
       }
-    },
+    }
   },
   getters: {
     getCity(state) {

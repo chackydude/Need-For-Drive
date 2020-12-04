@@ -186,14 +186,7 @@ export default {
     },
 
     addExtraService(service) {
-      console.log(this.getExtraServices);
-      console.log(this.getExtraServices.map(item => item.text));
-      if (
-        !(
-          this.getExtraServices.map(item => item.text).indexOf(service.text) >=
-          0
-        )
-      ) {
+      if (!(this.getExtraServices.map(item => item.text).indexOf(service.text) >= 0)) {
         this.updateServices({ status: "add", value: service });
       } else {
         this.updateServices({ status: "remove", value: service });
