@@ -1,23 +1,29 @@
 <template>
   <div class="model-tab">
     <div class="model-tab__radio-buttons">
-      <RadioButton
+      <CheckInputItem
         name="Все модели"
+        :value="{ text: 'Все модели' }"
         id="all"
         @change="changeCategory"
-        :isChecked="getCategory === 'Все модели'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
-      <RadioButton
+      <CheckInputItem
         name="Эконом"
+        :value="{ text: 'Эконом' }"
         id="eco"
         @change="changeCategory"
-        :isChecked="getCategory === 'Эконом'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
-      <RadioButton
+      <CheckInputItem
         name="Премиум"
+        :value="{ text: 'Премиум' }"
         id="premium"
         @change="changeCategory"
-        :isChecked="getCategory === 'Премиум'"
+        :comparingValue="getCategory"
+        group-name="category"
       />
     </div>
     <div
@@ -39,6 +45,8 @@
         :img="car.thumbnail.path"
         :colors="car.colors"
         :number="car.number"
+        :tank="car.tank"
+        @change-car="updateCarData"
       />
     </div>
     <paginate
@@ -56,7 +64,7 @@
 </template>
 
 <script>
-import RadioButton from "./common/RadioButton";
+import CheckInputItem from "./common/CheckInputItem";
 import CarItem from "./elements/CarItem";
 import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -64,7 +72,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   name: "ModelTab",
-  components: { CarItem, RadioButton, Paginate, PulseLoader },
+  components: { CarItem, CheckInputItem, Paginate, PulseLoader },
   data() {
     return {
       currentPage: 1,
@@ -72,17 +80,25 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCars"]),
-    ...mapMutations(["updateCategory"]),
+    ...mapActions(["fetchCars", "checkOrderProperties"]),
+    ...mapMutations(["updateCategory", "updateModel", "updateFillStatus", "checkTabsState"]),
     changeCategory: function(newValue) {
-      this.updateCategory(newValue);
+      this.updateCategory(newValue.text);
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
     clickCallback: function(page) {
       this.currentPage = page;
+    },
+    updateCarData(carModel) {
+      this.updateModel(carModel);
+      this.updateFillStatus(true);
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     }
   },
   computed: {
-    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory"]),
+    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory", "getCurrentTab"]),
     pagesAmount() {
       return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
     },
@@ -105,10 +121,17 @@ export default {
   },
   created() {
     if (this.getAllCars.length === 0) {
-      console.log('fetching cars')
       this.fetchCars();
     }
-  }
+  },
+  // mounted() {
+  //   // eslint-disable-next-line no-unused-vars
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type !== "updateProperty") {
+  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
+  //     }
+  //   });
+  // },
 };
 </script>
 
@@ -127,7 +150,7 @@ export default {
 }
 
 .model-tab__car-models {
-  min-height: 60vh;
+  min-height: 62vh;
   margin: 30px 0 18px 0;
   display: flex;
   flex-direction: row;
@@ -147,7 +170,7 @@ export default {
   justify-content: center;
   @include fontStylesLight;
   font-size: 17px;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   user-select: none;
 }
 

@@ -1,13 +1,13 @@
 <template>
   <div class="radio-button">
     <input
-      type="radio"
+      :type="inputType"
       class="radio-button__checker"
-      name="contact"
-      :value="name"
+      :name="groupName"
+      :value="value"
       :id="id"
       @click="change"
-      :checked="isChecked"
+      :checked="getCheckState"
     />
     <label class="radio-button__label" :for="id"> {{ name }} </label>
   </div>
@@ -15,16 +15,35 @@
 
 <script>
 export default {
-  name: "RadioButton",
+  name: "CheckInputItem",
   props: {
     name: String,
     id: String,
-    model: String,
-    isChecked: Boolean
+    isChecked: Boolean,
+    comparingValue: [String, Array],
+    groupName: String,
+    value: Object,
+    inputType: {
+      default: "radio"
+    }
   },
   methods: {
     change() {
-      this.$emit("change", this.name);
+      this.$emit("change", this.value);
+    }
+  },
+  computed: {
+    getCheckState() {
+      if (this.comparingValue instanceof Array) {
+        for (let i = 0; i < this.comparingValue.length; i++) {
+          if (this.comparingValue[i].text === this.value.text) {
+            return true;
+          }
+        }
+        return false;
+      } else {
+        return this.value.text === this.comparingValue;
+      }
     }
   }
 };

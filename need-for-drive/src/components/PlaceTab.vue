@@ -2,7 +2,7 @@
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
       <div class="inputs__input input-field">
-        <p class="input-field__title">Город</p>
+        <label class="input-field__title">Город</label>
         <input
           type="text"
           class="input-field__input"
@@ -18,7 +18,7 @@
         </datalist>
       </div>
       <div class="inputs__input input-field">
-        <p class="input-field__title">Пункт выдачи</p>
+        <label class="input-field__title">Пункт выдачи</label>
         <input
           type="text"
           class="input-field__input"
@@ -26,6 +26,7 @@
           v-model.trim="userPoint"
           @input="updateUserPoint"
           list="points"
+          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"
         />
         <datalist id="points">
           <option v-for="point in getPoints" :key="point.name">
@@ -56,13 +57,19 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateCity", "updatePlace", "updateFillStatus"]),
+    ...mapMutations([
+      "updateCity",
+      "updatePlace",
+      "updateFillStatus",
+      "checkTabsState"
+    ]),
     ...mapActions([
       "fetchCities",
       "fetchPoints",
       "generatePlaceCoordinates",
       "generateCoordinatesForPoints",
-      "generateCurrentCityId"
+      "generateCurrentCityId",
+      "checkOrderProperties"
     ]),
 
     updateUserInput() {
@@ -75,12 +82,21 @@ export default {
         this.userPoint = "";
         this.updateUserPoint();
       }
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateUserPoint() {
-      this.updatePlace(this.userPoint);
-      this.updateFillStatus(this.isFilled);
-      this.updateCityCoordinates();
+      if (
+        this.getPoints.map(point => point.address).indexOf(this.userPoint) !==
+        -1
+      ) {
+        this.updatePlace(this.userPoint);
+        this.updateFillStatus(this.isFilled);
+        this.updateCityCoordinates();
+        this.checkOrderProperties(this.getCurrentTab.id);
+        this.checkTabsState(this.getCurrentTab.id);
+      }
     },
 
     updateCityCoordinates() {
@@ -98,6 +114,7 @@ export default {
       "getPointsCoordinates",
       "getCurrentPoint",
       "getCurrentCityId",
+      "getCurrentTab"
     ]),
 
     isFilled() {
@@ -108,16 +125,25 @@ export default {
     this.userCity = this.getCity;
     this.userPoint = this.getPoint;
     if (this.getCities.length === 0) {
-      console.log('fetching cities')
       this.fetchCities();
     }
   },
+  // mounted() {
+  //   // eslint-disable-next-line no-unused-vars
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type !== "updateProperty") {
+  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
+  //     }
+  //   });
+  // },
   watch: {
     getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     getPoints: function() {

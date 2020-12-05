@@ -2,11 +2,7 @@
   <div class="users-order">
     <p class="users-order__title">Ваш заказ:</p>
     <div class="users-order__current-list list">
-      <OderListItem
-        class="list__order-item"
-        name="Пункт выдачи"
-        v-if="getCity"
-      >
+      <OderListItem class="list__order-item" name="Пункт выдачи" v-if="getCity">
         {{ getCity }}, <br />
         {{ getPoint }}
       </OderListItem>
@@ -16,25 +12,73 @@
         :value="getModel.name"
         v-if="getModel.name"
       />
-      <OderListItem class="list__order-item" name="Цвет" value="Голубой" />
       <OderListItem
+        v-if="getColor"
+        class="list__order-item"
+        name="Цвет"
+        :value="getColor"
+      />
+      <OderListItem
+        v-if="getRentalTime.length > 1"
         class="list__order-item"
         name="Длительность аренды"
-        :value="order.rentalTime"
+        :value="getRentalTime | toDate"
       />
-      <OderListItem class="list__order-item" name="Тариф" :value="order.userTariff" />
-      <OderListItem class="list__order-item" name="Полный бак" value="Да" />
+      <OderListItem
+        v-if="getTariff"
+        class="list__order-item"
+        name="Тариф"
+        :value="getTariff"
+      />
+      <div v-if="getExtraServices.length !== 0">
+        <OderListItem
+          v-for="service in getExtraServices"
+          :key="service.text"
+          class="list__order-item"
+          :name="service.text"
+          value="Да"
+        />
+      </div>
     </div>
-    <div class="users-order__price">
-      <span class="price__title">Цена:</span> от 8000 до 12000 ₽
+    <div
+      class="users-order__price"
+      v-if="
+        Object.keys(getModel).length !== 0 &&
+          getTariff !== '' &&
+          getRentalTime.length > 0
+      "
+    >
+      <span class="price__title">Цена: </span> {{ getCurrentPrice | toPrice }} ₽
     </div>
+    <div
+      class="users-order__price"
+      v-if="
+        Object.keys(getModel).length !== 0 &&
+          (getTariff === '' || getRentalTime.length === 0)
+      "
+    >
+      <span class="price__title">Цена:</span> от
+      {{ getModel.priceMin | toPrice }} до {{ getModel.priceMax | toPrice }} ₽
+    </div>
+
     <button
       class="users-order__button order-button"
       @click="unlockTab"
-      :class="{ 'order-button--blocked': !getCurrentTab.isFilled }"
+      :class="{
+        'order-button--blocked':
+          !getCurrentTab.isFilled ||
+          (error && getCurrentTab.name === 'Дополнительно')
+      }"
     >
       {{ buttonText[getCurrentTab.id] }}
     </button>
+
+    <p
+      v-if="error && getCurrentTab.isFilled && getCurrentTab.name === 'Дополнительно'"
+      class="users-order__error-message error-message"
+    >
+      {{ error }}
+    </p>
   </div>
 </template>
 
@@ -57,12 +101,62 @@ export default {
     OderListItem
   },
   computed: {
-    ...mapGetters(["getCity", "getPoint", "getCurrentTab", "getModel"])
+    ...mapGetters([
+      "getCity",
+      "getPoint",
+      "getCurrentTab",
+      "getModel",
+      "getColor",
+      "getTariff",
+      "getExtraServices",
+      "getRentalTime",
+      "getCurrentPrice"
+    ]),
+    error() {
+      if (this.getCurrentPrice > this.getModel.priceMax) {
+        return "Слишком большая стоимость";
+      }
+
+      if (this.getCurrentPrice < this.getModel.priceMin) {
+        return "Слишком низкая стоимость";
+      }
+
+      return "";
+    }
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
     unlockTab() {
       this.unlockNextTab();
+    }
+  },
+  filters: {
+    toDate(data) {
+      let dateFormat = ["д", "ч", "м"];
+      let result = "";
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === 0) continue;
+        result += data[i] + dateFormat[i];
+        result += " ";
+      }
+      return result;
+    },
+
+    toPrice(str) {
+      str = str.toString().replace(/(\.(.*))/g, "");
+      var arr = str.split("");
+      var str_temp = "";
+      if (str.length > 3) {
+        for (var i = arr.length - 1, j = 1; i >= 0; i--, j++) {
+          str_temp = arr[i] + str_temp;
+          if (j % 3 === 0) {
+            str_temp = " " + str_temp;
+          }
+        }
+        return str_temp;
+      } else {
+        return str;
+      }
     }
   }
 };
@@ -121,6 +215,26 @@ export default {
 
 .users-order__button {
   margin-top: 26px;
+}
+
+.error-message {
+  @include fontStylesLight;
+  max-width: 287px;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffe0e8;
+  color: $black-color;
+  border-radius: 8px;
+  align-self: center;
+}
+
+.users-order {
+  .error-message {
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 1024px) {

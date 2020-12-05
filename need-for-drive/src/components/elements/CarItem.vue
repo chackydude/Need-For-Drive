@@ -1,5 +1,5 @@
 <template>
-  <div class="car-item" @click="updateCarData">
+  <div class="car-item" @click="change">
     <div class="car-item__info">
       <div class="car-item__name">
         {{ name }}
@@ -29,20 +29,34 @@ export default {
     img: String,
     id: Number,
     colors: Array,
-    number: String
+    number: String,
+    tank: Number
   },
   methods: {
     ...mapMutations(["updateModel", "updateFillStatus"]),
-    updateCarData() {
-      this.updateModel({
+    // updateCarData() {
+    //   this.updateModel({
+    //     name: this.name,
+    //     id: this.id,
+    //     colors: this.colors,
+    //     number: this.number,
+    //     priceMax: this.priceMax,
+    //     priceMin: this.priceMin
+    //   });
+    //   this.updateFillStatus(true);
+    // },
+    // emiting update car model
+    change() {
+      this.$emit("change-car", {
         name: this.name,
         id: this.id,
         colors: this.colors,
         number: this.number,
         priceMax: this.priceMax,
-        priceMin: this.priceMin
+        priceMin: this.priceMin,
+        thumbnail: this.thumbnail,
+        tank: this.tank
       });
-      this.updateFillStatus(true);
     }
   }
 };
