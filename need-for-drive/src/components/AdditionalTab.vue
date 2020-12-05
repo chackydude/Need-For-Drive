@@ -201,8 +201,6 @@ export default {
       } else {
         this.updateServices({ status: "remove", value: service });
       }
-      this.checkOrderProperties(this.getCurrentTab.id);
-      this.checkTabsState(this.getCurrentTab.id);
     },
 
     notBeforeToday(date) {

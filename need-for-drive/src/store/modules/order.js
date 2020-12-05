@@ -47,14 +47,14 @@ export default {
       state.tariff = tariff;
     },
 
-    // пушит и в tabMap?
     updateServices(state, payload) {
+      console.log(payload);
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
         // TODO: optimize removing
-        state.extraServices = state.extraServices.filter(items => {
-          items.text !== payload.value.text;
+        state.extraServices = state.extraServices.filter(item => {
+          item.text !== payload.value.text;
         });
       }
     },
@@ -63,7 +63,6 @@ export default {
       state.rentalTime = time;
     },
 
-    // can replace by common mutation
     updateRentalDateFrom(state, date) {
       state.rentalDateFrom = date;
     },
