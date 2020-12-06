@@ -54,7 +54,7 @@ export default {
         number: this.number,
         priceMax: this.priceMax,
         priceMin: this.priceMin,
-        thumbnail: this.thumbnail,
+        thumbnail: this.img,
         tank: this.tank
       });
     }

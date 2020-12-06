@@ -40,6 +40,7 @@
         </tab>
 
         <tab :is-active="getTabs[3].isActive" :selected="getTabs[3].isActive">
+          <ResultTab />
         </tab>
 
         <OrderList class="users-order" :order="usersOrder" />
@@ -57,10 +58,12 @@ import OrderList from "../components/OrderList";
 import { mapMutations, mapGetters } from "vuex";
 import ModelTab from "../components/ModelTab";
 import AdditionalTab from "../components/AdditionalTab";
+import ResultTab from "../components/ResultTab";
 
 export default {
   name: "Order",
   components: {
+    ResultTab,
     AdditionalTab,
     ModelTab,
     OrderList,
