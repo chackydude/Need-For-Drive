@@ -54,8 +54,9 @@ export default {
 .result-tab {
   margin-top: 34px;
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: space-between;
+  max-width: 100%;
   width: 726px;
 }
 
