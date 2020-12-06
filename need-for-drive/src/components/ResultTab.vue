@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "ResultTab",
   computed: {
@@ -45,6 +45,9 @@ export default {
       }
     }
   },
+  methods: {
+    ...mapMutations(["updateFillStatus"])
+  },
   filters: {
     toNumber(num) {
       return (
@@ -55,6 +58,9 @@ export default {
         num.slice(4)
       ).toUpperCase();
     }
+  },
+  mounted() {
+    this.updateFillStatus(true);
   }
 };
 </script>
@@ -93,6 +99,10 @@ export default {
 .car-info__tank,
 .car-info__date {
   font-weight: bold;
+}
+
+.car-image {
+  align-self: flex-end;
 }
 
 @media (max-width: 1324px) {

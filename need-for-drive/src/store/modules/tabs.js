@@ -31,7 +31,7 @@ export default {
         isActive: false,
         isBlocked: true,
         isLast: true,
-        isFilled: false
+        isFilled: true
       }
     ]
   },
