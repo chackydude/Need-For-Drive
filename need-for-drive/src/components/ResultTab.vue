@@ -5,7 +5,7 @@
       <p class="car-info__number">{{ getModel.number | toNumber }}</p>
       <p class="car-info__tank">
         Топливо:
-        <span class="car-info__property-value">{{ getModel.tank }}%</span>
+        <span class="car-info__property-value">{{ tank }}%</span>
       </p>
       <p class="car-info__date">
         Доступна с
@@ -32,7 +32,18 @@ import { mapGetters } from "vuex";
 export default {
   name: "ResultTab",
   computed: {
-    ...mapGetters(["getModel", "getDateFrom"])
+    ...mapGetters(["getModel", "getDateFrom", "getExtraServices"]),
+    tank() {
+      if (this.getModel.tank !== 100) {
+        if (this.getExtraServices.map(item => item.text).indexOf('Полный бак') !== -1) {
+          return 100;
+        } else {
+          return this.getModel.tank;
+        }
+      } else {
+        return this.getModel.tank;
+      }
+    }
   },
   filters: {
     toNumber(num) {
