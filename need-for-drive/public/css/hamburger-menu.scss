@@ -13,7 +13,7 @@ $bar-color-dark: #000;
 
 .menu-wrapper {
   position: relative;
-  z-index: 100;
+  z-index: 3;
   cursor: pointer;
   width: $bar-width;
   height: $bar-height + $bar-spacing * 2;

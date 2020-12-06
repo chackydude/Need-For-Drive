@@ -271,6 +271,13 @@ export default {
   text-align: center;
 }
 
+.confirm__buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .confirm__accept-button, .confirm__cancel-button {
   border: none;
   color: white;
@@ -300,6 +307,21 @@ export default {
     border-left: none;
     padding: 10px;
     margin: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .confirm__title {
+    margin-bottom: 15px;
+  }
+
+  .confirm__accept-button {
+    margin: 0 0 10px 0;
+  }
+
+  .confirm__buttons {
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>
