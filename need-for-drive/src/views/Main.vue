@@ -18,7 +18,7 @@
           <p class="title__second-phrase">Need for drive</p>
           <p class="title__description">Поминутная аренда авто твоего города</p>
         </div>
-        <router-link tag="button" to="/order" class="welcome-area__button">
+        <router-link tag="button" :to="`/order/${getOrderId}`" class="welcome-area__button">
           Забронировать
         </router-link>
       </main>
@@ -52,7 +52,7 @@ export default {
     ...mapActions(["fetchCities", "fetchCars"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars"])
+    ...mapGetters(["getCities", "getAllCars", "getOrderId"])
   },
   created() {
     if (this.getCities.length === 0) {

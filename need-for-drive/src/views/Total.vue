@@ -5,7 +5,7 @@
       <Header class="total-page__header" />
 
       <div class="total-page__tabs tabs">
-        <p>Заказ номер RU58491823</p>
+        <p>Заказ номер: {{ getOrderId }}</p>
       </div>
 
       <div class="tabs-content">
@@ -13,7 +13,7 @@
           <p class="title">Ваш заказ подтвержден</p>
           <ResultTab class="result-tab" />
         </div>
-        <OrderList class="users-order" :order="usersOrder" />
+        <OrderList class="users-order"/>
       </div>
     </div>
   </div>
@@ -34,24 +34,11 @@ export default {
     Header,
     SideBar
   },
-  data() {
-    return {
-      usersOrder: {
-        orderCty: "Ульяновск",
-        orderPlace: "Нариманова 42",
-        orderModel: "Hyndai, i30 N",
-        modelColor: "Голубой",
-        rentalTime: "1д 2ч",
-        extraServices: [],
-        userTariff: "На сутки"
-      }
-    };
-  },
   methods: {
     ...mapMutations(["selectTab"])
   },
   computed: {
-    ...mapGetters(["getTabs", "getCurrentTab"])
+    ...mapGetters(["getTabs", "getCurrentTab", "getOrderId"])
   }
 };
 </script>

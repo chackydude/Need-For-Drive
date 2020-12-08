@@ -85,7 +85,11 @@
       {{ error }}
     </p>
 
-    <div class="user-order__confirm confirm" v-if="confirm" @click="confirm = false">
+    <div
+      class="user-order__confirm confirm"
+      v-if="confirm"
+      @click="confirm = false"
+    >
       <div>
         <p class="confirm__title">
           {{ getOrderStatus ? "Отменить заказ" : "Подтвердить заказ" }}
@@ -93,7 +97,7 @@
         <div class="confirm__buttons">
           <router-link
             tag="button"
-            :to="getOrderStatus ? '/order' : '/order/id'"
+            :to="getOrderStatus ? '/order' : `/order/${getOrderId}`"
             class="confirm__accept-button"
             @click.native="sendOrder"
           >
@@ -114,9 +118,6 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "UsersOrder",
-  props: {
-    order: Object
-  },
 
   data() {
     return {
@@ -138,7 +139,8 @@ export default {
       "getExtraServices",
       "getRentalTime",
       "getCurrentPrice",
-      "getOrderStatus"
+      "getOrderStatus",
+      "getOrderId"
     ]),
     error() {
       if (this.getCurrentPrice > this.getModel.priceMax) {
@@ -159,7 +161,7 @@ export default {
       if (this.getCurrentTab.isLast) {
         this.confirm = true;
       } else this.unlockNextTab();
-    },
+    }
   },
   filters: {
     toDate(data) {

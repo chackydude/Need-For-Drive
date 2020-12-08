@@ -1,8 +1,10 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
+import router from "../../router";
 
 export default {
   namespaced: false,
   state: {
+    orderId: "",
     orderCity: "",
     orderPlace: "",
     orderModel: {},
@@ -76,6 +78,10 @@ export default {
       state.isPosted = status;
     },
 
+    updateOrderId(state, id) {
+      state.orderId = id;
+    },
+
     // template
     updateProperty(state, payload) {
       state[payload.propertyName] = payload.value;
@@ -87,7 +93,7 @@ export default {
       for (let property in this.state.order.tabMap) {
         if (state.tabMap[property].tabId > changedTab) {
           // поле extraServices вложенное в tabMap менялось паралельно с extraServices у корневого state
-          // FIXME
+          // FIXME: fixed
           let value =
             property === "extraServices" ? [] : state.tabMap[property].default;
           commit("updateProperty", {
@@ -101,9 +107,12 @@ export default {
     sendOrder({ commit, state }) {
       if (!state.isPosted) {
         commit("updateOrderStatus", true);
-        // отправить заказ на бэк
+        // отправить заказ на бэк, получить ID заказа
+        commit("updateOrderId", 123);
+        router.push(`/order/${state.orderId}`);
       } else {
         commit("updateOrderStatus", false);
+        commit("updateOrderId", "");
         // удалить заказ с бека
       }
     }
@@ -157,6 +166,10 @@ export default {
 
     getOrderStatus(state) {
       return state.isPosted;
+    },
+
+    getOrderId(state) {
+      return state.orderId;
     }
   }
 };
