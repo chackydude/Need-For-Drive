@@ -1,5 +1,7 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
 import router from "../../router";
+// import FetchApi from "../../utils/api/FetchApi";
+// import Api from "../../utils/api/Api";
 
 export default {
   namespaced: false,
@@ -104,10 +106,28 @@ export default {
       }
     },
 
+    loggs() {
+      console.log("foreign action");
+    },
+
     sendOrder({ commit, state }) {
       if (!state.isPosted) {
         commit("updateOrderStatus", true);
         // отправить заказ на бэк, получить ID заказа
+        // let fetchApi = new Api(new FetchApi());
+        //
+        // fetchApi
+        //   .postRequest(
+        //     process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId,
+        //     fetchApi.provider.headers
+        //   )
+        //   .then(result => {
+        //     commit("updatePoints", result.data);
+        //   })
+        //   .catch(error => {
+        //     console.log(error.message);
+        //   });
+
         commit("updateOrderId", 123);
         router.push(`/order/${state.orderId}`);
       } else {
