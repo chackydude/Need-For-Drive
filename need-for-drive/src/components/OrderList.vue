@@ -67,14 +67,19 @@
       :class="{
         'order-button--blocked':
           !getCurrentTab.isFilled ||
-          (error && getCurrentTab.name === 'Дополнительно')
+          (error && getCurrentTab.name === 'Дополнительно'),
+        'order-button--sended': getOrderStatus
       }"
     >
-      {{ buttonText[getCurrentTab.id] }}
+      {{ getOrderStatus ? "Отменить" : buttonText[getCurrentTab.id] }}
     </button>
 
     <p
-      v-if="error && getCurrentTab.isFilled && getCurrentTab.name === 'Дополнительно'"
+      v-if="
+        error &&
+          getCurrentTab.isFilled &&
+          getCurrentTab.name === 'Дополнительно'
+      "
       class="users-order__error-message error-message"
     >
       {{ error }}
@@ -84,10 +89,17 @@
       <div>
         <p class="confirm__title">Подтвердить заказ</p>
         <div class="confirm__buttons">
-          <router-link tag="button" to="/order" class="confirm__accept-button">
+          <router-link
+            tag="button"
+            to="/order/id"
+            class="confirm__accept-button"
+            @click.native="sendOrder"
+          >
             Подтвердить
           </router-link>
-          <button class="confirm__cancel-button" @click="confirm = false">Вернуться</button>
+          <button class="confirm__cancel-button" @click="confirm = false">
+            Вернуться
+          </button>
         </div>
       </div>
     </div>
@@ -96,7 +108,7 @@
 
 <script>
 import OderListItem from "./elements/OrderListItem";
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "UsersOrder",
@@ -123,7 +135,8 @@ export default {
       "getTariff",
       "getExtraServices",
       "getRentalTime",
-      "getCurrentPrice"
+      "getCurrentPrice",
+      "getOrderStatus"
     ]),
     error() {
       if (this.getCurrentPrice > this.getModel.priceMax) {
@@ -139,11 +152,12 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
+    ...mapActions(["sendOrder"]),
     unlockTab() {
       if (this.getCurrentTab.isLast) {
         this.confirm = true;
       } else this.unlockNextTab();
-    }
+    },
   },
   filters: {
     toDate(data) {
@@ -228,6 +242,11 @@ export default {
   @include buttonBlocked;
 }
 
+.order-button--sended {
+  background-color: $darken-red;
+  @include buttonStylesByColor($darken-red);
+}
+
 .users-order__button {
   margin-top: 26px;
 }
@@ -278,7 +297,8 @@ export default {
   justify-content: center;
 }
 
-.confirm__accept-button, .confirm__cancel-button {
+.confirm__accept-button,
+.confirm__cancel-button {
   border: none;
   color: white;
   border-radius: 8px;
@@ -300,7 +320,6 @@ export default {
   @include buttonStylesByColor($darken-red);
   border-radius: 4px;
 }
-
 
 @media (max-width: 1024px) {
   .users-order {

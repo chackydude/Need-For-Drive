@@ -13,6 +13,7 @@ export default {
     tariff: "",
     extraServices: [],
     calculator: new PriceCalculator(1999, 7),
+    isPosted: false,
     tabMap: {
       orderCity: { tabId: 0, default: "" },
       orderPlace: { tabId: 0, default: "" },
@@ -71,6 +72,10 @@ export default {
       state.rentalDateTo = date;
     },
 
+    updateOrderStatus(state, status) {
+      state.isPosted = status;
+    },
+
     // template
     updateProperty(state, payload) {
       state[payload.propertyName] = payload.value;
@@ -83,13 +88,19 @@ export default {
         if (state.tabMap[property].tabId > changedTab) {
           // поле extraServices вложенное в tabMap менялось паралельно с extraServices у корневого state
           // FIXME
-          let value = property === "extraServices" ? [] : state.tabMap[property].default;
+          let value =
+            property === "extraServices" ? [] : state.tabMap[property].default;
           commit("updateProperty", {
             propertyName: property,
             value: value
           });
         }
       }
+    },
+
+    sendOrder({ commit }) {
+      commit("updateOrderStatus", true);
+      console.log('sended')
     }
   },
   getters: {
@@ -137,6 +148,10 @@ export default {
         state.extraServices.map(item => item.amount)
       );
       return price;
+    },
+
+    getOrderStatus(state) {
+      return state.isPosted;
     }
   }
 };

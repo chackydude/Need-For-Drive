@@ -150,7 +150,7 @@ export default {
 }
 
 .model-tab__car-models {
-  min-height: 62vh;
+  /*min-height: 62vh;*/
   margin: 30px 0 18px 0;
   display: flex;
   flex-direction: row;
