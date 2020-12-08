@@ -85,19 +85,21 @@
       {{ error }}
     </p>
 
-    <div class="user-order__confirm confirm" v-if="confirm">
+    <div class="user-order__confirm confirm" v-if="confirm" @click="confirm = false">
       <div>
-        <p class="confirm__title">Подтвердить заказ</p>
+        <p class="confirm__title">
+          {{ getOrderStatus ? "Отменить заказ" : "Подтвердить заказ" }}
+        </p>
         <div class="confirm__buttons">
           <router-link
             tag="button"
-            to="/order/id"
+            :to="getOrderStatus ? '/order' : '/order/id'"
             class="confirm__accept-button"
             @click.native="sendOrder"
           >
-            Подтвердить
+            {{ getOrderStatus ? "Отменить" : "Подтвердить" }}
           </router-link>
-          <button class="confirm__cancel-button" @click="confirm = false">
+          <button class="confirm__cancel-button">
             Вернуться
           </button>
         </div>

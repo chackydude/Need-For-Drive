@@ -98,9 +98,14 @@ export default {
       }
     },
 
-    sendOrder({ commit }) {
-      commit("updateOrderStatus", true);
-      console.log('sended')
+    sendOrder({ commit, state }) {
+      if (!state.isPosted) {
+        commit("updateOrderStatus", true);
+        // отправить заказ на бэк
+      } else {
+        commit("updateOrderStatus", false);
+        // удалить заказ с бека
+      }
     }
   },
   getters: {
