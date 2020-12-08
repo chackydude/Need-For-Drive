@@ -1,10 +1,10 @@
 <template>
-  <div class="order-page">
-    <SideBar class="order-page__sidebar" />
-    <div class="order-page__content">
-      <Header class="order-page__header" />
+  <div class="total-page">
+    <SideBar class="total-page__sidebar" />
+    <div class="total-page__content">
+      <Header class="total-page__header" />
 
-      <div class="order-page__tabs tabs">
+      <div class="total-page__tabs tabs">
         <p>Заказ номер RU58491823</p>
       </div>
 
@@ -70,17 +70,17 @@ $padding: 64px;
   margin: 34px 0 28px 0;
 }
 
-.order-page {
+.total-page {
   display: flex;
   flex-direction: row;
 }
 
-.order-page__sidebar {
+.total-page__sidebar {
   position: fixed;
   z-index: 2;
 }
 
-.order-page__content {
+.total-page__content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -135,17 +135,17 @@ $padding: 64px;
 }
 
 @media (max-width: 1324px) {
-  .order-page__sidebar {
+  .total-page__sidebar {
     position: fixed;
     z-index: 2;
   }
 
-  .order-page__content {
+  .total-page__content {
     margin-left: 45px;
     padding-left: 0;
   }
 
-  .order-page__tabs {
+  .total-page__tabs {
     justify-content: center;
     flex-wrap: wrap;
     min-height: 32px;
@@ -159,15 +159,15 @@ $padding: 64px;
 }
 
 @media (max-width: 768px) {
-  .order-page__sidebar {
+  .total-page__sidebar {
     display: none !important;
   }
 
-  .order-page__content {
+  .total-page__content {
     margin-left: 0;
   }
 
-  .order-page__tabs {
+  .total-page__tabs {
     padding: 0 10px 0 10px;
   }
 
@@ -175,7 +175,7 @@ $padding: 64px;
     display: none;
   }
 
-  .order-page__tabs > div {
+  .total-page__tabs > div {
     margin: 8px;
     font-size: 12px;
   }
