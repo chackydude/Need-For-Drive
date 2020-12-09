@@ -104,6 +104,7 @@ export default {
 .car-image {
   align-self: flex-end;
   height: 116px;
+  margin-bottom: 20px;
 }
 
 .car-item__image {
