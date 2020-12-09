@@ -2,7 +2,7 @@
   <div class="result-tab">
     <div class="result-tab__car-info car-info">
       <p class="car-info__name">{{ getModel.name }}</p>
-      <p class="car-info__number">{{ getModel.number | toNumber }}</p>
+      <p  v-if="getModel.number" class="car-info__number">{{ getModel.number | toNumber }}</p>
       <p class="car-info__tank">
         Топливо:
         <span class="car-info__property-value">{{ tank }}%</span>
@@ -103,6 +103,11 @@ export default {
 
 .car-image {
   align-self: flex-end;
+  height: 116px;
+}
+
+.car-item__image {
+  height: 116px;
 }
 
 @media (max-width: 1324px) {

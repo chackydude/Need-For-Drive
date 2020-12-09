@@ -49,7 +49,7 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars"])
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder"])
   },
   computed: {
     ...mapGetters(["getCities", "getAllCars", "getOrderId"])
@@ -60,6 +60,9 @@ export default {
     }
     if (this.getAllCars.length === 0) {
       this.fetchCars();
+    }
+    if (localStorage.getItem("orderId") !== null) {
+      this.fetchOrder(localStorage.getItem("orderId"));
     }
   }
 };

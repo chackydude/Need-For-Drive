@@ -23,7 +23,7 @@
 import SideBar from "../components/SideBar";
 import Header from "../components/Header";
 import OrderList from "../components/OrderList";
-import { mapMutations, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import ResultTab from "../components/ResultTab";
 
 export default {
@@ -35,10 +35,15 @@ export default {
     SideBar
   },
   methods: {
-    ...mapMutations(["selectTab"])
+    ...mapActions(["fetchOrder"])
   },
   computed: {
     ...mapGetters(["getTabs", "getCurrentTab", "getOrderId"])
+  },
+  mounted() {
+    if (localStorage.getItem("orderId") !== null) {
+      this.fetchOrder(localStorage.getItem("orderId"));
+    }
   }
 };
 </script>

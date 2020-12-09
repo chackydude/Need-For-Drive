@@ -1,4 +1,5 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
+import DateHadler from "../../utils/date/DateHadler";
 import router from "../../router";
 import FetchApi from "../../utils/api/FetchApi";
 import Api from "../../utils/api/Api";
@@ -19,12 +20,14 @@ export default {
     extraServices: [],
 
     calculator: new PriceCalculator(1999, 7),
+    dateHandler: new DateHadler(),
     isPosted: false,
 
     availableStatuses: [],
-    currentOrderStatus: "",
+    currentOrderStatusId: "",
 
     rates: [],
+    currentRate: {},
 
     tabMap: {
       orderCity: { tabId: 0, default: "" },
@@ -99,11 +102,43 @@ export default {
 
     updateRates(state, rates) {
       state.rates = rates;
-    }
+    },
 
-    // updateOrder(state, newOrder) {
-    //
-    // }
+    updateCurrentRate(state, rate) {
+      state.currentRate = rate;
+    },
+
+    updateStatuses(state, statuses) {
+      state.availableStatuses = statuses;
+    },
+
+    updateStatusId(state, id) {
+      state.orderStatusId = id;
+    },
+
+    updateOrder(state, newOrder) {
+      console.log(newOrder);
+      let model = {
+        colors: newOrder.carId.colors,
+        id: newOrder.carId.id,
+        name: newOrder.carId.name,
+        number: newOrder.carId.number,
+        priceMax: newOrder.carId.priceMax,
+        priceMin: newOrder.carId.priceMin,
+        tank: newOrder.carId.tank,
+        thumbnail: newOrder.carId.thumbnail.path
+      };
+      state.orderId = newOrder.id;
+      state.orderCity = newOrder.cityId.name;
+      state.orderPlace = newOrder.pointId.address;
+      state.orderModel = model;
+      state.modelColor = newOrder.color;
+      state.rentalTime = state.dateHandler.calcDateDiff(newOrder.dateFrom, newOrder.dateTo);
+      state.rentalDateFrom = new Date(newOrder.dateFrom).toLocaleString();
+      state.rentalDateTo = new Date(newOrder.dateTo).toLocaleString();
+      state.tariff = "Поминутно, 7₽/мин";
+      // extraServices: [],
+    }
   },
   actions: {
     checkOrderProperties({ commit, state }, changedTab) {
@@ -134,7 +169,7 @@ export default {
     },
 
     // получаем заказ по id
-    getOrder({ commit }, id) {
+    fetchOrder({ commit }, id) {
       let fetchApi = new Api(new FetchApi());
 
       fetchApi
@@ -170,7 +205,7 @@ export default {
         });
     },
 
-    loadRates({ commit }) {
+    fetchRates({ commit }) {
       let fetchApi = new Api(new FetchApi());
       fetchApi
         .getRequest(
@@ -179,6 +214,21 @@ export default {
         )
         .then(result => {
           commit("updateRates", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    fetchOrderStatuses({ commit }) {
+      let fetchApi = new Api(new FetchApi());
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/rate",
+          fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateStatuses", result.data);
         })
         .catch(error => {
           console.log(error.message);
@@ -195,6 +245,7 @@ export default {
     },
 
     getModel(state) {
+      console.log(state.orderModel);
       return state.orderModel;
     },
 
@@ -234,6 +285,14 @@ export default {
 
     getOrderStatus(state) {
       return state.isPosted;
+    },
+
+    getRates(state) {
+      return state.rates;
+    },
+
+    getCurrentRate(state) {
+      return state.currentRate;
     },
 
     getOrderId(state) {
