@@ -69,6 +69,7 @@ export default {
       "generatePlaceCoordinates",
       "generateCoordinatesForPoints",
       "generateCurrentCityId",
+      "generateCurrentPointId",
       "checkOrderProperties"
     ]),
 
@@ -92,6 +93,7 @@ export default {
         -1
       ) {
         this.updatePlace(this.userPoint);
+        this.generateCurrentPointId(this.userPoint);
         this.updateFillStatus(this.isFilled);
         this.updateCityCoordinates();
         this.checkOrderProperties(this.getCurrentTab.id);

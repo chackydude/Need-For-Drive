@@ -10,7 +10,7 @@ export default class FetchApi extends BaseApi {
   async getRequest(url, headers) {
     return fetch(url, {
       headers: headers,
-      contentType: "application/json"
+      // contentType: "application/json"
     }).then(response => {
       return response.json();
     });

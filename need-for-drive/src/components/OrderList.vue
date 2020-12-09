@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
-    ...mapActions(["sendOrder", "postOrder"]),
+    ...mapActions(["routeToOrder", "postOrder"]),
     unlockTab() {
       if (this.getCurrentTab.isLast) {
         this.confirm = true;
@@ -166,7 +166,7 @@ export default {
 
     async sendCurrentorder() {
       if (!this.getOrderStatus) await this.postOrder(this.getOrder);
-      this.sendOrder();
+      this.routeToOrder();
     }
   },
   filters: {

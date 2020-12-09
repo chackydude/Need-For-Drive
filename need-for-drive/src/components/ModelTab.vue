@@ -46,6 +46,7 @@
         :colors="car.colors"
         :number="car.number"
         :tank="car.tank"
+        :id="car.id"
         @change-car="updateCarData"
       />
     </div>
@@ -91,6 +92,7 @@ export default {
       this.currentPage = page;
     },
     updateCarData(carModel) {
+      console.log(carModel)
       this.updateModel(carModel);
       this.updateFillStatus(true);
       this.checkOrderProperties(this.getCurrentTab.id);
