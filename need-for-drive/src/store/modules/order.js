@@ -15,10 +15,9 @@ export default {
     rentalDateFrom: "",
     rentalDateTo: "",
 
-
-    // tariff: "",
-
+    tariff: "",
     extraServices: [],
+
     calculator: new PriceCalculator(1999, 7),
     isPosted: false,
 
@@ -61,17 +60,17 @@ export default {
       state.tariff = tariff;
     },
 
-    // updateServices(state, payload) {
-    //   console.log(payload);
-    //   if (payload.status === "add") {
-    //     state.extraServices.push(payload.value);
-    //   } else {
-    //     // TODO: optimize removing
-    //     state.extraServices = state.extraServices.filter(item => {
-    //       item.text !== payload.value.text;
-    //     });
-    //   }
-    // },
+    updateServices(state, payload) {
+      console.log(payload);
+      if (payload.status === "add") {
+        state.extraServices.push(payload.value);
+      } else {
+        // TODO: optimize removing
+        state.extraServices = state.extraServices.filter(item => {
+          item.text !== payload.value.text;
+        });
+      }
+    },
 
     updateRentalTime(state, time) {
       state.rentalTime = time;
@@ -170,6 +169,21 @@ export default {
           console.log(error.message);
         });
     },
+
+    loadRates({ commit }) {
+      let fetchApi = new Api(new FetchApi());
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/rate",
+          fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateRates", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
   },
   getters: {
     getCity(state) {
@@ -188,13 +202,13 @@ export default {
       return state.modelColor;
     },
 
-    // getTariff(state) {
-    //   return state.tariff;
-    // },
+    getTariff(state) {
+      return state.tariff;
+    },
 
-    // getExtraServices(state) {
-    //   return state.extraServices;
-    // },
+    getExtraServices(state) {
+      return state.extraServices;
+    },
 
     getRentalTime(state) {
       return state.rentalTime;
