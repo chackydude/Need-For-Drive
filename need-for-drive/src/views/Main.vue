@@ -39,7 +39,7 @@
 import SideBar from "../components/SideBar";
 import PageSlider from "../components/PageSlider";
 import Menu from "../components/common/Menu";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Main",
@@ -49,7 +49,8 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder"])
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder"]),
+    ...mapMutations(["updateOrderStatus"])
   },
   computed: {
     ...mapGetters(["getCities", "getAllCars", "getOrderId"])
@@ -63,6 +64,7 @@ export default {
     }
     if (localStorage.getItem("orderId") !== null) {
       this.fetchOrder(localStorage.getItem("orderId"));
+      this.updateOrderStatus(true)
     }
   }
 };
