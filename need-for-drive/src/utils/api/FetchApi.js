@@ -3,10 +3,11 @@ import BaseApi from "./BaseApi";
 export default class FetchApi extends BaseApi {
   headers = {
     "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
-    Authorization: process.env.VUE_APP_SECRET_KEY
+    Authorization: process.env.VUE_APP_SECRET_KEY,
+    "Content-Type": "application/json"
   };
 
-  getRequest(url, headers) {
+  async getRequest(url, headers) {
     return fetch(url, {
       headers: headers,
       contentType: "application/json"
@@ -18,6 +19,7 @@ export default class FetchApi extends BaseApi {
   postRequest(url, headers, body) {
     return fetch(url, {
       headers: headers,
+      method: "POST",
       contentType: "application/json",
       body: JSON.stringify(body)
     }).then(response => {

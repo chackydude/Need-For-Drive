@@ -99,7 +99,7 @@
             tag="button"
             :to="getOrderStatus ? '/order' : `/order/${getOrderId}`"
             class="confirm__accept-button"
-            @click.native="sendOrder"
+            @click.native="sendCurrentorder"
           >
             {{ getOrderStatus ? "Отменить" : "Подтвердить" }}
           </router-link>
@@ -140,7 +140,8 @@ export default {
       "getRentalTime",
       "getCurrentPrice",
       "getOrderStatus",
-      "getOrderId"
+      "getOrderId",
+      "getOrder"
     ]),
     error() {
       if (this.getCurrentPrice > this.getModel.priceMax) {
@@ -156,11 +157,16 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
-    ...mapActions(["sendOrder"]),
+    ...mapActions(["sendOrder", "postOrder"]),
     unlockTab() {
       if (this.getCurrentTab.isLast) {
         this.confirm = true;
       } else this.unlockNextTab();
+    },
+
+    async sendCurrentorder() {
+      if (!this.getOrderStatus) await this.postOrder(this.getOrder);
+      this.sendOrder();
     }
   },
   filters: {

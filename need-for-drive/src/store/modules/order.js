@@ -1,7 +1,7 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
 import router from "../../router";
-// import FetchApi from "../../utils/api/FetchApi";
-// import Api from "../../utils/api/Api";
+import FetchApi from "../../utils/api/FetchApi";
+import Api from "../../utils/api/Api";
 
 export default {
   namespaced: false,
@@ -106,35 +106,35 @@ export default {
       }
     },
 
-    loggs() {
-      console.log("foreign action");
-    },
-
     sendOrder({ commit, state }) {
       if (!state.isPosted) {
-        commit("updateOrderStatus", true);
         // отправить заказ на бэк, получить ID заказа
-        // let fetchApi = new Api(new FetchApi());
-        //
-        // fetchApi
-        //   .postRequest(
-        //     process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId,
-        //     fetchApi.provider.headers
-        //   )
-        //   .then(result => {
-        //     commit("updatePoints", result.data);
-        //   })
-        //   .catch(error => {
-        //     console.log(error.message);
-        //   });
-
-        commit("updateOrderId", 123);
+        commit("updateOrderStatus", true);
+        console.log(state.orderId);
         router.push(`/order/${state.orderId}`);
       } else {
         commit("updateOrderStatus", false);
         commit("updateOrderId", "");
         // удалить заказ с бека
       }
+    },
+
+    async postOrder({ commit }, order) {
+      let fetchApi = new Api(new FetchApi());
+
+      // сформировать тут заказ, либо в передать уже готорый в параметры
+      await fetchApi
+        .postRequest(
+          process.env.VUE_APP_BASE_URL + "db/order",
+          fetchApi.provider.headers,
+          order
+        )
+        .then(result => {
+          commit("updateOrderId", result.data.id);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
     }
   },
   getters: {
@@ -190,6 +190,45 @@ export default {
 
     getOrderId(state) {
       return state.orderId;
+    },
+
+    getOrder(state, getter) {
+      let isFullTank = false;
+      let isNeedChildChair = false;
+      let isRightWheel = false;
+      for (let i = 0; i < state.extraServices.length; i++) {
+        switch (state.extraServices[i].text) {
+          case "Детское кресло":
+            isNeedChildChair = true;
+            break;
+          case "Правый руль":
+            isRightWheel = true;
+            break;
+          case "Полный бак":
+            isRightWheel = true;
+            break;
+        }
+      }
+
+      let orderStub = {
+        orderStatusId: "5e26a191099b810b946c5d89", // new, add api
+        cityId: "5e26a128099b810b946c5d87", // add api
+        pointId: "5e26a148099b810b946c5d88", // add api
+        carId: "5ea166b8099b810b946c62b6", // add api
+        color: state.modelColor,
+        dateFrom: new Date(state.rentalDateFrom).getTime(),
+        dateTo: new Date(state.rentalDateTo).getTime(),
+        rateId:
+          state.tariff === "Поминутно, 7₽/мин"
+            ? "5e26a0d2099b810b946c5d85"
+            : "5e26a0d2099b810b946c5d86", // add api
+        price: getter.getCurrentPrice,
+        isFullTank: isFullTank,
+        isNeedChildChair: isNeedChildChair,
+        isRightWheel: isRightWheel
+      };
+
+      return orderStub;
     }
   }
 };
