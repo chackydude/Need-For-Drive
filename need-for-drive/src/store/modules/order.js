@@ -133,7 +133,10 @@ export default {
       state.orderPlace = newOrder.pointId.address;
       state.orderModel = model;
       state.modelColor = newOrder.color;
-      state.rentalTime = state.dateHandler.calcDateDiff(newOrder.dateFrom, newOrder.dateTo);
+      state.rentalTime = state.dateHandler.calcDateDiff(
+        newOrder.dateFrom,
+        newOrder.dateTo
+      );
       state.rentalDateFrom = new Date(newOrder.dateFrom).toLocaleString();
       state.rentalDateTo = new Date(newOrder.dateTo).toLocaleString();
       state.tariff = "Поминутно, 7₽/мин";
@@ -157,7 +160,7 @@ export default {
       }
     },
 
-    // роутимся на страничку заказа
+    // роутимся на страничку заказа и обновляем сопутствующую информацию
     routeToOrder({ commit, state }) {
       if (!state.isPosted) {
         commit("updateOrderStatus", true);
@@ -186,7 +189,15 @@ export default {
     },
 
     // отправляем заказ на бек
-    async postOrder({ commit }, order) {
+    async postOrder({ commit, state }, order) {
+
+      for (let i = 0; i < state.availableStatuses; i++) {
+        if (state.availableStatuses[i].name === "new") {
+          commit("updateStatusId", state.availableStatuses[i].id);
+          break;
+        }
+      }
+
       let fetchApi = new Api(new FetchApi());
 
       // сформировать тут заказ, либо в передать уже готорый в параметры
@@ -203,6 +214,31 @@ export default {
         .catch(error => {
           console.log(error.message);
         });
+    },
+
+    async cancelOrder({ commit, state }, order) {
+
+      for (let i = 0; i < state.availableStatuses; i++) {
+        if (state.availableStatuses[i].name === "cancelled") {
+          commit("updateStatusId", state.availableStatuses[i].id);
+          break;
+        }
+      }
+
+      let fetchApi = new Api(new FetchApi());
+
+      // сформировать тут заказ, либо в передать уже готорый в параметры
+      await fetchApi
+        .postRequest(
+          process.env.VUE_APP_BASE_URL + "db/order",
+          fetchApi.provider.headers,
+          order
+        )
+        .catch(error => {
+          console.log(error.message);
+        });
+
+      localStorage.removeItem("orderId");
     },
 
     fetchRates({ commit }) {
@@ -224,7 +260,7 @@ export default {
       let fetchApi = new Api(new FetchApi());
       fetchApi
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/rate",
+          process.env.VUE_APP_BASE_URL + "db/orderStatus",
           fetchApi.provider.headers
         )
         .then(result => {

@@ -26,4 +26,15 @@ export default class FetchApi extends BaseApi {
       return response.json();
     });
   }
+
+  putRequest(url, headers, body) {
+    return fetch(url, {
+      headers: headers,
+      method: "PUT",
+      contentType: "application/json",
+      body: JSON.stringify(body)
+    }).then(response => {
+      return response.json();
+    });
+  }
 }

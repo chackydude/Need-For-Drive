@@ -62,7 +62,9 @@ export default {
     if (this.getAllCars.length === 0) {
       this.fetchCars();
     }
+    console.log("before: " + localStorage.getItem("orderId"));
     if (localStorage.getItem("orderId") !== null) {
+      console.log(localStorage.getItem("orderId"));
       this.fetchOrder(localStorage.getItem("orderId"));
       this.updateOrderStatus(true)
     }

@@ -135,7 +135,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["checkOrderProperties", "checkOrderProperties"]),
+    ...mapActions(["checkOrderProperties", "checkOrderProperties", "fetchOrderStatuses"]),
     ...mapMutations([
       "updateColor",
       "updateTariff",
@@ -253,6 +253,7 @@ export default {
   created() {
     this.dateFrom = this.getDateFrom;
     this.dateTo = this.getDateTo;
+    this.fetchOrderStatuses();
   },
   // mounted() {
   //   // eslint-disable-next-line no-unused-vars

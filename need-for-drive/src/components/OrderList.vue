@@ -157,15 +157,19 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab"]),
-    ...mapActions(["routeToOrder", "postOrder"]),
+    ...mapActions(["routeToOrder", "postOrder", "cancelOrder"]),
     unlockTab() {
-      if (this.getCurrentTab.isLast) {
+      if (this.getCurrentTab.isLast || localStorage.getItem("orderId") !== null) {
         this.confirm = true;
       } else this.unlockNextTab();
     },
 
     async sendCurrentorder() {
-      if (!this.getOrderStatus) await this.postOrder(this.getOrder);
+      if (!this.getOrderStatus) {
+        await this.postOrder(this.getOrder);
+      } else {
+        this.cancelOrder(this.getOrder);
+      }
       this.routeToOrder();
     }
   },
