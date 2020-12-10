@@ -216,7 +216,9 @@ export default {
         });
     },
 
-    async cancelOrder({ commit, state }, order) {
+    cancelOrder({ commit, state }, order) {
+
+      // обновляем статус заказа на canceled
 
       for (let i = 0; i < state.availableStatuses; i++) {
         if (state.availableStatuses[i].name === "cancelled") {
@@ -227,10 +229,9 @@ export default {
 
       let fetchApi = new Api(new FetchApi());
 
-      // сформировать тут заказ, либо в передать уже готорый в параметры
-      await fetchApi
-        .postRequest(
-          process.env.VUE_APP_BASE_URL + "db/order",
+      fetchApi
+        .putRequest(
+          process.env.VUE_APP_BASE_URL + "db/order/" + state.orderId,
           fetchApi.provider.headers,
           order
         )
