@@ -44,7 +44,7 @@ export default {
   mounted() {
     if (localStorage.getItem("orderId") !== null) {
       this.fetchOrder(localStorage.getItem("orderId"));
-      this.updateOrderStatus(true)
+      this.updateOrderStatus(true);
     }
   }
 };

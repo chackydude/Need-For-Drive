@@ -141,7 +141,8 @@ export default {
       "getCurrentPrice",
       "getOrderStatus",
       "getOrderId",
-      "getOrder"
+      "getOrder",
+      "getAvailableStatuses"
     ]),
     error() {
       if (this.getCurrentPrice > this.getModel.priceMax) {
@@ -156,18 +157,24 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["unlockNextTab"]),
+    ...mapMutations(["unlockNextTab", "updateStatusId"]),
     ...mapActions(["routeToOrder", "postOrder", "cancelOrder"]),
     unlockTab() {
-      if (this.getCurrentTab.isLast || localStorage.getItem("orderId") !== null) {
+      if (
+        this.getCurrentTab.isLast ||
+        localStorage.getItem("orderId") !== null
+      ) {
         this.confirm = true;
       } else this.unlockNextTab();
     },
 
     async sendCurrentorder() {
       if (!this.getOrderStatus) {
+        // update current order status:
+        this.updateStatusId("new");
         await this.postOrder(this.getOrder);
       } else {
+        this.updateStatusId("cancelled");
         this.cancelOrder(this.getOrder);
       }
       this.routeToOrder();

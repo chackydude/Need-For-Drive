@@ -112,8 +112,15 @@ export default {
       state.availableStatuses = statuses;
     },
 
-    updateStatusId(state, id) {
-      state.orderStatusId = id;
+    // updating status id with a name of status
+    updateStatusId(state, status) {
+      for (let i = 0; i < state.availableStatuses.length; i++) {
+        if (state.availableStatuses[i].name === status) {
+          state.currentOrderStatusId = state.availableStatuses[i].id;
+          console.log(state.currentOrderStatusId, state.availableStatuses[i].id)
+          break;
+        }
+      }
     },
 
     updateOrder(state, newOrder) {
@@ -189,14 +196,16 @@ export default {
     },
 
     // отправляем заказ на бек
-    async postOrder({ commit, state }, order) {
+    async postOrder({ commit }, order) {
 
-      for (let i = 0; i < state.availableStatuses; i++) {
-        if (state.availableStatuses[i].name === "new") {
-          commit("updateStatusId", state.availableStatuses[i].id);
-          break;
-        }
-      }
+      // console.log("posting...")
+
+      // for (let i = 0; i < state.availableStatuses; i++) {
+      //   if (state.availableStatuses[i].name === "new") {
+      //     commit("updateStatusId", state.availableStatuses[i].id);
+      //     break;
+      //   }
+      // }
 
       let fetchApi = new Api(new FetchApi());
 
@@ -216,16 +225,16 @@ export default {
         });
     },
 
-    cancelOrder({ commit, state }, order) {
+    cancelOrder({ state }, order) {
 
       // обновляем статус заказа на canceled
 
-      for (let i = 0; i < state.availableStatuses; i++) {
-        if (state.availableStatuses[i].name === "cancelled") {
-          commit("updateStatusId", state.availableStatuses[i].id);
-          break;
-        }
-      }
+      // for (let i = 0; i < state.availableStatuses; i++) {
+      //   if (state.availableStatuses[i].name === "cancelled") {
+      //     commit("updateStatusId", state.availableStatuses[i].id);
+      //     break;
+      //   }
+      // }
 
       let fetchApi = new Api(new FetchApi());
 
@@ -341,6 +350,10 @@ export default {
       return state.orderId;
     },
 
+    getAvailableStatuses(state) {
+      return state.availableStatuses;
+    },
+
     getOrder(state, getters, rootState) {
       let isFullTank = false;
       let isNeedChildChair = false;
@@ -360,8 +373,8 @@ export default {
       }
 
       let orderStub = {
-        orderStatusId: "5e26a191099b810b946c5d89", // new, add api FIXME
-        pointId: rootState.place.currentPointId, // add api
+        orderStatusId: state.currentOrderStatusId,
+        pointId: rootState.place.currentPointId,
         cityId: rootState.place.currentCityId,
         carId: state.orderModel.id,
         color: state.modelColor,
