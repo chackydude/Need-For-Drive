@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
+import SideBar from "../components/common/SideBar";
 import Header from "../components/Header";
 import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/tabs/PlaceTab";
@@ -58,7 +58,7 @@ import OrderList from "../components/OrderList";
 import { mapMutations, mapGetters } from "vuex";
 import ModelTab from "../components/tabs/ModelTab";
 import AdditionalTab from "../components/tabs/AdditionalTab";
-import ResultTab from "../components/tabs/ResultTab";
+import ResultTab from "../components/common/ResultTab";
 
 export default {
   name: "Order",

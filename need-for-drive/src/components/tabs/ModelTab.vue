@@ -92,7 +92,6 @@ export default {
       this.currentPage = page;
     },
     updateCarData(carModel) {
-      console.log(carModel)
       this.updateModel(carModel);
       this.updateFillStatus(true);
       this.checkOrderProperties(this.getCurrentTab.id);

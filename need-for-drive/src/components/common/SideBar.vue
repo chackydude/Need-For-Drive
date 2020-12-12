@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Menu from "./common/Menu";
+import Menu from "./Menu";
 export default {
   name: "SideBar",
   components: {
@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../public/css/hamburger-menu";
-@import "public/css/variables";
+@import "../../../public/css/hamburger-menu";
+@import "../../../public/css/variables";
 .side-bar {
   display: flex;
   flex-direction: column;

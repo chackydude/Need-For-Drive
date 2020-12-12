@@ -35,8 +35,8 @@ export default {
       orderModel: { tabId: 1, default: {} },
       modelColor: { tabId: 2, default: "" },
       rentalTime: { tabId: 2, default: [] },
-      rentalDateFrom: { tabId: 2, default: "" },
-      rentalDateTo: { tabId: 2, default: "" },
+      rentalDateFrom: { tabId: 2, default: null },
+      rentalDateTo: { tabId: 2, default: null },
       tariff: { tabId: 2, default: "" },
       extraServices: { tabId: 2, default: [] }
     }
@@ -64,7 +64,6 @@ export default {
     },
 
     updateServices(state, payload) {
-      console.log(payload);
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
@@ -117,10 +116,6 @@ export default {
       for (let i = 0; i < state.availableStatuses.length; i++) {
         if (state.availableStatuses[i].name === status) {
           state.currentOrderStatusId = state.availableStatuses[i].id;
-          console.log(
-            state.currentOrderStatusId,
-            state.availableStatuses[i].id
-          );
           break;
         }
       }
@@ -270,7 +265,6 @@ export default {
         )
         .then(result => {
           commit("updateRates", result.data);
-          console.log(result);
         })
         .catch(error => {
           console.log(error.message);
@@ -302,7 +296,6 @@ export default {
     },
 
     getModel(state) {
-      console.log(state.orderModel);
       return state.orderModel;
     },
 
@@ -391,7 +384,7 @@ export default {
         color: state.modelColor,
         dateFrom: state.rentalDateFrom,
         dateTo: state.rentalDateTo,
-        rateId: state.tariff.id, // add api FIXME
+        rateId: state.tariff.id,
         price: getters.getCurrentPrice,
         isFullTank: isFullTank,
         isNeedChildChair: isNeedChildChair,

@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab", "updateStatusId"]),
-    ...mapActions(["routeToOrder", "postOrder", "cancelOrder"]),
+    ...mapActions(["routeToOrder", "postOrder", "cancelOrder", "checkOrderProperties"]),
     unlockTab() {
       if (
         this.getCurrentTab.isLast ||
@@ -176,6 +176,7 @@ export default {
       } else {
         this.updateStatusId("cancelled");
         this.cancelOrder(this.getOrder);
+        this.checkOrderProperties(0);
       }
       this.routeToOrder();
     }

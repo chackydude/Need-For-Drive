@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
-import PageSlider from "../components/PageSlider";
+import SideBar from "../components/common/SideBar";
+import PageSlider from "../components/common/PageSlider";
 import Menu from "../components/common/Menu";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
@@ -53,7 +53,7 @@ export default {
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars", "getOrderId"])
+    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab"])
   },
   created() {
     if (this.getCities.length === 0) {
@@ -62,11 +62,9 @@ export default {
     if (this.getAllCars.length === 0) {
       this.fetchCars();
     }
-    console.log("before: " + localStorage.getItem("orderId"));
     if (localStorage.getItem("orderId") !== null) {
-      console.log(localStorage.getItem("orderId"));
       this.fetchOrder(localStorage.getItem("orderId"));
-      this.updateOrderStatus(true)
+      this.updateOrderStatus(true);
     }
   }
 };

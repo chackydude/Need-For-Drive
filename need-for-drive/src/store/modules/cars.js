@@ -3,16 +3,11 @@ import FetchApi from "../../utils/api/FetchApi";
 
 export default {
   state: {
-    // cars: [],
     carsAmount: 0,
     allCars: [],
     category: "Все модели"
   },
   mutations: {
-    // updateCars(state, pageCars) {
-    //   state.cars.push(pageCars);
-    // },
-
     updateCategory(state, category) {
       state.category = category;
     },
@@ -67,10 +62,6 @@ export default {
     // }
   },
   getters: {
-    // getCars(state) {
-    //   return state.cars;
-    // },
-
     getCarsAmount(state) {
       return state.carsAmount;
     },
