@@ -25,7 +25,7 @@
         :value="getRentalTime | toDate"
       />
       <OderListItem
-        v-if="getTariff.text"
+        v-if="Object.keys(getTariff).length > 0"
         class="list__order-item"
         name="Тариф"
         :value="getTariff.text"
@@ -44,7 +44,7 @@
       class="users-order__price"
       v-if="
         Object.keys(getModel).length !== 0 &&
-          getTariff !== '' &&
+          Object.keys(getTariff).length !== 0 &&
           getRentalTime.length > 0
       "
     >
@@ -54,7 +54,7 @@
       class="users-order__price"
       v-if="
         Object.keys(getModel).length !== 0 &&
-          (getTariff === '' || getRentalTime.length === 0)
+          (Object.keys(getTariff).length === 0 || getRentalTime.length === 0)
       "
     >
       <span class="price__title">Цена:</span> от
@@ -85,35 +85,18 @@
       {{ error }}
     </p>
 
-    <div
-      class="user-order__confirm confirm"
+    <OrderModal
       v-if="confirm"
-      @click="confirm = false"
-    >
-      <div>
-        <p class="confirm__title">
-          {{ getOrderStatus ? "Отменить заказ" : "Подтвердить заказ" }}
-        </p>
-        <div class="confirm__buttons">
-          <router-link
-            tag="button"
-            :to="getOrderStatus ? '/order' : `/order/${getOrderId}`"
-            class="confirm__accept-button"
-            @click.native="sendCurrentorder"
-          >
-            {{ getOrderStatus ? "Отменить" : "Подтвердить" }}
-          </router-link>
-          <button class="confirm__cancel-button">
-            Вернуться
-          </button>
-        </div>
-      </div>
-    </div>
+      :order-id="getOrderId"
+      :order-status="getOrderStatus"
+      @click-close="confirm = false"
+    />
   </div>
 </template>
 
 <script>
 import OderListItem from "./elements/OrderListItem";
+import OrderModal from "./OrderModal";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -126,7 +109,8 @@ export default {
     };
   },
   components: {
-    OderListItem
+    OderListItem,
+    OrderModal
   },
   computed: {
     ...mapGetters([
@@ -158,7 +142,13 @@ export default {
   },
   methods: {
     ...mapMutations(["unlockNextTab", "updateStatusId", "updateToDefault"]),
-    ...mapActions(["routeToOrder", "postOrder", "cancelOrder", "checkOrderProperties"]),
+    ...mapActions([
+      "routeToOrder",
+      "postOrder",
+      "cancelOrder",
+      "checkOrderProperties",
+      "fetchRates"
+    ]),
     unlockTab() {
       if (
         this.getCurrentTab.isLast ||
@@ -210,6 +200,9 @@ export default {
         return str;
       }
     }
+  },
+  created() {
+    this.fetchRates();
   }
 };
 </script>

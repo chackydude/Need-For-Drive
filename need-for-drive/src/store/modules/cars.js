@@ -14,7 +14,6 @@ export default {
 
     updateAllCars(state, cars) {
       state.allCars = cars;
-      console.log(cars)
     },
 
     updateCarsAmount(state, amount) {

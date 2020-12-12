@@ -27,20 +27,7 @@ export default {
     currentOrderStatusId: "",
 
     rates: [],
-    currentRate: {},
-
-    // tabMap: {
-    //   orderCity: { tabId: 0, default: "" },
-    //   orderPlace: { tabId: 0, default: "" },
-    //   orderModel: { tabId: 1, default: {} },
-    //   modelColor: { tabId: 2, default: "" },
-    //   rentalTime: { tabId: 2, default: [] },
-    //   rentalDateFrom: { tabId: 2, default: null },
-    //   rentalDateTo: { tabId: 2, default: null },
-    //   tariff: { tabId: 2, default: {} },
-    //   extraServices: { tabId: 2, default: [] },
-    //   currentRate: { tabId: 2, default: {} }
-    // }
+    currentRate: {}
   },
 
   mutations: {
@@ -68,7 +55,6 @@ export default {
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
-        // TODO: optimize removing
         state.extraServices = state.extraServices.filter(item => {
           item.text !== payload.value.text;
         });
@@ -112,7 +98,7 @@ export default {
       state.availableStatuses = statuses;
     },
 
-    // updating status id with a name of status
+    // updating status id with the name of status
     updateStatusId(state, status) {
       for (let i = 0; i < state.availableStatuses.length; i++) {
         if (state.availableStatuses[i].name === status) {
@@ -178,22 +164,6 @@ export default {
     }
   },
   actions: {
-    // checkOrderProperties({ commit, state }, changedTab) {
-    //   // очистка всех последующих данных
-    //   for (let property in this.state.order.tabMap) {
-    //     if (state.tabMap[property].tabId > changedTab) {
-    //       // поле extraServices вложенное в tabMap менялось паралельно с extraServices у корневого state
-    //       // FIXME: fixed
-    //       let value =
-    //         property === "extraServices" ? [] : state.tabMap[property].default;
-    //       commit("updateProperty", {
-    //         propertyName: property,
-    //         value: value
-    //       });
-    //     }
-    //   }
-    // },
-
     // роутимся на страничку заказа и обновляем сопутствующую информацию
     routeToOrder({ commit, state }) {
       if (!state.isPosted) {
@@ -328,7 +298,8 @@ export default {
     },
 
     getCurrentPrice(state) {
-      let tariff = state.tariff !== "На сутки, 1999 ₽/сутки" ? "minute" : "day";
+      let tariff = state.tariff.id === "5e26a0d2099b810b946c5d85" ? "minute" : "day";
+
       let price = state.calculator.calcPrice(
         state.rentalTime,
         tariff,
@@ -350,11 +321,6 @@ export default {
     },
 
     getOrderId(state) {
-      // if (localStorage.getItem("orderId") !== null) {
-      //   return localStorage.getItem("orderId");
-      // } else {
-      //   return state.orderId;
-      // }
       return state.orderId;
     },
 
@@ -379,7 +345,6 @@ export default {
             break;
         }
       }
-
       let orderStub = {
         orderStatusId: state.currentOrderStatusId,
         pointId: rootState.place.currentPointId,
@@ -394,7 +359,6 @@ export default {
         isNeedChildChair: isNeedChildChair,
         isRightWheel: isRightWheel
       };
-
       return orderStub;
     }
   }

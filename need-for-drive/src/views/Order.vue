@@ -55,7 +55,7 @@ import Header from "../components/Header";
 import Tab from "../components/elements/Tab";
 import PlaceTab from "../components/tabs/PlaceTab";
 import OrderList from "../components/OrderList";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 import ModelTab from "../components/tabs/ModelTab";
 import AdditionalTab from "../components/tabs/AdditionalTab";
 import ResultTab from "../components/tabs/ResultTab";
@@ -73,10 +73,14 @@ export default {
     SideBar
   },
   methods: {
-    ...mapMutations(["selectTab"])
+    ...mapMutations(["selectTab"]),
+    ...mapActions(["fetchRates"])
   },
   computed: {
     ...mapGetters(["getTabs", "getCurrentTab"])
+  },
+  created() {
+    this.fetchRates();
   }
 };
 </script>

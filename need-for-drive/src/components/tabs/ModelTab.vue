@@ -124,16 +124,7 @@ export default {
     if (this.getAllCars.length === 0) {
       this.fetchCars();
     }
-    this.fetchRates();
   },
-  // mounted() {
-  //   // eslint-disable-next-line no-unused-vars
-  //   this.$store.subscribe((mutation, state) => {
-  //     if (mutation.type !== "updateProperty") {
-  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
-  //     }
-  //   });
-  // },
 };
 </script>
 

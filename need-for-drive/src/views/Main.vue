@@ -49,13 +49,14 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder"]),
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates"]),
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
     ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab"])
   },
   created() {
+
     if (this.getCities.length === 0) {
       this.fetchCities();
     }

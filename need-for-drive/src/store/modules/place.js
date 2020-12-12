@@ -8,7 +8,7 @@ export default {
     currentCityCoordinates: [55.751574, 37.573856], // Moscow
     currentCityId: "",
     pointsWithCoordinates: [],
-    currentPointId: "",
+    currentPointId: ""
   },
   mutations: {
     updateCities(state, cities) {

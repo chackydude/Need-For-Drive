@@ -241,7 +241,7 @@ export default {
     isFilled() {
       return (
         this.getColor !== "" &&
-        this.getTariff !== "" &&
+        this.getTariff.text !== "" &&
         this.getRentalTime.length !== 0
       );
     },
