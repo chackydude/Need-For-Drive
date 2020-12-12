@@ -17,11 +17,11 @@
 
 <script>
 import { Slider, SliderItem } from "vue-easy-slider";
-import backImage1 from "../assets/images/slide-1.png";
-import backImage2 from "../assets/images/slide-2.png";
-import backImage3 from "../assets/images/slide-3.png";
-import backImage4 from "../assets/images/slide-4.png";
-import PageSliderItemContent from "./elements/PageSliderItemContent";
+import backImage1 from "../../assets/images/slide-1.png";
+import backImage2 from "../../assets/images/slide-2.png";
+import backImage3 from "../../assets/images/slide-3.png";
+import backImage4 from "../../assets/images/slide-4.png";
+import PageSliderItemContent from "../elements/PageSliderItemContent";
 
 export default {
   name: "PageSlider",

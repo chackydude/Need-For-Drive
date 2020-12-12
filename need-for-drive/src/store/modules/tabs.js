@@ -42,6 +42,14 @@ export default {
       });
     },
 
+    updateToDefault(state) {
+      for (let i = 0; i < state.tabs.length; i++) {
+        i === 0 ? state.tabs[i].isActive = true : state.tabs[i].isActive = false;
+        i === 0 ? state.tabs[i].isBlocked = false : state.tabs[i].isBlocked = true;
+        i === (state.tabs.length - 1) ? state.tabs[i].isFilled = true : state.tabs[i].isFilled = false;
+      }
+    },
+
     unlockNextTab(state) {
       for (let i = 0; i < state.tabs.length; i++) {
         if (state.tabs[i].isActive && i < state.tabs.length - 1) {

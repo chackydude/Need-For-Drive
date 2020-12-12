@@ -44,7 +44,7 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import Map from "./elements/Map";
+import Map from "../elements/Map";
 export default {
   name: "PlaceTab",
   components: {
@@ -69,6 +69,7 @@ export default {
       "generatePlaceCoordinates",
       "generateCoordinatesForPoints",
       "generateCurrentCityId",
+      "generateCurrentPointId",
       "checkOrderProperties"
     ]),
 
@@ -92,6 +93,7 @@ export default {
         -1
       ) {
         this.updatePlace(this.userPoint);
+        this.generateCurrentPointId(this.userPoint);
         this.updateFillStatus(this.isFilled);
         this.updateCityCoordinates();
         this.checkOrderProperties(this.getCurrentTab.id);
@@ -154,8 +156,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 
 .place-tab__inputs {
   margin-top: 32px;

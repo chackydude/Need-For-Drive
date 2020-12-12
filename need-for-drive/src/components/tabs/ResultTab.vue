@@ -2,14 +2,14 @@
   <div class="result-tab">
     <div class="result-tab__car-info car-info">
       <p class="car-info__name">{{ getModel.name }}</p>
-      <p class="car-info__number">{{ getModel.number | toNumber }}</p>
+      <p  v-if="getModel.number" class="car-info__number">{{ getModel.number | toNumber }}</p>
       <p class="car-info__tank">
         Топливо:
         <span class="car-info__property-value">{{ tank }}%</span>
       </p>
       <p class="car-info__date">
         Доступна с
-        <span class="car-info__property-value">{{ getDateFrom }}</span>
+        <span class="car-info__property-value">{{ new Date(getDateFrom).toISOString() }}</span>
       </p>
     </div>
     <div class="result-tab__car-image car-image">
@@ -66,8 +66,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 .result-tab {
   margin-top: 34px;
   display: flex;
@@ -103,6 +103,12 @@ export default {
 
 .car-image {
   align-self: flex-end;
+  height: 116px;
+  margin-bottom: 20px;
+}
+
+.car-item__image {
+  height: 116px;
 }
 
 @media (max-width: 1324px) {

@@ -1,48 +1,18 @@
 <template>
-  <div class="order-page">
-    <SideBar class="order-page__sidebar" />
-    <div class="order-page__content">
-      <Header class="order-page__header" />
+  <div class="total-page">
+    <SideBar class="total-page__sidebar" />
+    <div class="total-page__content">
+      <Header class="total-page__header" />
 
-      <div class="order-page__tabs tabs">
-        <div
-          v-for="tab in getTabs"
-          class="tabs__tab tab"
-          :class="{
-            'tab--active': tab.isActive,
-            'tab--blocked': tab.isBlocked
-          }"
-          :key="tab.name"
-        >
-          <a class="tab__link link" @click="selectTab(tab)">
-            {{ tab.name }}
-          </a>
-          <img
-            v-if="!tab.isLast"
-            class="tab__icon icon"
-            src="@/assets/icons/next.svg"
-            alt="next"
-          />
-        </div>
+      <div class="total-page__tabs tabs">
+        <p>Заказ номер: {{ getOrderId }}</p>
       </div>
 
       <div class="tabs-content">
-        <tab :is-active="getTabs[0].isActive" :selected="getTabs[0].isActive">
-          <PlaceTab />
-        </tab>
-
-        <tab :is-active="getTabs[1].isActive" :selected="getTabs[1].isActive">
-          <ModelTab />
-        </tab>
-
-        <tab :is-active="getTabs[2].isActive" :selected="getTabs[2].isActive">
-          <AdditionalTab />
-        </tab>
-
-        <tab :is-active="getTabs[3].isActive" :selected="getTabs[3].isActive">
-          <ResultTab />
-        </tab>
-
+        <div>
+          <p class="title">Ваш заказ подтвержден</p>
+          <ResultTab class="result-tab" />
+        </div>
         <OrderList class="users-order"/>
       </div>
     </div>
@@ -52,55 +22,59 @@
 <script>
 import SideBar from "../components/common/SideBar";
 import Header from "../components/Header";
-import Tab from "../components/elements/Tab";
-import PlaceTab from "../components/tabs/PlaceTab";
 import OrderList from "../components/OrderList";
-import { mapMutations, mapGetters, mapActions } from "vuex";
-import ModelTab from "../components/tabs/ModelTab";
-import AdditionalTab from "../components/tabs/AdditionalTab";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import ResultTab from "../components/tabs/ResultTab";
 
 export default {
-  name: "Order",
+  name: "Total",
   components: {
     ResultTab,
-    AdditionalTab,
-    ModelTab,
     OrderList,
-    PlaceTab,
-    Tab,
     Header,
     SideBar
   },
   methods: {
-    ...mapMutations(["selectTab"]),
-    ...mapActions(["fetchRates"])
+    ...mapActions(["fetchOrder", "routeToOrder"]),
+    ...mapMutations(["updateOrderStatus"]),
   },
   computed: {
-    ...mapGetters(["getTabs", "getCurrentTab"])
+    ...mapGetters(["getTabs", "getCurrentTab", "getOrderId"])
   },
-  created() {
-    this.fetchRates();
+  mounted() {
+    if (localStorage.getItem("orderId") !== null) {
+      this.fetchOrder(localStorage.getItem("orderId"));
+      this.updateOrderStatus(true);
+    }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "public/css/variables";
 
 $padding: 64px;
 
-.order-page {
+.result-tab {
+  margin-top: 0;
+}
+
+.title {
+  font-size: 24px;
+  margin: 34px 0 28px 0;
+}
+
+.total-page {
   display: flex;
   flex-direction: row;
 }
 
-.order-page__sidebar {
+.total-page__sidebar {
   position: fixed;
   z-index: 2;
 }
 
-.order-page__content {
+.total-page__content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -155,17 +129,17 @@ $padding: 64px;
 }
 
 @media (max-width: 1324px) {
-  .order-page__sidebar {
+  .total-page__sidebar {
     position: fixed;
     z-index: 2;
   }
 
-  .order-page__content {
+  .total-page__content {
     margin-left: 45px;
     padding-left: 0;
   }
 
-  .order-page__tabs {
+  .total-page__tabs {
     justify-content: center;
     flex-wrap: wrap;
     min-height: 32px;
@@ -179,15 +153,15 @@ $padding: 64px;
 }
 
 @media (max-width: 768px) {
-  .order-page__sidebar {
+  .total-page__sidebar {
     display: none !important;
   }
 
-  .order-page__content {
+  .total-page__content {
     margin-left: 0;
   }
 
-  .order-page__tabs {
+  .total-page__tabs {
     padding: 0 10px 0 10px;
   }
 
@@ -195,7 +169,7 @@ $padding: 64px;
     display: none;
   }
 
-  .order-page__tabs > div {
+  .total-page__tabs > div {
     margin: 8px;
     font-size: 12px;
   }

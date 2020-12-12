@@ -15,6 +15,10 @@ const routes = [
     name: "order",
     component: () => import("../views/Order")
   },
+  {
+    path: "/order/:id",
+    component: () => import("../views/Total")
+  }
 ];
 
 const router = new VueRouter({

@@ -27,7 +27,7 @@ export default {
     priceMin: Number,
     priceMax: Number,
     img: String,
-    id: Number,
+    id: String,
     colors: Array,
     number: String,
     tank: Number

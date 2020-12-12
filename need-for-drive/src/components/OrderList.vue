@@ -25,10 +25,10 @@
         :value="getRentalTime | toDate"
       />
       <OderListItem
-        v-if="getTariff"
+        v-if="Object.keys(getTariff).length > 0"
         class="list__order-item"
         name="Тариф"
-        :value="getTariff"
+        :value="getTariff.text"
       />
       <div v-if="getExtraServices.length !== 0">
         <OderListItem
@@ -44,7 +44,7 @@
       class="users-order__price"
       v-if="
         Object.keys(getModel).length !== 0 &&
-          getTariff !== '' &&
+          Object.keys(getTariff).length !== 0 &&
           getRentalTime.length > 0
       "
     >
@@ -54,7 +54,7 @@
       class="users-order__price"
       v-if="
         Object.keys(getModel).length !== 0 &&
-          (getTariff === '' || getRentalTime.length === 0)
+          (Object.keys(getTariff).length === 0 || getRentalTime.length === 0)
       "
     >
       <span class="price__title">Цена:</span> от
@@ -67,42 +67,40 @@
       :class="{
         'order-button--blocked':
           !getCurrentTab.isFilled ||
-          (error && getCurrentTab.name === 'Дополнительно')
+          (error && getCurrentTab.name === 'Дополнительно'),
+        'order-button--sended': getOrderStatus
       }"
     >
-      {{ buttonText[getCurrentTab.id] }}
+      {{ getOrderStatus ? "Отменить" : buttonText[getCurrentTab.id] }}
     </button>
 
     <p
-      v-if="error && getCurrentTab.isFilled && getCurrentTab.name === 'Дополнительно'"
+      v-if="
+        error &&
+          getCurrentTab.isFilled &&
+          getCurrentTab.name === 'Дополнительно'
+      "
       class="users-order__error-message error-message"
     >
       {{ error }}
     </p>
 
-    <div class="user-order__confirm confirm" v-if="confirm">
-      <div>
-        <p class="confirm__title">Подтвердить заказ</p>
-        <div class="confirm__buttons">
-          <router-link tag="button" to="/order" class="confirm__accept-button">
-            Подтвердить
-          </router-link>
-          <button class="confirm__cancel-button" @click="confirm = false">Вернуться</button>
-        </div>
-      </div>
-    </div>
+    <OrderModal
+      v-if="confirm"
+      :order-id="getOrderId"
+      :order-status="getOrderStatus"
+      @click-close="confirm = false"
+    />
   </div>
 </template>
 
 <script>
 import OderListItem from "./elements/OrderListItem";
-import { mapGetters, mapMutations } from "vuex";
+import OrderModal from "./OrderModal";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "UsersOrder",
-  props: {
-    order: Object
-  },
 
   data() {
     return {
@@ -111,7 +109,8 @@ export default {
     };
   },
   components: {
-    OderListItem
+    OderListItem,
+    OrderModal
   },
   computed: {
     ...mapGetters([
@@ -123,7 +122,11 @@ export default {
       "getTariff",
       "getExtraServices",
       "getRentalTime",
-      "getCurrentPrice"
+      "getCurrentPrice",
+      "getOrderStatus",
+      "getOrderId",
+      "getOrder",
+      "getAvailableStatuses"
     ]),
     error() {
       if (this.getCurrentPrice > this.getModel.priceMax) {
@@ -138,11 +141,35 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["unlockNextTab"]),
+    ...mapMutations(["unlockNextTab", "updateStatusId", "updateToDefault"]),
+    ...mapActions([
+      "routeToOrder",
+      "postOrder",
+      "cancelOrder",
+      "checkOrderProperties",
+      "fetchRates"
+    ]),
     unlockTab() {
-      if (this.getCurrentTab.isLast) {
+      if (
+        this.getCurrentTab.isLast ||
+        localStorage.getItem("orderId") !== null
+      ) {
         this.confirm = true;
       } else this.unlockNextTab();
+    },
+
+    async sendCurrentorder() {
+      if (!this.getOrderStatus) {
+        // update current order status:
+        this.updateStatusId("new");
+        await this.postOrder(this.getOrder);
+      } else {
+        this.updateStatusId("cancelled");
+        this.cancelOrder(this.getOrder);
+        this.checkOrderProperties(-1);
+        this.updateToDefault();
+      }
+      this.routeToOrder();
     }
   },
   filters: {
@@ -173,6 +200,9 @@ export default {
         return str;
       }
     }
+  },
+  created() {
+    this.fetchRates();
   }
 };
 </script>
@@ -228,6 +258,11 @@ export default {
   @include buttonBlocked;
 }
 
+.order-button--sended {
+  background-color: $darken-red;
+  @include buttonStylesByColor($darken-red);
+}
+
 .users-order__button {
   margin-top: 26px;
 }
@@ -278,7 +313,8 @@ export default {
   justify-content: center;
 }
 
-.confirm__accept-button, .confirm__cancel-button {
+.confirm__accept-button,
+.confirm__cancel-button {
   border: none;
   color: white;
   border-radius: 8px;
@@ -300,7 +336,6 @@ export default {
   @include buttonStylesByColor($darken-red);
   border-radius: 4px;
 }
-
 
 @media (max-width: 1024px) {
   .users-order {

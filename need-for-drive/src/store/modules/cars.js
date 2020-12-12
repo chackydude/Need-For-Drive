@@ -1,18 +1,14 @@
 import Api from "../../utils/api/Api";
 import FetchApi from "../../utils/api/FetchApi";
+import AxiosApi from "../../utils/api/AxiosApi";
 
 export default {
   state: {
-    // cars: [],
     carsAmount: 0,
     allCars: [],
     category: "Все модели"
   },
   mutations: {
-    // updateCars(state, pageCars) {
-    //   state.cars.push(pageCars);
-    // },
-
     updateCategory(state, category) {
       state.category = category;
     },
@@ -33,6 +29,22 @@ export default {
         .getRequest(
           process.env.VUE_APP_BASE_URL + "db/car",
           fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateCarsAmount", result.count);
+          commit("updateAllCars", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    fetchCarsAxios({ commit }) {
+      let axiosApi = new Api(new AxiosApi());
+      axiosApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/car",
+          axiosApi.provider.headers
         )
         .then(result => {
           commit("updateCarsAmount", result.count);
@@ -66,10 +78,6 @@ export default {
     // }
   },
   getters: {
-    // getCars(state) {
-    //   return state.cars;
-    // },
-
     getCarsAmount(state) {
       return state.carsAmount;
     },

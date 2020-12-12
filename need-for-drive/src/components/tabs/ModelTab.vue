@@ -46,6 +46,7 @@
         :colors="car.colors"
         :number="car.number"
         :tank="car.tank"
+        :id="car.id"
         @change-car="updateCarData"
       />
     </div>
@@ -64,8 +65,8 @@
 </template>
 
 <script>
-import CheckInputItem from "./common/CheckInputItem";
-import CarItem from "./elements/CarItem";
+import CheckInputItem from "../common/CheckInputItem";
+import CarItem from "../elements/CarItem";
 import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -80,7 +81,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCars", "checkOrderProperties"]),
+    ...mapActions(["fetchCars", "checkOrderProperties", "fetchRates"]),
     ...mapMutations(["updateCategory", "updateModel", "updateFillStatus", "checkTabsState"]),
     changeCategory: function(newValue) {
       this.updateCategory(newValue.text);
@@ -124,20 +125,12 @@ export default {
       this.fetchCars();
     }
   },
-  // mounted() {
-  //   // eslint-disable-next-line no-unused-vars
-  //   this.$store.subscribe((mutation, state) => {
-  //     if (mutation.type !== "updateProperty") {
-  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
-  //     }
-  //   });
-  // },
 };
 </script>
 
 <style lang="scss">
-@import "public/css/variables";
-@import "public/css/mixins";
+@import "../../../public/css/variables";
+@import "../../../public/css/mixins";
 
 .model-tab {
   width: 60vw;

@@ -7,7 +7,8 @@ export default {
     currentPoints: [],
     currentCityCoordinates: [55.751574, 37.573856], // Moscow
     currentCityId: "",
-    pointsWithCoordinates: []
+    pointsWithCoordinates: [],
+    currentPointId: ""
   },
   mutations: {
     updateCities(state, cities) {
@@ -16,6 +17,10 @@ export default {
 
     updateCurrentCityId(state, id) {
       state.currentCityId = id;
+    },
+
+    updateCurrentPointId(state, id) {
+      state.currentPointId = id;
     },
 
     updatePoints(state, points) {
@@ -118,6 +123,14 @@ export default {
           commit("updateCurrentCityId", getters.getCities[i].id);
         }
       }
+    },
+
+    generateCurrentPointId({ commit, getters }, pointName) {
+      for (let i = 0; i < getters.getPoints.length; i++) {
+        if (getters.getPoints[i].address === pointName) {
+          commit("updateCurrentPointId", getters.getPoints[i].id);
+        }
+      }
     }
   },
   getters: {
@@ -131,6 +144,10 @@ export default {
 
     getCurrentCityId(state) {
       return state.currentCityId;
+    },
+
+    getCurrentPointId(state) {
+      return state.currentPointId;
     },
 
     getCoordinates(state) {

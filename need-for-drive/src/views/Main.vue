@@ -18,7 +18,7 @@
           <p class="title__second-phrase">Need for drive</p>
           <p class="title__description">Поминутная аренда авто твоего города</p>
         </div>
-        <router-link tag="button" to="/order" class="welcome-area__button">
+        <router-link tag="button" :to="`/order/${getOrderId}`" class="welcome-area__button">
           Забронировать
         </router-link>
       </main>
@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import SideBar from "../components/SideBar";
-import PageSlider from "../components/PageSlider";
+import SideBar from "../components/common/SideBar";
+import PageSlider from "../components/common/PageSlider";
 import Menu from "../components/common/Menu";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "Main",
@@ -49,17 +49,23 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars"])
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates"]),
+    ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars"])
+    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab"])
   },
   created() {
+
     if (this.getCities.length === 0) {
       this.fetchCities();
     }
     if (this.getAllCars.length === 0) {
       this.fetchCars();
+    }
+    if (localStorage.getItem("orderId") !== null) {
+      this.fetchOrder(localStorage.getItem("orderId"));
+      this.updateOrderStatus(true);
     }
   }
 };

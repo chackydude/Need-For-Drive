@@ -9,8 +9,8 @@ export default class Api {
   postRequest(url, headers, body) {
     return this.provider.postRequest(url, headers, body);
   }
-  updateRequest(url, headers, body) {
-    return this.provider.updateRequest(url, headers, body);
+  putRequest(url, headers, body) {
+    return this.provider.putRequest(url, headers, body);
   }
   deleteRequest(url, headers) {
     return this.provider.deleteRequest(url, headers);

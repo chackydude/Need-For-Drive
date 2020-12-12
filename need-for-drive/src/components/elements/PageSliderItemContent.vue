@@ -14,7 +14,7 @@
         {{ description }}
       </p>
       <router-link
-        to="/order"
+        :to="`/order/${getOrderId}`"
         tag="button"
         class="slide-content__button"
         :style="
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "PageSliderItem",
   props: {
@@ -39,6 +41,9 @@ export default {
     description: String,
     backgroundImage: String,
     buttonColors: Array
+  },
+  computed: {
+    ...mapGetters(["getOrderId"])
   }
 };
 </script>

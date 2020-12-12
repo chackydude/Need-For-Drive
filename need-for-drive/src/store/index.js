@@ -5,6 +5,7 @@ import tabs from "./modules/tabs";
 import place from "./modules/place";
 import map from "./modules/map";
 import cars from "./modules/cars";
+import tabsMapping from "./modules/tabsMapping";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     tabs,
     place,
     map,
-    cars
+    cars,
+    tabsMapping
   }
 });
