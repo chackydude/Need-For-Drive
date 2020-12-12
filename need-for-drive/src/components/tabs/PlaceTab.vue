@@ -44,7 +44,7 @@
 
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import Map from "./elements/Map";
+import Map from "../elements/Map";
 export default {
   name: "PlaceTab",
   components: {
@@ -156,8 +156,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 
 .place-tab__inputs {
   margin-top: 32px;

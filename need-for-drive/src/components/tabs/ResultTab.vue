@@ -9,7 +9,7 @@
       </p>
       <p class="car-info__date">
         Доступна с
-        <span class="car-info__property-value">{{ getDateFrom }}</span>
+        <span class="car-info__property-value">{{ new Date(getDateFrom).toISOString() }}</span>
       </p>
     </div>
     <div class="result-tab__car-image car-image">
@@ -66,8 +66,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 .result-tab {
   margin-top: 34px;
   display: flex;

@@ -31,6 +31,7 @@
         <label class="rent-item__title">С</label>
         <date-picker
           v-model="dateFrom"
+          valueType="timestamp"
           type="datetime"
           :disabled-date="notBeforeToday"
           value-type="format"
@@ -44,13 +45,14 @@
         <date-picker
           v-model="dateTo"
           type="datetime"
+          valueType="timestamp"
           :disabled-date="notBeforeDateFrom"
           :disabled-time="notBeforeDateFromHours"
           value-type="format"
           placeholder="Введите дату и время"
           input-class="rent-item__input"
           @change="changeRentalTime"
-          :disabled="this.dateFrom === ''"
+          :disabled="this.dateFrom === null"
         ></date-picker>
       </div>
     </div>
@@ -58,21 +60,14 @@
       <p class="tariff__title">Тариф:</p>
       <div class="tariff__items tariffs">
         <CheckInputItem
+          v-for="rate in getRates"
+          :key="rate.id"
           @change="changeTariff"
-          :comparingValue="getTariff"
+          :comparingValue="getTariff.text"
           class="tariffs__item"
-          id="byMinute"
-          name="Поминутно, 7₽/мин"
-          :value="{ text: 'Поминутно, 7₽/мин' }"
-          group-name="tariff"
-        />
-        <CheckInputItem
-          @change="changeTariff"
-          :comparingValue="getTariff"
-          class="tariffs__item"
-          id="byDay"
-          name="На сутки, 1999 ₽/сутки"
-          :value="{ text: 'На сутки, 1999 ₽/сутки' }"
+          :id="rate.id"
+          :name="rate.rateTypeId.name + ', ' + rate.price + '₽/' + rate.rateTypeId.unit"
+          :value="{ text: rate.rateTypeId.name + ', ' + rate.price + '₽/' + rate.rateTypeId.unit, id: rate.id }"
           group-name="tariff"
         />
       </div>
@@ -116,11 +111,11 @@
 </template>
 
 <script>
-import CheckInputItem from "./common/CheckInputItem";
+import CheckInputItem from "../common/CheckInputItem";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
-import DateHadler from "../utils/date/DateHadler";
+import DateHadler from "../../utils/date/DateHadler";
 
 export default {
   name: "AdditionalTab",
@@ -130,12 +125,16 @@ export default {
   },
   data() {
     return {
-      dateFrom: "",
-      dateTo: ""
+      dateFrom: null,
+      dateTo: null
     };
   },
   methods: {
-    ...mapActions(["checkOrderProperties", "checkOrderProperties", "fetchOrderStatuses"]),
+    ...mapActions([
+      "checkOrderProperties",
+      "checkOrderProperties",
+      "fetchOrderStatuses"
+    ]),
     ...mapMutations([
       "updateColor",
       "updateTariff",
@@ -159,16 +158,16 @@ export default {
     },
 
     changeTariff(tariff) {
-      this.updateTariff(tariff.text);
+      this.updateTariff(tariff);
       this.updateFillStatus(this.isFilled);
       this.checkOrderProperties(this.getCurrentTab.id);
       this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateCurrentDateFrom() {
-      if (this.dateFrom == null || this.dateFrom === "") {
-        this.dateFrom = "";
-        this.dateTo = "";
+      if (this.dateFrom === null) {
+        this.dateFrom = null;
+        this.dateTo = null;
         this.updateRentalDateFrom(this.dateFrom);
         this.updateRentalTime(this.getDateDiff);
         this.updateFillStatus(this.isFilled);
@@ -180,8 +179,8 @@ export default {
 
     changeRentalTime() {
       if (this.dateTo == null) {
-        this.dateFrom = "";
-        this.dateTo = "";
+        this.dateFrom = null;
+        this.dateTo = null;
       }
       this.updateRentalDateTo(this.dateTo);
       this.updateRentalTime(this.getDateDiff);
@@ -235,7 +234,8 @@ export default {
       "getRentalTime",
       "getDateFrom",
       "getDateTo",
-      "getCurrentTab"
+      "getCurrentTab",
+      "getRates"
     ]),
 
     isFilled() {
@@ -254,7 +254,7 @@ export default {
     this.dateFrom = this.getDateFrom;
     this.dateTo = this.getDateTo;
     this.fetchOrderStatuses();
-  },
+  }
   // mounted() {
   //   // eslint-disable-next-line no-unused-vars
   //   this.$store.subscribe((mutation, state) => {
@@ -267,7 +267,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "public/css/mixins";
+@import "../../../public/css/mixins";
 
 $margin-title: 34px 0 16px 0;
 

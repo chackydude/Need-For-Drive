@@ -24,7 +24,7 @@ import SideBar from "../components/SideBar";
 import Header from "../components/Header";
 import OrderList from "../components/OrderList";
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import ResultTab from "../components/ResultTab";
+import ResultTab from "../components/tabs/ResultTab";
 
 export default {
   name: "Total",

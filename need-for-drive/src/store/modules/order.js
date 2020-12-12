@@ -13,10 +13,10 @@ export default {
     orderModel: {},
     modelColor: "",
     rentalTime: [],
-    rentalDateFrom: "",
-    rentalDateTo: "",
+    rentalDateFrom: 0,
+    rentalDateTo: 0,
 
-    tariff: "",
+    tariff: {},
     extraServices: [],
 
     calculator: new PriceCalculator(1999, 7),
@@ -117,7 +117,10 @@ export default {
       for (let i = 0; i < state.availableStatuses.length; i++) {
         if (state.availableStatuses[i].name === status) {
           state.currentOrderStatusId = state.availableStatuses[i].id;
-          console.log(state.currentOrderStatusId, state.availableStatuses[i].id)
+          console.log(
+            state.currentOrderStatusId,
+            state.availableStatuses[i].id
+          );
           break;
         }
       }
@@ -135,6 +138,25 @@ export default {
         tank: newOrder.carId.tank,
         thumbnail: newOrder.carId.thumbnail.path
       };
+      let extraServices = [];
+      if (newOrder.isFullTank) {
+        extraServices.push({
+          amount: 500,
+          text: "Полный бак"
+        })
+      }
+      if (newOrder.isNeedChildChair) {
+        extraServices.push({
+          amount: 200,
+          text: "Детское кресло"
+        })
+      }
+      if (newOrder.isRightWheel) {
+        extraServices.push({
+          amount: 1600,
+          text: "Правый руль"
+        })
+      }
       state.orderId = newOrder.id;
       state.orderCity = newOrder.cityId.name;
       state.orderPlace = newOrder.pointId.address;
@@ -144,10 +166,18 @@ export default {
         newOrder.dateFrom,
         newOrder.dateTo
       );
-      state.rentalDateFrom = new Date(newOrder.dateFrom).toLocaleString();
-      state.rentalDateTo = new Date(newOrder.dateTo).toLocaleString();
-      state.tariff = "Поминутно, 7₽/мин";
-      // extraServices: [],
+      state.rentalDateFrom = newOrder.dateFrom;
+      state.rentalDateTo = newOrder.dateTo;
+      state.tariff = {
+        text:
+          newOrder.rateId.rateTypeId.name +
+          ", " +
+          newOrder.rateId.price +
+          "₽/" +
+          newOrder.rateId.rateTypeId.unit,
+        id: newOrder.rateId.id
+      };
+      state.extraServices = extraServices;
     }
   },
   actions: {
@@ -197,16 +227,6 @@ export default {
 
     // отправляем заказ на бек
     async postOrder({ commit }, order) {
-
-      // console.log("posting...")
-
-      // for (let i = 0; i < state.availableStatuses; i++) {
-      //   if (state.availableStatuses[i].name === "new") {
-      //     commit("updateStatusId", state.availableStatuses[i].id);
-      //     break;
-      //   }
-      // }
-
       let fetchApi = new Api(new FetchApi());
 
       // сформировать тут заказ, либо в передать уже готорый в параметры
@@ -226,16 +246,6 @@ export default {
     },
 
     cancelOrder({ state }, order) {
-
-      // обновляем статус заказа на canceled
-
-      // for (let i = 0; i < state.availableStatuses; i++) {
-      //   if (state.availableStatuses[i].name === "cancelled") {
-      //     commit("updateStatusId", state.availableStatuses[i].id);
-      //     break;
-      //   }
-      // }
-
       let fetchApi = new Api(new FetchApi());
 
       fetchApi
@@ -260,6 +270,7 @@ export default {
         )
         .then(result => {
           commit("updateRates", result.data);
+          console.log(result);
         })
         .catch(error => {
           console.log(error.message);
@@ -367,7 +378,7 @@ export default {
             isRightWheel = true;
             break;
           case "Полный бак":
-            isRightWheel = true;
+            isFullTank = true;
             break;
         }
       }
@@ -378,12 +389,9 @@ export default {
         cityId: rootState.place.currentCityId,
         carId: state.orderModel.id,
         color: state.modelColor,
-        dateFrom: new Date(state.rentalDateFrom).getTime(),
-        dateTo: new Date(state.rentalDateTo).getTime(),
-        rateId:
-          state.tariff === "Поминутно, 7₽/мин"
-            ? "5e26a0d2099b810b946c5d85"
-            : "5e26a0d2099b810b946c5d86", // add api FIXME
+        dateFrom: state.rentalDateFrom,
+        dateTo: state.rentalDateTo,
+        rateId: state.tariff.id, // add api FIXME
         price: getters.getCurrentPrice,
         isFullTank: isFullTank,
         isNeedChildChair: isNeedChildChair,

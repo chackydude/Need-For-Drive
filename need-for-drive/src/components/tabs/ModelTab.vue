@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import CheckInputItem from "./common/CheckInputItem";
-import CarItem from "./elements/CarItem";
+import CheckInputItem from "../common/CheckInputItem";
+import CarItem from "../elements/CarItem";
 import Paginate from "vuejs-paginate";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
@@ -81,7 +81,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCars", "checkOrderProperties"]),
+    ...mapActions(["fetchCars", "checkOrderProperties", "fetchRates"]),
     ...mapMutations(["updateCategory", "updateModel", "updateFillStatus", "checkTabsState"]),
     changeCategory: function(newValue) {
       this.updateCategory(newValue.text);
@@ -125,6 +125,7 @@ export default {
     if (this.getAllCars.length === 0) {
       this.fetchCars();
     }
+    this.fetchRates();
   },
   // mounted() {
   //   // eslint-disable-next-line no-unused-vars
@@ -138,8 +139,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "public/css/variables";
-@import "public/css/mixins";
+@import "../../../public/css/variables";
+@import "../../../public/css/mixins";
 
 .model-tab {
   width: 60vw;

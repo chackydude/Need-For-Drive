@@ -25,10 +25,10 @@
         :value="getRentalTime | toDate"
       />
       <OderListItem
-        v-if="getTariff"
+        v-if="getTariff.text"
         class="list__order-item"
         name="Тариф"
-        :value="getTariff"
+        :value="getTariff.text"
       />
       <div v-if="getExtraServices.length !== 0">
         <OderListItem
