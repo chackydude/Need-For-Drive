@@ -49,7 +49,7 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates"]),
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates", "fetchCarsAxios"]),
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
@@ -57,16 +57,19 @@ export default {
   },
   created() {
 
-    if (this.getCities.length === 0) {
-      this.fetchCities();
-    }
-    if (this.getAllCars.length === 0) {
-      this.fetchCars();
-    }
-    if (localStorage.getItem("orderId") !== null) {
-      this.fetchOrder(localStorage.getItem("orderId"));
-      this.updateOrderStatus(true);
-    }
+    this.fetchCarsAxios();
+    console.log('cars?')
+
+    // if (this.getCities.length === 0) {
+    //   this.fetchCities();
+    // }
+    // if (this.getAllCars.length === 0) {
+    //   this.fetchCars();
+    // }
+    // if (localStorage.getItem("orderId") !== null) {
+    //   this.fetchOrder(localStorage.getItem("orderId"));
+    //   this.updateOrderStatus(true);
+    // }
   }
 };
 </script>
