@@ -37,8 +37,9 @@ export default {
       rentalTime: { tabId: 2, default: [] },
       rentalDateFrom: { tabId: 2, default: null },
       rentalDateTo: { tabId: 2, default: null },
-      tariff: { tabId: 2, default: "" },
-      extraServices: { tabId: 2, default: [] }
+      tariff: { tabId: 2, default: {} },
+      extraServices: { tabId: 2, default: [] },
+      currentRate: { tabId: 2, default: {} }
     }
   },
 
@@ -173,6 +174,11 @@ export default {
         id: newOrder.rateId.id
       };
       state.extraServices = extraServices;
+      state.currentOrderStatusId = newOrder.orderStatusId.id;
+
+      // adding info for other states
+      // cityId
+      // pointId
     }
   },
   actions: {
@@ -214,6 +220,8 @@ export default {
         )
         .then(result => {
           commit("updateOrder", result.data);
+          commit("updateCurrentCityId", result.data.cityId.id);
+          commit("updateCurrentPointId", result.data.pointId.id);
         })
         .catch(error => {
           console.log(error.message);

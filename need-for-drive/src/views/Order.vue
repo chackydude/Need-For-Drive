@@ -58,7 +58,7 @@ import OrderList from "../components/OrderList";
 import { mapMutations, mapGetters } from "vuex";
 import ModelTab from "../components/tabs/ModelTab";
 import AdditionalTab from "../components/tabs/AdditionalTab";
-import ResultTab from "../components/common/ResultTab";
+import ResultTab from "../components/tabs/ResultTab";
 
 export default {
   name: "Order",
