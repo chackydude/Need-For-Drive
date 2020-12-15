@@ -105,6 +105,7 @@ export default {
   border-radius: 4px;
   height: 29px;
   width: 110px;
+  cursor: pointer;
 }
 
 @media (max-width: 450px) {
