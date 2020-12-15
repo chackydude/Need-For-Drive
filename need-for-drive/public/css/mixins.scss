@@ -29,3 +29,8 @@
   font-size: 14px;
   font-weight: lighter;
 }
+
+@mixin fontStyleRegular() {
+  font-size: 14px;
+  font-weight: 400;
+}

@@ -18,6 +18,10 @@ const routes = [
   {
     path: "/order/:id",
     component: () => import("../views/Total")
+  },
+  {
+    path: "/admin",
+    component: () => import("../views/Auth")
   }
 ];
 
