@@ -29,13 +29,14 @@ const routes = [
     path: "/admin/*",
     component: () => import("../views/Admin"),
     // route check function
-    beforeEnter(to, from, next) {
-      if (localStorage.getItem("authId")) {
-        next();
-      } else {
-        next({ name: "auth" });
-      }
-    }
+
+    // beforeEnter(to, from, next) {
+    //   if (localStorage.getItem("authId")) {
+    //     next();
+    //   } else {
+    //     next({ name: "auth" });
+    //   }
+    // }
   }
 ];
 
