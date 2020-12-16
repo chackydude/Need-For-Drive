@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-form">
+  <form class="auth-form">
     <h2 class="auth-form__title">Вход</h2>
     <div class="auth-form__inputs inputs">
       <label for="email" class="inputs__label auth-label">Почта</label>
@@ -11,11 +11,11 @@
       <button class="access-button">
         Запросить доступ
       </button>
-      <button class="enter-button">
+      <button class="enter-button" type="submit">
         Войти
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
