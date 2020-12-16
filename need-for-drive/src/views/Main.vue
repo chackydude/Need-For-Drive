@@ -53,7 +53,7 @@ export default {
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab"])
+    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates"])
   },
   created() {
 
@@ -62,6 +62,9 @@ export default {
     }
     if (this.getAllCars.length === 0) {
       this.fetchCars();
+    }
+    if (this.getRates.length === 0) {
+      this.fetchRates();
     }
     if (localStorage.getItem("orderId") !== null) {
       this.fetchOrder(localStorage.getItem("orderId"));

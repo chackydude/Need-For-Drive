@@ -80,7 +80,7 @@ export default {
     ...mapGetters(["getTabs", "getCurrentTab"])
   },
   created() {
-    this.fetchRates();
+      this.fetchRates();
   }
 };
 </script>

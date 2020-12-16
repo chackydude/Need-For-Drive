@@ -1,12 +1,13 @@
 export default class PriceCalculator {
-  constructor(tariffDays, tariffMinutes) {
+  constructor(tariffDays, tariffMinutes, tariffWeeks) {
     this.tariffDays = tariffDays;
     this.tariffMinutes = tariffMinutes;
+    this.tariffweeks = tariffWeeks;
   }
 
   calcPrice(rentalTime, tariff, extraServices) {
     let price = 0;
-    let days, minutes;
+    let days, minutes, weeks, tail;
     switch (tariff) {
       case "day":
         days =
@@ -29,6 +30,14 @@ export default class PriceCalculator {
             return (sum += current);
           }, 0);
         return price;
+      case "week":
+        weeks = Math.floor(rentalTime[0] / 7);
+        tail = rentalTime[0] % 7 + rentalTime[1] + rentalTime[2];
+        if (tail === 0) {
+          return weeks * this.tariffweeks;
+        } else {
+          return (weeks + 1) * this.tariffweeks;
+        }
       default:
         return 0;
     }
