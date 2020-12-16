@@ -19,7 +19,7 @@ export default {
     tariff: {},
     extraServices: [],
 
-    calculator: new PriceCalculator(1999, 7),
+    calculator: null,
     dateHandler: new DateHadler(),
     isPosted: false,
 
@@ -98,6 +98,10 @@ export default {
       state.availableStatuses = statuses;
     },
 
+    updateCalculator(state, calc) {
+      state.calculator = calc;
+    },
+
     // updating status id with the name of status
     updateStatusId(state, status) {
       for (let i = 0; i < state.availableStatuses.length; i++) {
@@ -125,19 +129,19 @@ export default {
         extraServices.push({
           amount: 500,
           text: "Полный бак"
-        })
+        });
       }
       if (newOrder.isNeedChildChair) {
         extraServices.push({
           amount: 200,
           text: "Детское кресло"
-        })
+        });
       }
       if (newOrder.isRightWheel) {
         extraServices.push({
           amount: 1600,
           text: "Правый руль"
-        })
+        });
       }
       state.orderId = newOrder.id;
       state.orderCity = newOrder.cityId.name;
@@ -239,6 +243,14 @@ export default {
         )
         .then(result => {
           commit("updateRates", result.data);
+          commit(
+            "updateCalculator",
+            new PriceCalculator(
+              result.data[0].price,
+              result.data[2].price,
+              result.data[1].price
+            )
+          );
         })
         .catch(error => {
           console.log(error.message);
@@ -298,13 +310,28 @@ export default {
     },
 
     getCurrentPrice(state) {
-      let tariff = state.tariff.id === "5e26a0d2099b810b946c5d85" ? "minute" : "day";
+      let tariff;
 
-      let price = state.calculator.calcPrice(
-        state.rentalTime,
-        tariff,
-        state.extraServices.map(item => item.amount)
-      );
+      switch (state.tariff.text) {
+        case "Поминутно, 7₽/мин":
+          tariff = "minute";
+          break;
+        case "На сутки, 1999₽/сутки":
+          tariff = "day";
+          break;
+        case "Недельный, 7000₽/7 дней":
+          tariff = "week";
+          break;
+      }
+
+      let price =
+        state.calculator === null
+          ? 0
+          : state.calculator.calcPrice(
+              state.rentalTime,
+              tariff,
+              state.extraServices.map(item => item.amount)
+            );
       return price;
     },
 
