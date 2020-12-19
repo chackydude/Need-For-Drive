@@ -24,7 +24,14 @@
       <button class="access-button">
         Запросить доступ
       </button>
-      <button class="enter-button" @click="sendAuthRequest()" type="submit">
+      <button
+        class="enter-button"
+        @click="sendAuthRequest()"
+        type="submit"
+        :class="{
+          'enter-button--blocked': this.password === '' || this.email === ''
+        }"
+      >
         Войти
       </button>
     </div>
@@ -131,6 +138,10 @@ export default {
   width: 110px;
   cursor: pointer;
   @include buttonStylesByColor($blue-color);
+}
+
+.enter-button--blocked {
+  @include buttonBlocked();
 }
 
 @media (max-width: 450px) {

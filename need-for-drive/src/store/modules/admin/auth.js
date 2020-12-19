@@ -28,7 +28,6 @@ export default {
         )
         .then(result => {
           localStorage.setItem("auth", true);
-          console.log(result);
           commit("updateAccessToken", result.access_token);
         })
         .catch(error => {
