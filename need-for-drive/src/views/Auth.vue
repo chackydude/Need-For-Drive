@@ -25,7 +25,6 @@ import PulseLoader from "vue-spinner/src/PulseLoader";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  // auth page
   name: "Auth",
   components: {
     AuthForm,
