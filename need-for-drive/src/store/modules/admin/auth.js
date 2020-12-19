@@ -3,9 +3,7 @@ import FetchApi from "../../../utils/api/FetchApi";
 
 export default {
   state: {
-    // email: "",
-    // password: ""
-    accessToken: "",
+    accessToken: ""
   },
 
   getters: {
