@@ -1,26 +1,50 @@
 <template>
-  <div class="auth-form">
+  <form class="auth-form">
     <h2 class="auth-form__title">Вход</h2>
     <div class="auth-form__inputs inputs">
       <label for="email" class="inputs__label auth-label">Почта</label>
-      <input id="email" type="email" class="inputs__input auth-input" />
+      <input
+        id="email"
+        type="email"
+        class="inputs__input auth-input"
+        v-model.trim="email"
+        required
+      />
+
       <label for="pass" class="inputs__label auth-label">Пароль</label>
-      <input id="pass" type="password" class="inputs__input auth-input" />
+      <input
+        id="pass"
+        type="password"
+        class="inputs__input auth-input"
+        v-model.trim="password"
+        required
+      />
     </div>
     <div class="auth-form__buttons">
       <button class="access-button">
         Запросить доступ
       </button>
-      <button class="enter-button">
+      <button class="enter-button" @click="sendAuthRequest()" type="submit">
         Войти
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 export default {
-  name: "AuthForm"
+  name: "AuthForm",
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    sendAuthRequest() {
+      this.$emit("sending", { email: this.email, password: this.password });
+    }
+  }
 };
 </script>
 
@@ -106,6 +130,7 @@ export default {
   height: 29px;
   width: 110px;
   cursor: pointer;
+  @include buttonStylesByColor($blue-color);
 }
 
 @media (max-width: 450px) {

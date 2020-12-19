@@ -1,22 +1,61 @@
 <template>
   <div class="auth-page">
-    <div class="auth-page__content content">
+    <div class="auth-page__content content"  v-if="!loading">
       <div class="content__title auth-title">
-        <img src="@/assets/icons/logo.svg" alt="logo" class="auth-title__logo" />
+        <img
+          src="@/assets/icons/logo.svg"
+          alt="logo"
+          class="auth-title__logo"
+        />
         <h1 class="auth-title__text">Need for drive</h1>
       </div>
-      <AuthForm class="content__form"/>
+      <AuthForm class="content__form" @sending="sendAuthRequest"/>
     </div>
+    <pulse-loader
+      v-if="loading"
+      :loading="isLoading"
+      color="#007BFF"
+    ></pulse-loader>
   </div>
 </template>
 
 <script>
 import AuthForm from "../components/AuthForm";
+import PulseLoader from "vue-spinner/src/PulseLoader";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   // auth page
   name: "Auth",
   components: {
-    AuthForm
+    AuthForm,
+    PulseLoader
+  },
+  data() {
+    return {
+      loading: false
+    };
+  },
+  methods: {
+    ...mapActions(["authUser"]),
+    sendAuthRequest(userData) {
+      this.authUser({
+        username: userData.email,
+        password: userData.password
+      });
+      this.loading = true;
+    }
+  },
+  computed: {
+    ...mapGetters(["getAccessToken"]),
+    isLoading() {
+      return this.getAccessToken === "";
+    }
+  },
+  watch: {
+    getAccessToken: function() {
+      this.$router.push("admin/panel");
+    }
   }
 };
 </script>
@@ -45,7 +84,7 @@ export default {
   @include fontStylesLight;
   font-weight: 500;
   font-size: 24px;
-  color: #3D5170;
+  color: #3d5170;
   margin-left: 12px;
 }
 
