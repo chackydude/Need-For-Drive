@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: "/admin/*",
-    component: () => import("../views/Admin"),
+    component: () => import("../views/AdminCarCard"),
     // route check function
 
     // beforeEnter(to, from, next) {
@@ -39,14 +39,14 @@ const routes = [
     // }
   },
   {
-    path: "/admin/panel/",
-    component: () => import("../views/Admin"),
+    path: "/admin/car-card/",
+    component: () => import("../views/AdminCarCard"),
   }
 ];
 
 const router = new VueRouter({
   routes,
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL
 });
 
