@@ -88,8 +88,9 @@ export default {
   height: 100vh;
   max-width: 285px;
   width: 100%;
-  box-shadow: 6px 0 4px -4px rgba(165, 182, 201, 0.1);
-  min-width: 50px;
+  box-shadow: 6px 0 4px -4px rgba(38, 46, 52, 0.1);
+  min-width: 70px;
+  z-index: 2;
 }
 
 .logo-image {

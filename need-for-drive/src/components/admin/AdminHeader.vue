@@ -18,7 +18,7 @@
           <p class="actions__nickname">Admin</p>
         </div>
         <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
-        <div class="actions__logout" v-if="showActions">Logout</div>
+        <div class="actions__action" v-if="showActions">Logout</div>
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   box-shadow: 0px 8px 4px -4px rgba(165, 182, 201, 0.1);
+  background-color: #fff;
 }
 
 .search-bar {
@@ -106,7 +107,7 @@ export default {
   margin-left: 10px;
 }
 
-.actions__logout {
+.actions__action {
   position: absolute;
   top: 80px;
   font-size: 15px;
