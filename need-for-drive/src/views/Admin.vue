@@ -1,22 +1,18 @@
 <template>
   <div class="admin-page">
-    <h3>
-      here will be admin page
-    </h3>
+    <AdminSideBar />
   </div>
 </template>
 
 <script>
+import AdminSideBar from "../components/admin/AdminSideBar";
 export default {
-  name: "Admin"
+  name: "Admin",
+  components: {
+    AdminSideBar
+  }
 };
 </script>
 
 <style scoped lang="scss">
-.admin-page {
-  display: grid;
-  place-items: center;
-  height: 100vh;
-  width: 100vw;
-}
 </style>

@@ -37,6 +37,10 @@ const routes = [
     //     next({ name: "auth" });
     //   }
     // }
+  },
+  {
+    path: "/admin/panel/",
+    component: () => import("../views/Admin"),
   }
 ];
 
