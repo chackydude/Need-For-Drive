@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: "/admin/*",
-    component: () => import("../views/AdminCarCard"),
+    component: () => import("../views/AdminOrders"),
     // route check function
 
     // beforeEnter(to, from, next) {
@@ -40,7 +40,7 @@ const routes = [
   },
   {
     path: "/admin/car-card/",
-    component: () => import("../views/AdminCarCard"),
+    component: () => import("../views/AdminOrders"),
   }
 ];
 

@@ -5,6 +5,9 @@
       <AdminHeader class="admin-page__header"/>
       <div class="admin-page__content admin-content">
         <h1 class="admin-content__title">Заказы</h1>
+        <AdminOrderList class="admin-content__order-list">
+
+        </AdminOrderList>
       </div>
       <AdminFooter class="admin-page__footer"/>
     </div>
@@ -15,6 +18,7 @@
 import AdminSideBar from "../components/admin/AdminSideBar";
 import AdminHeader from "../components/admin/AdminHeader";
 import AdminFooter from "../components/admin/AdminFooter";
+import AdminOrderList from "../components/admin/AdminOrderList";
 import { mapActions } from "vuex";
 
 export default {
@@ -22,7 +26,8 @@ export default {
   components: {
     AdminSideBar,
     AdminHeader,
-    AdminFooter
+    AdminFooter,
+    AdminOrderList
   },
   methods: {
     ...mapActions(["fetchOrders"])
@@ -63,10 +68,11 @@ export default {
   flex: 0 0 auto;
 }
 
-.admin-page__content {
+.admin-content {
   display: flex;
   flex: 1 0 auto;
   padding: 32px;
+  flex-direction: column;
 }
 
 .admin-page__footer {
@@ -77,5 +83,9 @@ export default {
 .admin-content__title {
   font-size: 29px;
   color: #3D5170;
+}
+
+.admin-content__order-list {
+  margin-top: 30px;
 }
 </style>

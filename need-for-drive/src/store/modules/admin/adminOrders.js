@@ -5,14 +5,13 @@ export default {
   state: {
     orders: {}
   },
-  getters: {
-    getOrders(state) {
-      return state.orders;
-    }
-  },
+  getters: {},
   actions: {
     fetchOrders({ commit }) {
       let fetchApi = new Api(new FetchApi());
+
+      fetchApi.provider.headers["Authorization"] =
+        "Bearer 05bc08c3949b852aa44867f59872ba00b7350af2";
 
       fetchApi
         .getRequest(
@@ -20,8 +19,8 @@ export default {
           fetchApi.provider.headers
         )
         .then(result => {
-          console.log(result);
           commit("updateOrders", result.data);
+          console.log(result);
         })
         .catch(error => {
           console.log(error.message);
