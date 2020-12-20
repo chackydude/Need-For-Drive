@@ -12,12 +12,12 @@
       <div class="admin-info__notifications">
         <img src="@/assets/icons/admin/notifications.svg" alt="notifications" />
       </div>
-      <div class="admin-info__actions actions">
+      <div class="admin-info__actions actions" @click="showActions = !showActions">
         <div class="actions__info-wrapper">
           <img src="@/assets/images/admin/user-avatar.png" alt="avatar" class="actions__admin-avatar">
           <p class="actions__nickname">Admin</p>
         </div>
-        <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown" @click="showActions = !showActions"/>
+        <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
         <div class="actions__logout" v-if="showActions">Logout</div>
       </div>
     </div>
@@ -87,6 +87,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  cursor: pointer;
 }
 
 .actions__admin-avatar {
@@ -103,10 +104,6 @@ export default {
   font-size: 15px;
   color: #5a6169;
   margin-left: 10px;
-}
-
-.actions__dropdown {
-  cursor: pointer;
 }
 
 .actions__logout {
