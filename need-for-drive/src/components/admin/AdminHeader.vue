@@ -52,15 +52,14 @@ export default {
 .search-bar {
   display: flex;
   align-items: center;
-}
-
-.search-bar__icon {
-  margin-left: 27px;
+  width: 100%;
+  padding: 0 27px 0 27px;
 }
 
 .search-bar__input {
   border: none;
   margin-left: 10px;
+  width: 100%;
 }
 
 .admin-info {
