@@ -49,4 +49,11 @@ export default {
 .admin-footer__copyright {
   font-size: 14px;
 }
+
+@media (max-width: 600px) {
+  .admin-footer__links,
+  .admin-footer__copyright {
+    font-size: 10px;
+  }
+}
 </style>
