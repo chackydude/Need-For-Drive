@@ -28,18 +28,18 @@ const routes = [
   {
     path: "/admin/*",
     component: () => import("../views/AdminOrders"),
-    // route check function
 
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.getItem("authId")) {
-    //     next();
-    //   } else {
-    //     next({ name: "auth" });
-    //   }
-    // }
+    // route check function
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
   },
   {
-    path: "/admin/car-card/",
+    path: "/admin/orders/",
     component: () => import("../views/AdminOrders"),
   }
 ];
