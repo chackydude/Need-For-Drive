@@ -6,7 +6,7 @@ import place from "./modules/place";
 import map from "./modules/map";
 import cars from "./modules/cars";
 import tabsMapping from "./modules/tabsMapping";
-import adminOrders from "./modules/admin/adminOrders";
+import auth from "./modules/admin/auth";
 
 Vue.use(Vuex);
 
@@ -18,6 +18,6 @@ export default new Vuex.Store({
     map,
     cars,
     tabsMapping,
-    adminOrders
+    auth
   }
 });
