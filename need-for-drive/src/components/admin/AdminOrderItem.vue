@@ -19,7 +19,7 @@
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="⛽"
+          name="Полный бак"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"
@@ -27,7 +27,7 @@
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="🎡"
+          name="Полный бак"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"
@@ -35,7 +35,7 @@
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="💺"
+          name="Полный бак"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"

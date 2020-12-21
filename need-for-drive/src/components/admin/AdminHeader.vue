@@ -12,13 +12,15 @@
       <div class="admin-info__notifications">
         <img src="@/assets/icons/admin/notifications.svg" alt="notifications" />
       </div>
-      <div class="admin-info__actions actions" @click="showActions = !showActions">
+      <div class="admin-info__actions actions dropdown" @click="showActions = !showActions">
         <div class="actions__info-wrapper">
           <img src="@/assets/images/admin/user-avatar.png" alt="avatar" class="actions__admin-avatar">
           <p class="actions__nickname">Admin</p>
+          <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
         </div>
-        <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
-        <div class="actions__action" v-if="showActions">Logout</div>
+        <div class="dropdown-content">
+          <router-link to="/admin" tag="p">Logout</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -99,6 +101,7 @@ export default {
 .actions__info-wrapper {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 }
 
@@ -114,6 +117,35 @@ export default {
   font-size: 15px;
   color: #5a6169;
   border: 1px solid black;
+}
+
+.actions__dropdown {
+  margin-left: 10px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 15px;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #5a6169;
+  text-align: center;
+  border: 1px solid #e1e5eb;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 @media (max-width: 600px) {

@@ -208,7 +208,7 @@ export default {
   }
 
   .side-bar-item {
-    min-width: 67px;
+    min-width: 30px;
     height: 67px;
     border-right: 1px solid #e1e5eb;
     border-left: 1px solid #e1e5eb;
