@@ -39,7 +39,7 @@ export default {
   methods: {
     ...mapActions(["fetchOrders"])
   },
-  mounted() {
+  created() {
     this.fetchOrders();
   }
 };

@@ -29,7 +29,7 @@ const routes = [
     path: "/admin/*",
     component: () => import("../views/AdminOrders"),
 
-    // route check function
+    // route check function, commented cuz api drops sometimes
     // beforeEnter(to, from, next) {
     //   if (localStorage.getItem("auth")) {
     //     next();

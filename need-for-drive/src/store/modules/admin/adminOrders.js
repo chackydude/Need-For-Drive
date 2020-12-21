@@ -7,11 +7,11 @@ export default {
   },
   getters: {},
   actions: {
-    fetchOrders({ commit }) {
+    fetchOrders({ commit, rootState }) {
       let fetchApi = new Api(new FetchApi());
 
       fetchApi.provider.headers["Authorization"] =
-        "Bearer 05bc08c3949b852aa44867f59872ba00b7350af2";
+        "Bearer " + rootState.auth.accessToken;
 
       fetchApi
         .getRequest(
