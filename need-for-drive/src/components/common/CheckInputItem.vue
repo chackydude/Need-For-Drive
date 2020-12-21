@@ -49,18 +49,22 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/variables";
 @import "public/css/mixins";
 
 .radio-button {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .radio-button__label {
   @include fontStylesLight;
   padding: 0 15px 0 8px;
   cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 input[type="radio"]:after {

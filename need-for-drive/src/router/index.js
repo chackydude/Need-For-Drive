@@ -27,23 +27,26 @@ const routes = [
   },
   {
     path: "/admin/*",
+    component: () => import("../views/AdminOrders"),
     // route check function
 
-    beforeEnter(to, from, next) {
-      if (localStorage.getItem("auth") !== "false") {
-        next();
-      } else {
-        next({ name: "auth" });
-      }
-    },
-
-    component: () => import("../views/Admin"),
+    // beforeEnter(to, from, next) {
+    //   if (localStorage.getItem("authId")) {
+    //     next();
+    //   } else {
+    //     next({ name: "auth" });
+    //   }
+    // }
+  },
+  {
+    path: "/admin/car-card/",
+    component: () => import("../views/AdminOrders"),
   }
 ];
 
 const router = new VueRouter({
   routes,
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL
 });
 

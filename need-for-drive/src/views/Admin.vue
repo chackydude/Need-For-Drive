@@ -1,7 +1,7 @@
 <template>
   <div class="admin-page">
     <h3>
-      here will be an admin page
+      here will be admin page
     </h3>
   </div>
 </template>
