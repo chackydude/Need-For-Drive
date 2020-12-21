@@ -18,8 +18,8 @@
       <paginate
         :pageCount="2"
         :containerClass="'pagination'"
-        prev-text="Назад"
-        next-text="Вперед"
+        prev-text="«"
+        next-text="»"
         :clickHandler="clickCallback"
         :page-class="'page-item'"
         :active-class="'page-item--active'"
@@ -109,6 +109,7 @@ export default {
 
 .admin-order-list__content {
   display: flex;
+  flex-direction: column;
   flex: 1 0 auto;
 }
 
@@ -125,20 +126,20 @@ export default {
   flex-direction: row;
   justify-content: center;
   @include fontStylesLight;
-  font-size: 17px;
+  font-size: 15px;
   user-select: none;
 }
 
 .page-item {
   margin: 0 2px 0 2px;
   padding: 1px 5px 1px 5px;
-  border-radius: 2px;
+  border-radius: 50%;
+  width: 20px;
 }
 
 .nav-item {
   margin: 0 5px 0 5px;
   padding: 1px 4px 1px 4px;
-  border-radius: 2px;
 }
 
 .nav-item:active,
@@ -152,4 +153,12 @@ export default {
   background-color: #007bff;
 }
 
+@media (max-width: 850px) {
+  .filters__select, .filters__accept-button {
+    font-size: 8px;
+    height: 25px;
+    width: 65px;
+    margin-right: 10px;
+  }
+}
 </style>

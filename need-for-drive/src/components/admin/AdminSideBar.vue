@@ -85,7 +85,8 @@ export default {
   color: #3d5170;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   max-width: 285px;
   width: 100%;
   box-shadow: 6px 0 4px -4px rgba(38, 46, 52, 0.1);
@@ -166,6 +167,10 @@ export default {
 @media (max-width: 1024px) {
   .admin-side-bar {
     width: 15%;
+    color: #3d5170;
+    display: flex;
+    flex-direction: row;
+    height: 10vh;
   }
 
   .side-bar-item__text,
