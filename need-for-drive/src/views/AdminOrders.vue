@@ -59,10 +59,6 @@ export default {
   flex-direction: row;
 }
 
-.admin-page__side-bar {
-  /*position: fixed;*/
-}
-
 .admin-page__main-content {
   width: 100%;
   background-color: $background-admin;
@@ -96,10 +92,21 @@ export default {
   margin-top: 30px;
 }
 
-/*@media (max-width: 600px) {*/
-/*  .admin-page {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*  }*/
-/*}*/
+@media (max-width: 600px) {
+  .admin-page {
+    flex-direction: column;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+
+  .admin-content__title {
+    text-align: center;
+  }
+
+  .admin-content__order-list {
+    margin-top: 20px;
+  }
+}
 </style>

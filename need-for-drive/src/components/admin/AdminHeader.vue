@@ -74,6 +74,7 @@ export default {
 
 .admin-info__notifications {
   width: 67px;
+  padding: 20px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -82,6 +83,7 @@ export default {
 
 .actions {
   width: 218px;
+  padding: 15px;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -112,5 +114,19 @@ export default {
   font-size: 15px;
   color: #5a6169;
   border: 1px solid black;
+}
+
+@media (max-width: 600px) {
+  .actions__dropdown, .actions__nickname {
+    display: none;
+  }
+
+  .admin-info__notifications {
+    width: auto;
+  }
+
+  .actions {
+    width: auto;
+  }
 }
 </style>

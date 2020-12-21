@@ -1,23 +1,25 @@
 <template>
   <div class="order">
     <div class="order__info">
-      <img
-        src="@/assets/images/car-example.png"
-        alt="car-image"
-        class="order__image"
-        crossOrigin="anonymous"
-        referrerPolicy="origin"
-      />
-      <p class="order__description">
-        <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42 <br />
-        12.06.2019 12:00 — 13.06.2019 12:00 <br />
-        Цвет: <span>Голубой</span>
-      </p>
+      <div class="order-info__container">
+        <img
+                src="@/assets/images/car-example.png"
+                alt="car-image"
+                class="order__image"
+                crossOrigin="anonymous"
+                referrerPolicy="origin"
+        />
+        <p class="order__description">
+          <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42 <br />
+          12.06.2019 12:00 — 13.06.2019 12:00 <br />
+          Цвет: <span>Голубой</span>
+        </p>
+      </div>
       <div class="order__extra order-extra">
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="Полный бак"
+          name="⛽"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"
@@ -25,7 +27,7 @@
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="Полный бак"
+          name="🎡"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"
@@ -33,7 +35,7 @@
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="Полный бак"
+          name="💺"
           :value="{ text: 'Полный бак', amount: 1600 }"
           :is-checked="false"
           id="1"
@@ -45,16 +47,13 @@
       <p class="order__price">4 300 ₽</p>
       <div class="order__action-buttons">
         <button class="action-button">
-          <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" />Готово
+          <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" /> <p class="action-button__text">Готово</p>
         </button>
         <button class="action-button">
-          <img
-            src="@/assets/icons/admin/buttons/close.svg"
-            alt="cancel"
-          />Отмена
+          <img src="@/assets/icons/admin/buttons/close.svg" alt="cancel" /> <p class="action-button__text">Отмена</p>
         </button>
         <button class="action-button">
-          <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" />Изменить
+          <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" /> <p class="action-button__text">Изменить</p>
         </button>
       </div>
     </div>
@@ -151,6 +150,11 @@ export default {
   align-items: center;
 }
 
+.order-info__container {
+  display: flex;
+  flex-derection: row;
+}
+
 .order__additional-info {
   width: 40%;
   display: flex;
@@ -177,7 +181,6 @@ export default {
 
   .order__info {
     display: flex;
-    flex-direction: row;
     align-items: center;
     width: 90%;
   }
@@ -205,6 +208,47 @@ export default {
 
   .order__description {
     font-size: 10px;
+  }
+
+  .order__image {
+    height: 30px;
+    width: 66px;
+    margin-right: 10px;
+  }
+
+  .order__price {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .action-button__text {
+    display: none;
+  }
+
+  .order__image {
+    height: 30px;
+    width: 66px;
+    margin-bottom: 10px;
+  }
+
+  .order__description {
+    font-size: 8px;
+  }
+
+  .action-button {
+    min-width: auto;
+
+    img {
+      margin: 0;
+    }
+  }
+}
+
+
+@media (max-width: 400px) {
+  .order-info__container {
+    flex-direction: column;
   }
 }
 </style>

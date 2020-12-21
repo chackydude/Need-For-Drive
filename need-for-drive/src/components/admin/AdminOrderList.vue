@@ -65,13 +65,13 @@ export default {
 }
 
 .filters {
-  height: 59px;
+  min-height: 59px;
   width: 100%;
   border-bottom: 1px solid #e1e5eb;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px 0 20px;
+  padding: 10px 20px 10px 20px;
 }
 
 .filters__select {
@@ -94,10 +94,11 @@ export default {
   border: none;
   @include buttonStylesByColor(#007bff);
   cursor: pointer;
+  padding: 0 8px 0 8px;
 }
 
 .admin-order-list__pagination {
-  height: 59px;
+  min-height: 59px;
   width: 100%;
   border-top: 1px solid #e1e5eb;
 }
@@ -158,7 +159,7 @@ export default {
     font-size: 8px;
     height: 25px;
     width: 65px;
-    margin-right: 10px;
+    margin: 5px 5px 0 0;
   }
 }
 </style>

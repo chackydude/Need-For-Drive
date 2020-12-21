@@ -190,4 +190,29 @@ export default {
     margin: 0 auto;
   }
 }
+
+@media (max-width: 600px) {
+  .admin-side-bar {
+    flex-direction: row;
+    justify-content: space-around;
+    min-height: 67px;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+    border-bottom: 1px solid #e1e5eb;
+    box-shadow: 0 6px 4px -4px rgba(38, 46, 52, 0.1);
+  }
+
+  .logo {
+    min-width: 67px;
+  }
+
+  .side-bar-item {
+    min-width: 67px;
+    height: 67px;
+    border-right: 1px solid #e1e5eb;
+    border-left: 1px solid #e1e5eb;
+    flex-grow: 1;
+  }
+}
 </style>
