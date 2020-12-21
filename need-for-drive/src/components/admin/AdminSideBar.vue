@@ -8,7 +8,10 @@
       />
       <router-link to="/" class="logo__text">Need for car</router-link>
     </div>
-    <div class="admin-side-bar__item side-bar-item" :class="{ 'side-bar-item--active' : active === 0 }">
+    <div
+      class="admin-side-bar__item side-bar-item"
+      :class="{ 'side-bar-item--active': active === 0 }"
+    >
       <svg
         width="15"
         height="15"
@@ -28,7 +31,10 @@
 
       <p class="side-bar-item__text">Карточка автомобиля</p>
     </div>
-    <div class="admin-side-bar__item side-bar-item" :class="{ 'side-bar-item--active' : active === 1 }">
+    <div
+      class="admin-side-bar__item side-bar-item"
+      :class="{ 'side-bar-item--active': active === 1 }"
+    >
       <svg
         width="17"
         height="16"
@@ -48,7 +54,10 @@
 
       <p class="side-bar-item__text">Список авто</p>
     </div>
-    <div class="admin-side-bar__item side-bar-item" :class="{ 'side-bar-item--active' : active === 2 }">
+    <div
+      class="admin-side-bar__item side-bar-item"
+      :class="{ 'side-bar-item--active': active === 2 }"
+    >
       <svg
         width="13"
         height="12"
@@ -75,7 +84,7 @@
 export default {
   name: "AdminSideBar",
   props: {
-    active: Number,
+    active: Number
   }
 };
 </script>
@@ -85,8 +94,8 @@ export default {
   color: #3d5170;
   display: flex;
   flex-direction: column;
-  height: auto;
   min-height: 100vh;
+  height: auto;
   max-width: 285px;
   width: 100%;
   box-shadow: 6px 0 4px -4px rgba(38, 46, 52, 0.1);
@@ -167,10 +176,6 @@ export default {
 @media (max-width: 1024px) {
   .admin-side-bar {
     width: 15%;
-    color: #3d5170;
-    display: flex;
-    flex-direction: row;
-    height: 10vh;
   }
 
   .side-bar-item__text,

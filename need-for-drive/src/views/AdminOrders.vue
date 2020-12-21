@@ -1,8 +1,8 @@
 <template>
   <div class="admin-page">
-    <AdminSideBar :active="0" class="admin-page__side-bar"/>
+    <AdminSideBar :active="0" class="admin-page__side-bar" />
     <div class="admin-page__main-content">
-      <AdminHeader class="admin-page__header"/>
+      <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <h1 class="admin-content__title">Заказы</h1>
         <AdminOrderList class="admin-content__order-list">
@@ -14,7 +14,7 @@
           <AdminOrderItem />
         </AdminOrderList>
       </div>
-      <AdminFooter class="admin-page__footer"/>
+      <AdminFooter class="admin-page__footer" />
     </div>
   </div>
 </template>
@@ -89,10 +89,17 @@ export default {
 
 .admin-content__title {
   font-size: 29px;
-  color: #3D5170;
+  color: #3d5170;
 }
 
 .admin-content__order-list {
   margin-top: 30px;
 }
+
+/*@media (max-width: 600px) {*/
+/*  .admin-page {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*  }*/
+/*}*/
 </style>
