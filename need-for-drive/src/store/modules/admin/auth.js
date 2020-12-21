@@ -27,7 +27,7 @@ export default {
           userData
         )
         .then(result => {
-          localStorage.setItem("auth", true);
+          localStorage.setItem("auth", "true");
           commit("updateAccessToken", result.access_token);
         })
         .catch(error => {

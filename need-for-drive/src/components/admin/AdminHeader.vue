@@ -12,15 +12,26 @@
       <div class="admin-info__notifications">
         <img src="@/assets/icons/admin/notifications.svg" alt="notifications" />
       </div>
-      <div class="admin-info__actions actions dropdown" @click="showActions = !showActions">
+      <div
+        class="admin-info__actions actions dropdown"
+        @click="showActions = !showActions"
+      >
         <div class="actions__info-wrapper">
-          <img src="@/assets/images/admin/user-avatar.png" alt="avatar" class="actions__admin-avatar">
+          <img
+            src="@/assets/images/admin/user-avatar.png"
+            alt="avatar"
+            class="actions__admin-avatar"
+          />
           <p class="actions__nickname">Admin</p>
-          <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
+          <img
+            src="@/assets/icons/admin/dropdown_icon.svg"
+            alt="dropdown"
+            class="actions__dropdown"
+          />
         </div>
-        <div class="dropdown-content">
-          <router-link to="/admin" tag="p">Logout</router-link>
-        </div>
+        <button class="dropdown-content" @click="logout">
+          Logout
+        </button>
       </div>
     </div>
   </div>
@@ -32,6 +43,12 @@ export default {
   data() {
     return {
       showActions: false
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("auth");
+      this.$router.push("/admin/");
     }
   }
 };
@@ -39,7 +56,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../../../public/css/variables";
-@import "../../../public/css/hamburger-menu";
+@import "../../../public/css/mixins";
 
 .admin-header {
   width: 100%;
@@ -134,7 +151,7 @@ export default {
   right: 15px;
   background-color: #f9f9f9;
   min-width: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
   border-radius: 5px;
@@ -142,6 +159,8 @@ export default {
   color: #5a6169;
   text-align: center;
   border: 1px solid #e1e5eb;
+  cursor: pointer;
+  @include buttonStylesByColor(#f9f9f9);
 }
 
 .dropdown:hover .dropdown-content {
@@ -149,7 +168,8 @@ export default {
 }
 
 @media (max-width: 600px) {
-  .actions__dropdown, .actions__nickname {
+  .actions__dropdown,
+  .actions__nickname {
     display: none;
   }
 

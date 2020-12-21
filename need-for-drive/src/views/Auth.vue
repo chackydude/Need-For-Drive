@@ -43,9 +43,6 @@ export default {
         password: userData.password
       });
       this.loading = true;
-
-      // temporary solution
-      this.$router.push("admin/panel");
     }
   },
   computed: {
@@ -55,9 +52,9 @@ export default {
     }
   },
   watch: {
-    // getAccessToken: function() {
-    //   this.$router.push("admin/panel");
-    // }
+    getAccessToken: function() {
+      this.$router.push("/admin/orders");
+    }
   }
 };
 </script>
