@@ -28,10 +28,10 @@ const routes = [
   {
     path: "/admin/*",
     component: () => import("../views/AdminOrders"),
-    // route check function
 
+    // route check function
     // beforeEnter(to, from, next) {
-    //   if (localStorage.getItem("authId")) {
+    //   if (localStorage.getItem("auth")) {
     //     next();
     //   } else {
     //     next({ name: "auth" });
@@ -39,7 +39,7 @@ const routes = [
     // }
   },
   {
-    path: "/admin/car-card/",
+    path: "/admin/orders/",
     component: () => import("../views/AdminOrders"),
   }
 ];
