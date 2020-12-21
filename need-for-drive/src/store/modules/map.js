@@ -6,6 +6,31 @@ export default {
     placemarks: [],
     currentPoint: ""
   },
+
+  getters: {
+    getMap(state) {
+      return state.myMap;
+    },
+
+    getCenter(state) {
+      return state.center;
+    },
+
+    getPlacemarks(state) {
+      return state.placemarks;
+    },
+
+    getCurrentPoint(state) {
+      return state.currentPoint;
+    }
+  },
+
+  actions: {
+    updateCurrentPoint({ commit }, point) {
+      commit("updatePlace", point);
+    }
+  },
+
   mutations: {
     updateCenter(state, center) {
       state.center = center;
@@ -77,30 +102,6 @@ export default {
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
       }
-    }
-  },
-
-  actions: {
-    updateCurrentPoint({ commit }, point) {
-      commit("updatePlace", point);
-    }
-  },
-
-  getters: {
-    getMap(state) {
-      return state.myMap;
-    },
-
-    getCenter(state) {
-      return state.center;
-    },
-
-    getPlacemarks(state) {
-      return state.placemarks;
-    },
-
-    getCurrentPoint(state) {
-      return state.currentPoint;
     }
   }
 };
