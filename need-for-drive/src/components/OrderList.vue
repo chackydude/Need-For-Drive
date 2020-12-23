@@ -337,7 +337,7 @@ export default {
   border-radius: 4px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1324px) {
   .users-order {
     border-left: none;
     padding: 10px;
