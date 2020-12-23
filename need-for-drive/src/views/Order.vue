@@ -105,6 +105,7 @@ $padding: 64px;
   display: flex;
   flex-direction: column;
   padding-left: $padding;
+  height: 100vh;
 }
 
 .link {
@@ -130,6 +131,7 @@ $padding: 64px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .tab__link,

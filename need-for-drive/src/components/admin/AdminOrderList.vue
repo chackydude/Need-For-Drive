@@ -7,7 +7,7 @@
         <input type="text" class="filters__select" placeholder="Ваш город" />
         <input type="text" class="filters__select" placeholder="Ваш город" />
       </div>
-      <button class="filters__accept-button">
+      <button class="filters__accept-button admin-button">
         Применить
       </button>
     </div>
@@ -84,15 +84,15 @@ export default {
   font-weight: lighter;
 }
 
-.filters__accept-button {
+.admin-button {
   height: 29px;
   width: 95px;
   color: white;
-  background-color: #007bff;
+  background-color: $admin-blue-color;
   border-radius: 3px;
   font-weight: lighter;
   border: none;
-  @include buttonStylesByColor(#007bff);
+  @include buttonStylesByColor($admin-blue-color);
   cursor: pointer;
   padding: 0 8px 0 8px;
 }
@@ -146,12 +146,12 @@ export default {
 .nav-item:active,
 .page-item:active {
   color: #fff;
-  background-color: #007bff;
+  background-color: $admin-blue-color;
 }
 
 .page-item--active {
   color: #fff;
-  background-color: #007bff;
+  background-color: $admin-blue-color;
 }
 
 @media (max-width: 850px) {

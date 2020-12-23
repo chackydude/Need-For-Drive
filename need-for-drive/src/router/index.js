@@ -26,6 +26,18 @@ const routes = [
     component: () => import("../views/Auth")
   },
   {
+    path: "/admin/orders/",
+    component: () => import("../views/AdminOrders"),
+  },
+  {
+    path: "/admin/edit/",
+    component: () => import("../views/AdminEntityEdit")
+  },
+  {
+    path: "/admin/entity/",
+    component: () => import("../views/AdminEntityExample")
+  },
+  {
     path: "/admin/*",
     component: () => import("../views/AdminOrders"),
 
@@ -37,10 +49,6 @@ const routes = [
     //     next({ name: "auth" });
     //   }
     // }
-  },
-  {
-    path: "/admin/orders/",
-    component: () => import("../views/AdminOrders"),
   }
 ];
 

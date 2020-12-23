@@ -7,19 +7,37 @@
 <style lang="scss">
 @font-face {
   font-family: "Roboto";
-  src: url("../public/fonts/Roboto-Bold.ttf");
+  src: url("../public/fonts/roboto/Roboto-Bold.ttf");
   font-weight: bold;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("../public/fonts/Roboto-Medium.ttf");
+  src: url("../public/fonts/roboto/Roboto-Medium.ttf");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("../public/fonts/Roboto-Light.ttf");
+  src: url("../public/fonts/roboto/Roboto-Light.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../public/fonts/helvetica/HelveticaBold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../public/fonts/helvetica/HelveticaRegular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../public/fonts/helvetica/HelveticaLight.ttf");
   font-weight: 300;
 }
 

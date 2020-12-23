@@ -8,7 +8,9 @@
       />
       <router-link to="/" class="logo__text">Need for car</router-link>
     </div>
-    <div
+    <router-link
+      tag="div"
+      to="/admin/edit"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 0 }"
     >
@@ -30,8 +32,10 @@
       </svg>
 
       <p class="side-bar-item__text">Карточка автомобиля</p>
-    </div>
-    <div
+    </router-link>
+    <router-link
+      tag="div"
+      to="/admin/entity"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 1 }"
     >
@@ -53,8 +57,10 @@
       </svg>
 
       <p class="side-bar-item__text">Список авто</p>
-    </div>
-    <div
+    </router-link>
+    <router-link
+      tag="div"
+      to="/admin/orders"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 2 }"
     >
@@ -76,7 +82,7 @@
       </svg>
 
       <p class="side-bar-item__text">Заказы</p>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -90,6 +96,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "public/css/mixins";
+@import "public/css/variables";
+
 .admin-side-bar {
   color: #3d5170;
   display: flex;
@@ -124,12 +133,12 @@ export default {
 
 .logo__text:active,
 .logo__text:visited {
-  color: #3d5170;
+  color: $admin-text-dark;
 }
 
 .admin-side-bar {
   div {
-    border-bottom: 1px solid #e1e5eb;
+    border-bottom: 1px solid $admin-light-gray;
   }
 }
 
@@ -142,7 +151,7 @@ export default {
 }
 
 .side-bar-item:hover {
-  background-color: #e1e5eb;
+  background-color: $admin-light-gray;
 }
 
 .side-bar-item__icon {
@@ -152,24 +161,24 @@ export default {
 }
 
 .side-bar-item:active {
-  border-left: 4px solid #007bff;
-  color: #007bff;
+  border-left: 4px solid $admin-blue-color;
+  color: $admin-blue-color;
 
   svg #car-card,
   svg #car-list,
   svg #order {
-    fill: #007bff;
+    fill: $admin-blue-color;
   }
 }
 
 .side-bar-item--active {
-  border-left: 4px solid #007bff;
+  border-left: 4px solid $admin-blue-color;
   color: #007bff;
 
   svg #car-card,
   svg #car-list,
   svg #order {
-    fill: #007bff;
+    fill: $admin-blue-color;
   }
 }
 
@@ -199,7 +208,7 @@ export default {
     height: auto;
     max-width: 100%;
     width: 100%;
-    border-bottom: 1px solid #e1e5eb;
+    border-bottom: 1px solid $admin-light-gray;
     box-shadow: 0 6px 4px -4px rgba(38, 46, 52, 0.1);
   }
 
@@ -210,8 +219,8 @@ export default {
   .side-bar-item {
     min-width: 30px;
     height: 67px;
-    border-right: 1px solid #e1e5eb;
-    border-left: 1px solid #e1e5eb;
+    border-right: 1px solid $admin-light-gray;
+    border-left: 1px solid $admin-light-gray;
     flex-grow: 1;
   }
 }
