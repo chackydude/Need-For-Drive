@@ -33,27 +33,28 @@ export default {
 }
 
 .admin-error__message {
+  font-weight: normal;
   font-size: 50px;
-  color: #3D5170;
+  color: $admin-text-dark;
   margin-bottom: 15px;
 }
 
 .admin-error__advice {
+  font-weight: normal;
   font-size: 20px;
-  color: #818EA3;
+  color: $admin-text-light;
   margin-bottom: 20px;
-  @include fontStylesLight;
 }
 
 .admin-error__back-button {
   height: 29px;
   width: 95px;
   color: white;
-  background-color: #007bff;
+  background-color: $admin-blue-color;
   border-radius: 3px;
   font-weight: lighter;
   border: none;
-  @include buttonStylesByColor(#007bff);
+  @include buttonStylesByColor($admin-blue-color);
   cursor: pointer;
   padding: 0 8px 0 8px;
 }

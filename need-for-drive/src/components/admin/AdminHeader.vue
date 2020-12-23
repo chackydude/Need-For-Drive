@@ -107,7 +107,7 @@ export default {
 
 .actions__nickname {
   font-size: 15px;
-  color: #5a6169;
+  color: $admin-text-gray;
   margin-left: 10px;
 }
 
@@ -115,7 +115,7 @@ export default {
   position: absolute;
   top: 80px;
   font-size: 15px;
-  color: #5a6169;
+  color: $admin-text-gray;
   border: 1px solid black;
 }
 
@@ -139,7 +139,7 @@ export default {
   z-index: 1;
   border-radius: 5px;
   font-size: 15px;
-  color: #5a6169;
+  color: $admin-text-gray;
   text-align: center;
   border: 1px solid #e1e5eb;
 }

@@ -123,7 +123,7 @@ export default {
 .access-button {
   border: none;
   background-color: white;
-  color: $blue-color;
+  color: $admin-blue-color;
   cursor: pointer;
   font-size: 11px;
 }
@@ -132,12 +132,12 @@ export default {
   border: none;
   font-size: 11px;
   color: #fff;
-  background-color: $blue-color;
+  background-color: $admin-blue-color;
   border-radius: 4px;
   height: 29px;
   width: 110px;
   cursor: pointer;
-  @include buttonStylesByColor($blue-color);
+  @include buttonStylesByColor($admin-blue-color);
 }
 
 .enter-button--blocked {

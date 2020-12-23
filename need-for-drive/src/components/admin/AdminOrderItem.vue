@@ -134,7 +134,7 @@ export default {
   display: flex;
   align-items: center;
   background-color: #fff;
-  color: #5a6169;
+  color: $admin-text-gray;
   border: 1px solid #becad6;
   @include buttonStylesByColor(#fff);
   cursor: pointer;

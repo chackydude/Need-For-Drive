@@ -4,9 +4,7 @@
       <router-link to="/" class="admin-links__link"
         >Главная страница</router-link
       >
-      <router-link to="/" class="admin-links__link"
-      >Ссылка</router-link
-      >
+      <router-link to="/" class="admin-links__link">Ссылка</router-link>
     </div>
     <div class="admin-footer__copyright">
       Copyright © 2020 Simbirsoft
@@ -21,6 +19,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "public/css/mixins";
+@import "public/css/variables";
+
 .admin-footer {
   width: 100%;
   height: 68px;
@@ -34,7 +35,7 @@ export default {
 
 .admin-links__link {
   text-decoration: none;
-  color: #007bff;
+  color: $admin-blue-color;
   margin-right: 16px;
   /*&:visited {*/
   /*    color: #6d35b5;*/
@@ -42,7 +43,7 @@ export default {
 }
 
 .admin-footer__copyright {
-  color: #818ea3;
+  color: $admin-text-light;
 }
 
 .admin-footer__links,

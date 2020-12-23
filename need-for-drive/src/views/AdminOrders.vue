@@ -4,16 +4,15 @@
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <!--         <h1 class="admin-content__title">Заказы</h1>-->
-        <!--        <AdminOrderList class="admin-content__order-list">-->
-        <!--          <AdminOrderItem />-->
-        <!--          <AdminOrderItem />-->
-        <!--          <AdminOrderItem />-->
-        <!--          <AdminOrderItem />-->
-        <!--          <AdminOrderItem />-->
-        <!--          <AdminOrderItem />-->
-        <!--        </AdminOrderList>-->
-
+<!--        <p class="admin-content__title">Заказы</p>-->
+<!--        <AdminOrderList class="admin-content__order-list">-->
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
+<!--        </AdminOrderList>-->
         <AdminError />
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -36,7 +35,7 @@ export default {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    AdminError
+    AdminError,
     // AdminOrderList,
     // AdminOrderItem
   },
@@ -54,8 +53,8 @@ export default {
 @import "public/css/variables";
 
 * {
-  font-family: Helvetica, sans-serif; // TODO download fonts
-  font-weight: 400;
+  font-family: Helvetica;
+  font-weight: normal;
 }
 
 .admin-page {
