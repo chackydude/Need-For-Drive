@@ -4,15 +4,15 @@
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <!-- <h1 class="admin-content__title">Заказы</h1> -->
-        <!-- <AdminOrderList class="admin-content__order-list">
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-        </AdminOrderList> -->
+        <!--         <h1 class="admin-content__title">Заказы</h1>-->
+        <!--        <AdminOrderList class="admin-content__order-list">-->
+        <!--          <AdminOrderItem />-->
+        <!--          <AdminOrderItem />-->
+        <!--          <AdminOrderItem />-->
+        <!--          <AdminOrderItem />-->
+        <!--          <AdminOrderItem />-->
+        <!--          <AdminOrderItem />-->
+        <!--        </AdminOrderList>-->
 
         <AdminError />
       </div>
@@ -37,7 +37,7 @@ export default {
     AdminHeader,
     AdminFooter,
     AdminError
-    // AdminOrderList
+    // AdminOrderList,
     // AdminOrderItem
   },
   methods: {
