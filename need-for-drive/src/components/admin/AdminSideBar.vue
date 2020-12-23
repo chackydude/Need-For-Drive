@@ -8,7 +8,9 @@
       />
       <router-link to="/" class="logo__text">Need for car</router-link>
     </div>
-    <div
+    <router-link
+      tag="div"
+      to="/admin/edit"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 0 }"
     >
@@ -30,8 +32,10 @@
       </svg>
 
       <p class="side-bar-item__text">Карточка автомобиля</p>
-    </div>
-    <div
+    </router-link>
+    <router-link
+      tag="div"
+      to="/admin/entity"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 1 }"
     >
@@ -53,8 +57,10 @@
       </svg>
 
       <p class="side-bar-item__text">Список авто</p>
-    </div>
-    <div
+    </router-link>
+    <router-link
+      tag="div"
+      to="/admin/orders"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 2 }"
     >
@@ -76,7 +82,7 @@
       </svg>
 
       <p class="side-bar-item__text">Заказы</p>
-    </div>
+    </router-link>
   </div>
 </template>
 

@@ -1,19 +1,18 @@
 <template>
   <div class="admin-page">
-    <AdminSideBar :active="0" class="admin-page__side-bar" />
+    <AdminSideBar :active="2" class="admin-page__side-bar" />
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-<!--        <p class="admin-content__title">Заказы</p>-->
-<!--        <AdminOrderList class="admin-content__order-list">-->
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
-<!--        </AdminOrderList>-->
-        <AdminError />
+        <p class="admin-content__title">Заказы</p>
+        <AdminOrderList class="admin-content__order-list">
+          <AdminOrderItem />
+          <AdminOrderItem />
+          <AdminOrderItem />
+          <AdminOrderItem />
+          <AdminOrderItem />
+          <AdminOrderItem />
+        </AdminOrderList>
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -24,9 +23,8 @@
 import AdminSideBar from "../components/admin/AdminSideBar";
 import AdminHeader from "../components/admin/AdminHeader";
 import AdminFooter from "../components/admin/AdminFooter";
-// import AdminOrderList from "../components/admin/AdminOrderList";
-// import AdminOrderItem from "../components/admin/AdminOrderItem";
-import AdminError from "../components/admin/AdminError";
+import AdminOrderList from "../components/admin/AdminOrderList";
+import AdminOrderItem from "../components/admin/AdminOrderItem";
 import { mapActions } from "vuex";
 
 export default {
@@ -35,9 +33,8 @@ export default {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    AdminError,
-    // AdminOrderList,
-    // AdminOrderItem
+    AdminOrderList,
+    AdminOrderItem
   },
   methods: {
     ...mapActions(["fetchOrders"])
@@ -48,7 +45,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/mixins";
 @import "public/css/variables";
 

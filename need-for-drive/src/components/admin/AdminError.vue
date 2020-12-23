@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "AdminError",
+  name: "AdminError"
 };
 </script>
 
@@ -29,7 +29,7 @@ export default {
 
 .admin-error__code {
   font-size: 75px;
-  color: #CACEDB;
+  color: #cacedb;
   margin-bottom: 20px;
 }
 
@@ -75,7 +75,5 @@ export default {
     font-size: 14px;
     margin-bottom: 20px;
   }
-
 }
-
 </style>
