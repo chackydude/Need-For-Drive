@@ -10,43 +10,41 @@ export default {
     pointsWithCoordinates: [],
     currentPointId: ""
   },
-  mutations: {
-    updateCities(state, cities) {
-      state.cities = cities;
+
+  getters: {
+    getCities(state) {
+      return state.cities;
     },
 
-    updateCurrentCityId(state, id) {
-      state.currentCityId = id;
+    getPoints(state) {
+      return state.currentPoints;
     },
 
-    updateCurrentPointId(state, id) {
-      state.currentPointId = id;
+    getCurrentCityId(state) {
+      return state.currentCityId;
     },
 
-    updatePoints(state, points) {
-      state.currentPoints = points;
+    getCurrentPointId(state) {
+      return state.currentPointId;
     },
 
-    updateCurrentCityCoordinates(state, coordinates) {
-      state.currentCityCoordinates = coordinates;
+    getCoordinates(state) {
+      return state.currentCityCoordinates;
     },
 
-    updatePointsWithCoordinates(state, payload) {
-      if (payload.status == "add") {
-        state.pointsWithCoordinates.push({
-          center: payload.coordinates,
-          name: payload.name
-        });
-      } else {
-        state.pointsWithCoordinates = [];
-      }
+    getPointsCoordinates(state) {
+      return state.pointsWithCoordinates;
     }
   },
+
   actions: {
     fetchCities({ commit }) {
       let fetchApi = new Api(new FetchApi());
       fetchApi
-        .getRequest(process.env.VUE_APP_BASE_URL + "db/city", fetchApi.provider.headers)
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/city",
+          fetchApi.provider.headers
+        )
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -58,7 +56,10 @@ export default {
     fetchPoints({ commit }, cityId) {
       let fetchApi = new Api(new FetchApi());
       fetchApi
-        .getRequest(process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId, fetchApi.provider.headers)
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId,
+          fetchApi.provider.headers
+        )
         .then(result => {
           commit("updatePoints", result.data);
         })
@@ -133,29 +134,37 @@ export default {
       }
     }
   },
-  getters: {
-    getCities(state) {
-      return state.cities;
+
+  mutations: {
+    updateCities(state, cities) {
+      state.cities = cities;
     },
 
-    getPoints(state) {
-      return state.currentPoints;
+    updateCurrentCityId(state, id) {
+      state.currentCityId = id;
     },
 
-    getCurrentCityId(state) {
-      return state.currentCityId;
+    updateCurrentPointId(state, id) {
+      state.currentPointId = id;
     },
 
-    getCurrentPointId(state) {
-      return state.currentPointId;
+    updatePoints(state, points) {
+      state.currentPoints = points;
     },
 
-    getCoordinates(state) {
-      return state.currentCityCoordinates;
+    updateCurrentCityCoordinates(state, coordinates) {
+      state.currentCityCoordinates = coordinates;
     },
 
-    getPointsCoordinates(state) {
-      return state.pointsWithCoordinates;
+    updatePointsWithCoordinates(state, payload) {
+      if (payload.status == "add") {
+        state.pointsWithCoordinates.push({
+          center: payload.coordinates,
+          name: payload.name
+        });
+      } else {
+        state.pointsWithCoordinates = [];
+      }
     }
   }
 };

@@ -8,17 +8,21 @@ export default {
     allCars: [],
     category: "Все модели"
   },
-  mutations: {
-    updateCategory(state, category) {
-      state.category = category;
+  getters: {
+    getCarsAmount(state) {
+      return state.carsAmount;
     },
 
-    updateAllCars(state, cars) {
-      state.allCars = cars;
+    getCategory(state) {
+      return state.category;
     },
 
-    updateCarsAmount(state, amount) {
-      state.carsAmount = amount;
+    getAllCars(state) {
+      return state.allCars.filter(car =>
+        state.category === "Все модели"
+          ? car
+          : car.categoryId.name === state.category
+      );
     }
   },
   actions: {
@@ -77,21 +81,17 @@ export default {
     //   }
     // }
   },
-  getters: {
-    getCarsAmount(state) {
-      return state.carsAmount;
+  mutations: {
+    updateCategory(state, category) {
+      state.category = category;
     },
 
-    getCategory(state) {
-      return state.category;
+    updateAllCars(state, cars) {
+      state.allCars = cars;
     },
 
-    getAllCars(state) {
-      return state.allCars.filter(car =>
-        state.category === "Все модели"
-          ? car
-          : car.categoryId.name === state.category
-      );
+    updateCarsAmount(state, amount) {
+      state.carsAmount = amount;
     }
   }
 };

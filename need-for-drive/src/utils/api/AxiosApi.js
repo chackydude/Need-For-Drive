@@ -12,7 +12,7 @@ export default class AxiosApi extends BaseApi {
     return await axios
       .get(url, { headers: headers })
       .then(response => {
-        return response.json();
+        return response;
       })
       .catch(err => {
         if (err.response) {
@@ -31,7 +31,7 @@ export default class AxiosApi extends BaseApi {
     return await axios
       .post(url, body, { headers: headers })
       .then(response => {
-        return response.json();
+        return response;
       })
       .catch(err => {
         if (err.response) {
@@ -50,7 +50,7 @@ export default class AxiosApi extends BaseApi {
     return await axios
       .put(url, body, { headers: headers })
       .then(response => {
-        return response.json();
+        return response;
       })
       .catch(err => {
         if (err.response) {

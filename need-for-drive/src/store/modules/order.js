@@ -30,6 +30,230 @@ export default {
     currentRate: {}
   },
 
+  getters: {
+    getCity(state) {
+      return state.orderCity;
+    },
+
+    getPoint(state) {
+      return state.orderPlace;
+    },
+
+    getModel(state) {
+      return state.orderModel;
+    },
+
+    getColor(state) {
+      return state.modelColor;
+    },
+
+    getTariff(state) {
+      return state.tariff;
+    },
+
+    getExtraServices(state) {
+      return state.extraServices;
+    },
+
+    getRentalTime(state) {
+      return state.rentalTime;
+    },
+
+    getDateFrom(state) {
+      return state.rentalDateFrom;
+    },
+
+    getDateTo(state) {
+      return state.rentalDateTo;
+    },
+
+    getCurrentPrice(state) {
+      let tariff;
+
+      switch (state.tariff.text) {
+        case "Поминутно, 7₽/мин":
+          tariff = "minute";
+          break;
+        case "На сутки, 1999₽/сутки":
+          tariff = "day";
+          break;
+        case "Недельный, 7000₽/7 дней":
+          tariff = "week";
+          break;
+      }
+
+      let price =
+        state.calculator === null
+          ? 0
+          : state.calculator.calcPrice(
+              state.rentalTime,
+              tariff,
+              state.extraServices.map(item => item.amount)
+            );
+      return price;
+    },
+
+    getOrderStatus(state) {
+      return state.isPosted;
+    },
+
+    getRates(state) {
+      return state.rates;
+    },
+
+    getCurrentRate(state) {
+      return state.currentRate;
+    },
+
+    getOrderId(state) {
+      return state.orderId;
+    },
+
+    getAvailableStatuses(state) {
+      return state.availableStatuses;
+    },
+
+    getOrder(state, getters, rootState) {
+      let isFullTank = false;
+      let isNeedChildChair = false;
+      let isRightWheel = false;
+      for (let i = 0; i < state.extraServices.length; i++) {
+        switch (state.extraServices[i].text) {
+          case "Детское кресло":
+            isNeedChildChair = true;
+            break;
+          case "Правый руль":
+            isRightWheel = true;
+            break;
+          case "Полный бак":
+            isFullTank = true;
+            break;
+        }
+      }
+      let orderStub = {
+        orderStatusId: state.currentOrderStatusId,
+        pointId: rootState.place.currentPointId,
+        cityId: rootState.place.currentCityId,
+        carId: state.orderModel.id,
+        color: state.modelColor,
+        dateFrom: state.rentalDateFrom,
+        dateTo: state.rentalDateTo,
+        rateId: state.tariff.id,
+        price: getters.getCurrentPrice,
+        isFullTank: isFullTank,
+        isNeedChildChair: isNeedChildChair,
+        isRightWheel: isRightWheel
+      };
+      return orderStub;
+    }
+  },
+
+  actions: {
+    // роутимся на страничку заказа и обновляем сопутствующую информацию
+    routeToOrder({ commit, state }) {
+      if (!state.isPosted) {
+        commit("updateOrderStatus", true);
+        router.push(`/order/${state.orderId}`);
+      } else {
+        commit("updateOrderStatus", false);
+        commit("updateOrderId", "");
+      }
+    },
+
+    // получаем заказ по id
+    fetchOrder({ commit }, id) {
+      let fetchApi = new Api(new FetchApi());
+
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/order/" + id,
+          fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateOrder", result.data);
+          commit("updateCurrentCityId", result.data.cityId.id);
+          commit("updateCurrentPointId", result.data.pointId.id);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    // отправляем заказ на бек
+    async postOrder({ commit }, order) {
+      let fetchApi = new Api(new FetchApi());
+
+      // сформировать тут заказ, либо в передать уже готорый в параметры
+      await fetchApi
+        .postRequest(
+          process.env.VUE_APP_BASE_URL + "db/order",
+          fetchApi.provider.headers,
+          order
+        )
+        .then(result => {
+          commit("updateOrderId", result.data.id);
+          localStorage.setItem("orderId", result.data.id);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    cancelOrder({ state }, order) {
+      let fetchApi = new Api(new FetchApi());
+
+      fetchApi
+        .putRequest(
+          process.env.VUE_APP_BASE_URL + "db/order/" + state.orderId,
+          fetchApi.provider.headers,
+          order
+        )
+        .catch(error => {
+          console.log(error.message);
+        });
+
+      localStorage.removeItem("orderId");
+    },
+
+    fetchRates({ commit }) {
+      let fetchApi = new Api(new FetchApi());
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/rate",
+          fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateRates", result.data);
+          commit(
+            "updateCalculator",
+            new PriceCalculator(
+              result.data[0].price,
+              result.data[2].price,
+              result.data[1].price
+            )
+          );
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    fetchOrderStatuses({ commit }) {
+      let fetchApi = new Api(new FetchApi());
+      fetchApi
+        .getRequest(
+          process.env.VUE_APP_BASE_URL + "db/orderStatus",
+          fetchApi.provider.headers
+        )
+        .then(result => {
+          commit("updateStatuses", result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
+  },
+
   mutations: {
     updateCity(state, city) {
       state.orderCity = city;
@@ -165,228 +389,6 @@ export default {
       };
       state.extraServices = extraServices;
       state.currentOrderStatusId = newOrder.orderStatusId.id;
-    }
-  },
-  actions: {
-    // роутимся на страничку заказа и обновляем сопутствующую информацию
-    routeToOrder({ commit, state }) {
-      if (!state.isPosted) {
-        commit("updateOrderStatus", true);
-        router.push(`/order/${state.orderId}`);
-      } else {
-        commit("updateOrderStatus", false);
-        commit("updateOrderId", "");
-      }
-    },
-
-    // получаем заказ по id
-    fetchOrder({ commit }, id) {
-      let fetchApi = new Api(new FetchApi());
-
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/order/" + id,
-          fetchApi.provider.headers
-        )
-        .then(result => {
-          commit("updateOrder", result.data);
-          commit("updateCurrentCityId", result.data.cityId.id);
-          commit("updateCurrentPointId", result.data.pointId.id);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    },
-
-    // отправляем заказ на бек
-    async postOrder({ commit }, order) {
-      let fetchApi = new Api(new FetchApi());
-
-      // сформировать тут заказ, либо в передать уже готорый в параметры
-      await fetchApi
-        .postRequest(
-          process.env.VUE_APP_BASE_URL + "db/order",
-          fetchApi.provider.headers,
-          order
-        )
-        .then(result => {
-          commit("updateOrderId", result.data.id);
-          localStorage.setItem("orderId", result.data.id);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    },
-
-    cancelOrder({ state }, order) {
-      let fetchApi = new Api(new FetchApi());
-
-      fetchApi
-        .putRequest(
-          process.env.VUE_APP_BASE_URL + "db/order/" + state.orderId,
-          fetchApi.provider.headers,
-          order
-        )
-        .catch(error => {
-          console.log(error.message);
-        });
-
-      localStorage.removeItem("orderId");
-    },
-
-    fetchRates({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/rate",
-          fetchApi.provider.headers
-        )
-        .then(result => {
-          commit("updateRates", result.data);
-          commit(
-            "updateCalculator",
-            new PriceCalculator(
-              result.data[0].price,
-              result.data[2].price,
-              result.data[1].price
-            )
-          );
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    },
-
-    fetchOrderStatuses({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/orderStatus",
-          fetchApi.provider.headers
-        )
-        .then(result => {
-          commit("updateStatuses", result.data);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    }
-  },
-  getters: {
-    getCity(state) {
-      return state.orderCity;
-    },
-
-    getPoint(state) {
-      return state.orderPlace;
-    },
-
-    getModel(state) {
-      return state.orderModel;
-    },
-
-    getColor(state) {
-      return state.modelColor;
-    },
-
-    getTariff(state) {
-      return state.tariff;
-    },
-
-    getExtraServices(state) {
-      return state.extraServices;
-    },
-
-    getRentalTime(state) {
-      return state.rentalTime;
-    },
-
-    getDateFrom(state) {
-      return state.rentalDateFrom;
-    },
-
-    getDateTo(state) {
-      return state.rentalDateTo;
-    },
-
-    getCurrentPrice(state) {
-      let tariff;
-
-      switch (state.tariff.text) {
-        case "Поминутно, 7₽/мин":
-          tariff = "minute";
-          break;
-        case "На сутки, 1999₽/сутки":
-          tariff = "day";
-          break;
-        case "Недельный, 7000₽/7 дней":
-          tariff = "week";
-          break;
-      }
-
-      let price =
-        state.calculator === null
-          ? 0
-          : state.calculator.calcPrice(
-              state.rentalTime,
-              tariff,
-              state.extraServices.map(item => item.amount)
-            );
-      return price;
-    },
-
-    getOrderStatus(state) {
-      return state.isPosted;
-    },
-
-    getRates(state) {
-      return state.rates;
-    },
-
-    getCurrentRate(state) {
-      return state.currentRate;
-    },
-
-    getOrderId(state) {
-      return state.orderId;
-    },
-
-    getAvailableStatuses(state) {
-      return state.availableStatuses;
-    },
-
-    getOrder(state, getters, rootState) {
-      let isFullTank = false;
-      let isNeedChildChair = false;
-      let isRightWheel = false;
-      for (let i = 0; i < state.extraServices.length; i++) {
-        switch (state.extraServices[i].text) {
-          case "Детское кресло":
-            isNeedChildChair = true;
-            break;
-          case "Правый руль":
-            isRightWheel = true;
-            break;
-          case "Полный бак":
-            isFullTank = true;
-            break;
-        }
-      }
-      let orderStub = {
-        orderStatusId: state.currentOrderStatusId,
-        pointId: rootState.place.currentPointId,
-        cityId: rootState.place.currentCityId,
-        carId: state.orderModel.id,
-        color: state.modelColor,
-        dateFrom: state.rentalDateFrom,
-        dateTo: state.rentalDateTo,
-        rateId: state.tariff.id,
-        price: getters.getCurrentPrice,
-        isFullTank: isFullTank,
-        isNeedChildChair: isNeedChildChair,
-        isRightWheel: isRightWheel
-      };
-      return orderStub;
     }
   }
 };
