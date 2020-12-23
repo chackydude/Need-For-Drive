@@ -7,7 +7,7 @@
         <input type="text" class="filters__select" placeholder="Ваш город" />
         <input type="text" class="filters__select" placeholder="Ваш город" />
       </div>
-      <button class="filters__accept-button">
+      <button class="filters__accept-button admin-button">
         Применить
       </button>
     </div>
@@ -84,7 +84,7 @@ export default {
   font-weight: lighter;
 }
 
-.filters__accept-button {
+.admin-button {
   height: 29px;
   width: 95px;
   color: white;

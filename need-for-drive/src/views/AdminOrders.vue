@@ -4,15 +4,17 @@
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <h1 class="admin-content__title">Заказы</h1>
-        <AdminOrderList class="admin-content__order-list">
+        <!-- <h1 class="admin-content__title">Заказы</h1> -->
+        <!-- <AdminOrderList class="admin-content__order-list">
           <AdminOrderItem />
           <AdminOrderItem />
           <AdminOrderItem />
           <AdminOrderItem />
           <AdminOrderItem />
           <AdminOrderItem />
-        </AdminOrderList>
+        </AdminOrderList> -->
+
+        <AdminError />
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -23,8 +25,9 @@
 import AdminSideBar from "../components/admin/AdminSideBar";
 import AdminHeader from "../components/admin/AdminHeader";
 import AdminFooter from "../components/admin/AdminFooter";
-import AdminOrderList from "../components/admin/AdminOrderList";
-import AdminOrderItem from "../components/admin/AdminOrderItem";
+// import AdminOrderList from "../components/admin/AdminOrderList";
+// import AdminOrderItem from "../components/admin/AdminOrderItem";
+import AdminError from "../components/admin/AdminError";
 import { mapActions } from "vuex";
 
 export default {
@@ -33,8 +36,9 @@ export default {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    AdminOrderList,
-    AdminOrderItem
+    AdminError
+    // AdminOrderList
+    // AdminOrderItem
   },
   methods: {
     ...mapActions(["fetchOrders"])
@@ -95,6 +99,12 @@ export default {
 @media (max-width: 600px) {
   .admin-page {
     flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .admin-page__main-content {
+    display: flex;
+    flex: 1 0 auto;
   }
 
   .admin-content {
