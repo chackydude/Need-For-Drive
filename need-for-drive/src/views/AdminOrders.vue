@@ -1,10 +1,10 @@
 <template>
   <div class="admin-page">
-    <AdminSideBar :active="0" class="admin-page__side-bar" />
+    <AdminSideBar :active="2" class="admin-page__side-bar" />
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <h1 class="admin-content__title">Заказы</h1>
+        <p class="admin-content__title">Заказы</p>
         <AdminOrderList class="admin-content__order-list">
           <AdminOrderItem />
           <AdminOrderItem />
@@ -45,13 +45,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/mixins";
 @import "public/css/variables";
 
 * {
-  font-family: Helvetica, sans-serif; // TODO download fonts
-  font-weight: 400;
+  font-family: Helvetica;
+  font-weight: normal;
 }
 
 .admin-page {
@@ -95,6 +95,12 @@ export default {
 @media (max-width: 600px) {
   .admin-page {
     flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .admin-page__main-content {
+    display: flex;
+    flex: 1 0 auto;
   }
 
   .admin-content {
