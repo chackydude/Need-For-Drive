@@ -3,11 +3,11 @@
     <div class="order__info">
       <div class="order-info__container">
         <img
-                src="@/assets/images/car-example.png"
-                alt="car-image"
-                class="order__image"
-                crossOrigin="anonymous"
-                referrerPolicy="origin"
+          src="@/assets/images/car-example.png"
+          alt="car-image"
+          class="order__image"
+          crossOrigin="anonymous"
+          referrerPolicy="origin"
         />
         <p class="order__description">
           <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42 <br />
@@ -47,13 +47,16 @@
       <p class="order__price">4 300 ₽</p>
       <div class="order__action-buttons">
         <button class="action-button">
-          <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" /> <p class="action-button__text">Готово</p>
+          <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" />
+          <p class="action-button__text">Готово</p>
         </button>
         <button class="action-button">
-          <img src="@/assets/icons/admin/buttons/close.svg" alt="cancel" /> <p class="action-button__text">Отмена</p>
+          <img src="@/assets/icons/admin/buttons/close.svg" alt="cancel" />
+          <p class="action-button__text">Отмена</p>
         </button>
         <button class="action-button">
-          <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" /> <p class="action-button__text">Изменить</p>
+          <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" />
+          <p class="action-button__text">Изменить</p>
         </button>
       </div>
     </div>
@@ -118,6 +121,7 @@ export default {
 .order__price {
   font-size: 24px;
   color: #3f3f3f;
+  font-family: Roboto, sans-serif;
 }
 
 .order__action-buttons {
@@ -134,7 +138,7 @@ export default {
   display: flex;
   align-items: center;
   background-color: #fff;
-  color: #5a6169;
+  color: $admin-text-gray;
   border: 1px solid #becad6;
   @include buttonStylesByColor(#fff);
   cursor: pointer;
@@ -244,7 +248,6 @@ export default {
     }
   }
 }
-
 
 @media (max-width: 400px) {
   .order-info__container {

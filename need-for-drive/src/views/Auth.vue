@@ -45,7 +45,7 @@ export default {
       this.loading = true;
 
       // temporary solution
-      this.$router.push("admin/panel");
+      this.$router.push("admin/orders");
     }
   },
   computed: {
