@@ -24,6 +24,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   flex: 1 0 auto;
+  text-align: center;
 }
 
 .admin-error__code {
@@ -59,5 +60,22 @@ export default {
   padding: 0 8px 0 8px;
 }
 
+@media (max-width: 600px) {
+  .admin-error__code {
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+
+  .admin-error__message {
+    font-size: 34px;
+    margin-bottom: 15px;
+  }
+
+  .admin-error__advice {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+}
 
 </style>
