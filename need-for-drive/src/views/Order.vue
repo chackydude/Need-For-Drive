@@ -88,6 +88,10 @@ export default {
 <style lang="scss">
 @import "public/css/variables";
 
+* {
+  font-family: Roboto, sans-serif;
+}
+
 $padding: 64px;
 
 .order-page {
@@ -170,7 +174,7 @@ $padding: 64px;
   .order-page__tabs {
     justify-content: center;
     flex-wrap: wrap;
-    min-height: 32px;
+    /*min-height: 32px;*/
     height: auto;
   }
 
