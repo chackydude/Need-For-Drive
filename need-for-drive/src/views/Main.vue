@@ -77,6 +77,11 @@ export default {
 <style scoped lang="scss">
 @import "public/css/variables";
 @import "../../public/css/mixins";
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: row;

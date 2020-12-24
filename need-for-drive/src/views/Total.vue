@@ -53,6 +53,10 @@ export default {
 <style lang="scss" scoped>
 @import "public/css/variables";
 
+* {
+  font-family: Roboto, sans-serif;
+}
+
 $padding: 64px;
 
 .result-tab {
