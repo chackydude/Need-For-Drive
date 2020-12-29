@@ -1,16 +1,12 @@
 import BaseApi from "./BaseApi";
+import { instance } from "./instance";
 import axios from "axios";
 
 export default class AxiosApi extends BaseApi {
-  headers = {
-    "X-Api-Factory-Application-Id": process.env.VUE_APP_ID,
-    Authorization: process.env.VUE_APP_SECRET_KEY,
-    "Content-Type": "application/json"
-  };
 
-  async getRequest(url, headers) {
-    return await axios
-      .get(url, { headers: headers })
+  async getRequest(url) {
+    return await instance
+      .get(url)
       .then(response => {
         return response;
       })
