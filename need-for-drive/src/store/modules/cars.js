@@ -31,7 +31,7 @@ export default {
         .getRequest("db/car")
         .then(result => {
           commit("updateCarsAmount", result.count);
-          commit("updateAllCars", result.data.data);
+          commit("updateAllCars", result.data);
         })
         .catch(error => {
           console.log(error.message);

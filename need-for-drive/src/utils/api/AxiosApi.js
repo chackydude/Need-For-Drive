@@ -1,14 +1,12 @@
 import BaseApi from "./BaseApi";
 import { instance } from "./instance";
-import axios from "axios";
 
 export default class AxiosApi extends BaseApi {
-
   async getRequest(url) {
     return await instance
       .get(url)
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(err => {
         if (err.response) {
@@ -23,11 +21,11 @@ export default class AxiosApi extends BaseApi {
       });
   }
 
-  async postRequest(url, headers, body) {
-    return await axios
-      .post(url, body, { headers: headers })
+  async postRequest(url, body) {
+    return await instance
+      .post(url, body)
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(err => {
         if (err.response) {
@@ -42,11 +40,11 @@ export default class AxiosApi extends BaseApi {
       });
   }
 
-  async putRequest(url, headers, body) {
-    return await axios
-      .put(url, body, { headers: headers })
+  async putRequest(url, body) {
+    return await instance
+      .put(url, body)
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(err => {
         if (err.response) {
