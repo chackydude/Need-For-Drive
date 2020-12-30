@@ -1,5 +1,6 @@
 import Api from "../../../utils/api/Api";
-import FetchApi from "../../../utils/api/FetchApi";
+import AxiosApi from "../../../utils/api/AxiosApi";
+import { instance } from "../../../utils/api/instance";
 
 export default {
   state: {
@@ -7,17 +8,14 @@ export default {
   },
   getters: {},
   actions: {
-    fetchOrders({ commit }) {
-      let fetchApi = new Api(new FetchApi());
+    fetchOrders({ commit, rootState }) {
+      let api = new Api(new AxiosApi());
 
-      fetchApi.provider.headers["Authorization"] =
-        "Bearer 05bc08c3949b852aa44867f59872ba00b7350af2";
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
 
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/order",
-          fetchApi.provider.headers
-        )
+      api
+        .getRequest("db/order")
         .then(result => {
           commit("updateOrders", result.data);
           console.log(result);

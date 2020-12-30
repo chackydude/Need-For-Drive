@@ -1,6 +1,6 @@
 <template>
   <div class="auth-page">
-    <div class="auth-page__content content"  v-if="!loading">
+    <div class="auth-page__content content" v-if="!getAuthLoading">
       <div class="content__title auth-title">
         <img
           src="@/assets/icons/logo.svg"
@@ -9,20 +9,20 @@
         />
         <h1 class="auth-title__text">Need for drive</h1>
       </div>
-      <AuthForm class="content__form" @sending="sendAuthRequest"/>
+      <AuthForm class="content__form" @sending="sendAuthRequest" />
+      <div v-if="getAuthError" class="content__error">Проблема аутентификации</div>
     </div>
     <pulse-loader
-      v-if="loading"
-      :loading="isLoading"
+      :loading="getAuthLoading"
       color="#007BFF"
     ></pulse-loader>
   </div>
 </template>
 
 <script>
-import AuthForm from "../components/AuthForm";
+import AuthForm from "../../components/AuthForm";
 import PulseLoader from "vue-spinner/src/PulseLoader";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "Auth",
@@ -37,34 +37,29 @@ export default {
   },
   methods: {
     ...mapActions(["authUser"]),
+    ...mapMutations(["updateError", "updateLoading"]),
     sendAuthRequest(userData) {
       this.authUser({
         username: userData.email,
         password: userData.password
       });
-      this.loading = true;
-
-      // temporary solution
-      this.$router.push("admin/orders");
+      this.updateLoading(true);
     }
   },
   computed: {
-    ...mapGetters(["getAccessToken"]),
-    isLoading() {
-      return this.getAccessToken === "";
-    }
+    ...mapGetters(["getAccessToken", "getAuthError", "getAuthLoading"])
   },
   watch: {
-    // getAccessToken: function() {
-    //   this.$router.push("admin/panel");
-    // }
+    getAccessToken: function() {
+      this.$router.push("admin/orders");
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 
 .auth-page {
   height: 100vh;
@@ -92,5 +87,18 @@ export default {
 
 .content__form {
   margin-top: 17px;
+}
+
+.content__error {
+  @include fontStylesLight;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffe0e8;
+  color: $black-color;
+  border-radius: 8px;
+  align-self: center;
+  margin-top: 15px;
 }
 </style>

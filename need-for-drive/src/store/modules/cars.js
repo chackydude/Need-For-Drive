@@ -1,5 +1,4 @@
 import Api from "../../utils/api/Api";
-import FetchApi from "../../utils/api/FetchApi";
 import AxiosApi from "../../utils/api/AxiosApi";
 
 export default {
@@ -27,29 +26,9 @@ export default {
   },
   actions: {
     fetchCars({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/car",
-          fetchApi.provider.headers
-        )
-        .then(result => {
-          commit("updateCarsAmount", result.count);
-          commit("updateAllCars", result.data);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
-    },
-
-    fetchCarsAxios({ commit }) {
       let axiosApi = new Api(new AxiosApi());
       axiosApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/car",
-          axiosApi.provider.headers
-        )
+        .getRequest("db/car")
         .then(result => {
           commit("updateCarsAmount", result.count);
           commit("updateAllCars", result.data);
@@ -59,9 +38,12 @@ export default {
         });
     }
 
-    // async fetchCarsWithPagination({ commit }, { pagesAmount, onpageCarsAmount }) {
+    // fetchCarsWithPagination(
+    //   { commit },
+    //   { pagesAmount, onpageCarsAmount }
+    // ) {
     //   let fetchApi = new Api(new FetchApi());
-    //
+
     //   for (let i = 1; i <= pagesAmount; i++) {
     //     fetchApi
     //       .getRequest(

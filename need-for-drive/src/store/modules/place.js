@@ -1,5 +1,5 @@
-import FetchApi from "../../utils/api/FetchApi";
 import Api from "../../utils/api/Api";
+import AxiosApi from "../../utils/api/AxiosApi";
 
 export default {
   state: {
@@ -39,11 +39,10 @@ export default {
 
   actions: {
     fetchCities({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
+      let api = new Api(new AxiosApi());
+      api
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/city",
-          fetchApi.provider.headers
+          process.env.VUE_APP_BASE_URL + "db/city"
         )
         .then(result => {
           commit("updateCities", result.data);
@@ -54,11 +53,10 @@ export default {
     },
 
     fetchPoints({ commit }, cityId) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
+      let api = new Api(new AxiosApi());
+      api
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId,
-          fetchApi.provider.headers
+          process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId
         )
         .then(result => {
           commit("updatePoints", result.data);
@@ -69,10 +67,9 @@ export default {
     },
 
     generatePlaceCoordinates({ commit }, address) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_GEOCODE_URL +
+      let api = new Api(new AxiosApi());
+      api
+        .getRequest(  process.env.VUE_APP_GEOCODE_URL +
             process.env.VUE_APP_MAPS_API_KEY +
             "&format=json&geocode=" +
             address
@@ -92,10 +89,10 @@ export default {
         status: "clear",
         coordinates: []
       });
-      let fetchApi = new Api(new FetchApi());
+      let api = new Api(new AxiosApi());
 
       for (let i = 0; i < points.length; i++) {
-        fetchApi
+        api
           .getRequest(
             process.env.VUE_APP_GEOCODE_URL +
               process.env.VUE_APP_MAPS_API_KEY +

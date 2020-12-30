@@ -3,6 +3,7 @@ export default class Api {
     this.provider = provider;
   }
 
+  // templates, headers may be not required
   getRequest(url, headers) {
     return this.provider.getRequest(url, headers);
   }

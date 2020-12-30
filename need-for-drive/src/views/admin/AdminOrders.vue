@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import AdminSideBar from "../components/admin/AdminSideBar";
-import AdminHeader from "../components/admin/AdminHeader";
-import AdminFooter from "../components/admin/AdminFooter";
-import AdminOrderList from "../components/admin/AdminOrderList";
-import AdminOrderItem from "../components/admin/AdminOrderItem";
+import AdminSideBar from "../../components/admin/AdminSideBar";
+import AdminHeader from "../../components/admin/AdminHeader";
+import AdminFooter from "../../components/admin/AdminFooter";
+import AdminOrderList from "../../components/admin/AdminOrderList";
+import AdminOrderItem from "../../components/admin/AdminOrderItem";
 import { mapActions } from "vuex";
 
 export default {
@@ -46,8 +46,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../public/css/mixins";
+@import "../../../public/css/variables";
 
 * {
   font-family: Helvetica;

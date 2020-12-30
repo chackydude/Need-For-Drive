@@ -1,8 +1,8 @@
 import PriceCalculator from "../../utils/price/PriceCalculator";
 import DateHadler from "../../utils/date/DateHadler";
 import router from "../../router";
-import FetchApi from "../../utils/api/FetchApi";
 import Api from "../../utils/api/Api";
+import AxiosApi from "../../utils/api/AxiosApi";
 
 export default {
   namespaced: false,
@@ -162,13 +162,10 @@ export default {
 
     // получаем заказ по id
     fetchOrder({ commit }, id) {
-      let fetchApi = new Api(new FetchApi());
+      let api = new Api(new AxiosApi());
 
-      fetchApi
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/order/" + id,
-          fetchApi.provider.headers
-        )
+      api
+        .getRequest("db/order/" + id)
         .then(result => {
           commit("updateOrder", result.data);
           commit("updateCurrentCityId", result.data.cityId.id);
@@ -181,15 +178,11 @@ export default {
 
     // отправляем заказ на бек
     async postOrder({ commit }, order) {
-      let fetchApi = new Api(new FetchApi());
+      let api = new Api(new AxiosApi());
 
-      // сформировать тут заказ, либо в передать уже готорый в параметры
-      await fetchApi
-        .postRequest(
-          process.env.VUE_APP_BASE_URL + "db/order",
-          fetchApi.provider.headers,
-          order
-        )
+      // сформировать тут заказ, либо в передать уже готовый в параметры
+      await api
+        .postRequest("db/order", order)
         .then(result => {
           commit("updateOrderId", result.data.id);
           localStorage.setItem("orderId", result.data.id);
@@ -200,27 +193,20 @@ export default {
     },
 
     cancelOrder({ state }, order) {
-      let fetchApi = new Api(new FetchApi());
+      let api = new Api(new AxiosApi());
 
-      fetchApi
-        .putRequest(
-          process.env.VUE_APP_BASE_URL + "db/order/" + state.orderId,
-          fetchApi.provider.headers,
-          order
-        )
-        .catch(error => {
-          console.log(error.message);
-        });
+      api.putRequest("db/order/" + state.orderId, order).catch(error => {
+        console.log(error.message);
+      });
 
       localStorage.removeItem("orderId");
     },
 
     fetchRates({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
+      let api = new Api(new AxiosApi());
+      api
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/rate",
-          fetchApi.provider.headers
+            "db/rate",
         )
         .then(result => {
           commit("updateRates", result.data);
@@ -239,11 +225,10 @@ export default {
     },
 
     fetchOrderStatuses({ commit }) {
-      let fetchApi = new Api(new FetchApi());
-      fetchApi
+      let api = new Api(new AxiosApi());
+      api
         .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/orderStatus",
-          fetchApi.provider.headers
+            "db/orderStatus",
         )
         .then(result => {
           commit("updateStatuses", result.data);
