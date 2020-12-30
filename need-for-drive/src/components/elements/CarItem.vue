@@ -1,5 +1,5 @@
 <template>
-  <div class="car-item" @click="change">
+  <div class="car-item" @click="change" :class="{ 'car-item--active': isActive }">
     <div class="car-item__info">
       <div class="car-item__name">
         {{ name }}
@@ -30,21 +30,11 @@ export default {
     id: String,
     colors: Array,
     number: String,
-    tank: Number
+    tank: Number,
+    comparingId: String
   },
   methods: {
     ...mapMutations(["updateModel", "updateFillStatus"]),
-    // updateCarData() {
-    //   this.updateModel({
-    //     name: this.name,
-    //     id: this.id,
-    //     colors: this.colors,
-    //     number: this.number,
-    //     priceMax: this.priceMax,
-    //     priceMin: this.priceMin
-    //   });
-    //   this.updateFillStatus(true);
-    // },
     // emiting update car model
     change() {
       this.$emit("change-car", {
@@ -57,6 +47,11 @@ export default {
         thumbnail: this.img,
         tank: this.tank
       });
+    }
+  },
+  computed: {
+    isActive() {
+      return this.id === this.comparingId;
     }
   }
 };
@@ -86,6 +81,10 @@ export default {
 
 .car-item__name {
   font-size: 18px;
+}
+
+.car-item--active {
+  border: 1px $main-accent-color solid;
 }
 
 .car-item__price {
