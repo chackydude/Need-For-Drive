@@ -1,5 +1,7 @@
 import Api from "../../../utils/api/Api";
 import FetchApi from "../../../utils/api/FetchApi";
+import { instance } from "../../../utils/api/instance";
+import AxiosApi from "../../../utils/api/AxiosApi";
 
 export default {
   state: {
@@ -14,20 +16,16 @@ export default {
 
   actions: {
     async authUser({ commit }, userData) {
-      let fetchApi = new Api(new FetchApi());
+      let api = new Api(new AxiosApi());
 
-      fetchApi.provider.headers["Authorization"] =
+      instance.defaults.headers["Authorization"] =
         "Basic " + btoa("11d7c9f:" + process.env.VUE_APP_SECRET_KEY);
-      console.log(fetchApi.provider.headers["Authorization"]);
 
-      await fetchApi
-        .postRequest(
-          process.env.VUE_APP_BASE_URL + "auth/login",
-          fetchApi.provider.headers,
-          userData
-        )
+      await api
+        .postRequest("auth/login", userData)
         .then(result => {
           localStorage.setItem("auth", true);
+          console.log(result);
           commit("updateAccessToken", result.access_token);
         })
         .catch(error => {

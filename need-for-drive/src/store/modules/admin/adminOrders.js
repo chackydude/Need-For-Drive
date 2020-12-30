@@ -11,6 +11,9 @@ export default {
     fetchOrders({ commit, rootState }) {
       let api = new Api(new AxiosApi());
 
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+
       api
         .getRequest("db/order")
         .then(result => {
