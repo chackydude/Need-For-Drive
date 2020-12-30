@@ -78,7 +78,7 @@ export default {
     updateUserInput() {
       this.updateCity(this.userCity);
       this.generateCurrentCityId(this.userCity);
-      this.fetchPoints(this.getCurrentCityId);
+      if (this.getCurrentCityId) this.fetchPoints(this.getCurrentCityId);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       if (this.userCity.length === 0) {

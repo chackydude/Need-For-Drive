@@ -41,7 +41,7 @@ export default {
     fetchCities({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(process.env.VUE_APP_BASE_URL + "db/city")
+        .getRequest( "db/city")
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -53,7 +53,7 @@ export default {
     fetchPoints({ commit }, cityId) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId)
+        .getRequest("db/point?cityId=" + cityId)
         .then(result => {
           commit("updatePoints", result.data);
         })

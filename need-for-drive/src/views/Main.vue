@@ -56,7 +56,6 @@ export default {
     ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates", "getCity"])
   },
   created() {
-    this.getUserLocationCoordinates();
     this.getUserLocationCityByCoordinates();
 
     if (this.getCities.length === 0) {
