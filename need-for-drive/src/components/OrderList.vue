@@ -186,16 +186,16 @@ export default {
 
     toPrice(str) {
       str = str.toString().replace(/(\.(.*))/g, "");
-      var arr = str.split("");
-      var str_temp = "";
+      let arr = str.split("");
+      let strTemp = "";
       if (str.length > 3) {
-        for (var i = arr.length - 1, j = 1; i >= 0; i--, j++) {
-          str_temp = arr[i] + str_temp;
+        for (let i = arr.length - 1, j = 1; i >= 0; i--, j++) {
+          strTemp = arr[i] + strTemp;
           if (j % 3 === 0) {
-            str_temp = " " + str_temp;
+            strTemp = " " + strTemp;
           }
         }
-        return str_temp;
+        return strTemp;
       } else {
         return str;
       }
