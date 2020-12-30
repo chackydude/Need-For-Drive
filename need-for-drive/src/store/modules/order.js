@@ -149,6 +149,31 @@ export default {
   },
 
   actions: {
+    // example: https://geocode-maps.yandex.ru/1.x/?geocode=27.525773,53.89079
+    // getting user's location city
+    getUserLocationCityByCoordinates({ rootState, commit }) {
+      let api = new Api(new AxiosApi());
+      api
+        .getRequest(
+          process.env.VUE_APP_GEOCODE_URL +
+            process.env.VUE_APP_MAPS_API_KEY +
+            "&format=json&geocode=" +
+            rootState.place.currentCityCoordinates[1] +
+            "," +
+            rootState.place.currentCityCoordinates[0]
+        )
+        .then(result => {
+          console.log(
+            result.response.GeoObjectCollection
+          );
+          commit(
+            "updateCity",
+            result.response.GeoObjectCollection.featureMember[3].GeoObject.name
+          );
+        })
+        .catch(error => console.log(error.message));
+    },
+
     // роутимся на страничку заказа и обновляем сопутствующую информацию
     routeToOrder({ commit, state }) {
       if (!state.isPosted) {
@@ -205,9 +230,7 @@ export default {
     fetchRates({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-            "db/rate",
-        )
+        .getRequest("db/rate")
         .then(result => {
           commit("updateRates", result.data);
           commit(
@@ -227,9 +250,7 @@ export default {
     fetchOrderStatuses({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-            "db/orderStatus",
-        )
+        .getRequest("db/orderStatus")
         .then(result => {
           commit("updateStatuses", result.data);
         })

@@ -6,7 +6,7 @@
       <div class="header__current-city">
         <img src="@/assets/icons/place_icon.svg" alt="current-city" />
         <div>
-          Ульяновск
+          {{ getCity || "Ульяновск" }}
         </div>
       </div>
     </div>
@@ -15,10 +15,15 @@
 
 <script>
 import Menu from "./common/Menu";
+import { mapGetters } from 'vuex';
+
 export default {
   name: "Header",
   components: {
     Menu
+  },
+  computed: {
+    ...mapGetters(["getCity"])
   }
 };
 </script>

@@ -45,6 +45,7 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Map from "../elements/Map";
+
 export default {
   name: "PlaceTab",
   components: {
@@ -70,7 +71,8 @@ export default {
       "generateCoordinatesForPoints",
       "generateCurrentCityId",
       "generateCurrentPointId",
-      "checkOrderProperties"
+      "checkOrderProperties",
+      "getUserLocationCoordinates"
     ]),
 
     updateUserInput() {
@@ -130,14 +132,7 @@ export default {
       this.fetchCities();
     }
   },
-  // mounted() {
-  //   // eslint-disable-next-line no-unused-vars
-  //   this.$store.subscribe((mutation, state) => {
-  //     if (mutation.type !== "updateProperty") {
-  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
-  //     }
-  //   });
-  // },
+
   watch: {
     getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;

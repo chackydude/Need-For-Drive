@@ -41,9 +41,7 @@ export default {
     fetchCities({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/city"
-        )
+        .getRequest(process.env.VUE_APP_BASE_URL + "db/city")
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -55,9 +53,7 @@ export default {
     fetchPoints({ commit }, cityId) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId
-        )
+        .getRequest(process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId)
         .then(result => {
           commit("updatePoints", result.data);
         })
@@ -66,10 +62,33 @@ export default {
         });
     },
 
+    // getting user's location coordinates
+    getUserLocationCoordinates({ commit }) {
+      function success(position) {
+        // получили координаты юзера
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        commit("updateCurrentCityCoordinates", [latitude, longitude]);
+      }
+
+      function error() {
+        // Unable to retrieve your location
+      }
+
+      if (!navigator.geolocation) {
+        // Geolocation is not supported by your browser
+      } else {
+        // Locating…
+        navigator.geolocation.getCurrentPosition(success, error);
+      }
+    },
+
     generatePlaceCoordinates({ commit }, address) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(  process.env.VUE_APP_GEOCODE_URL +
+        .getRequest(
+          process.env.VUE_APP_GEOCODE_URL +
             process.env.VUE_APP_MAPS_API_KEY +
             "&format=json&geocode=" +
             address

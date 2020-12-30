@@ -25,6 +25,7 @@ export default {
     }
   },
 
+  // FIXME: replace by mutation
   actions: {
     updateCurrentPoint({ commit }, point) {
       commit("updatePlace", point);

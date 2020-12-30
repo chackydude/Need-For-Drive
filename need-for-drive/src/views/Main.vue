@@ -8,7 +8,7 @@
         <div class="header__current-city">
           <img src="@/assets/icons/place_icon.svg" alt="current-city" />
           <div>
-            Ульяновск
+            {{ getCity || "Ульяновск" }}
           </div>
         </div>
       </header>
@@ -49,13 +49,15 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates"]),
+    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates", "getUserLocationCoordinates", "getUserLocationCityByCoordinates"]),
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates"])
+    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates", "getCity"])
   },
   created() {
+    this.getUserLocationCoordinates();
+    this.getUserLocationCityByCoordinates();
 
     if (this.getCities.length === 0) {
       this.fetchCities();
