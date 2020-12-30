@@ -19,7 +19,7 @@
           <img src="@/assets/icons/admin/dropdown_icon.svg" alt="dropdown" class="actions__dropdown"/>
         </div>
         <div class="dropdown-content">
-          <router-link to="/admin" tag="p">Logout</router-link>
+          <p to="/admin" @click="logout">Logout</p>
         </div>
       </div>
     </div>
@@ -27,11 +27,19 @@
 </template>
 
 <script>
+import router from "../../router";
+
 export default {
   name: "AdminHeader",
   data() {
     return {
       showActions: false
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("auth");
+      router.push("/admin")
     }
   }
 };

@@ -23,32 +23,56 @@ const routes = [
   {
     path: "/admin",
     name: "auth",
-    component: () => import("../views/Auth")
+    component: () => import("../views/admin/Auth")
   },
   {
     path: "/admin/orders/",
-    component: () => import("../views/AdminOrders"),
+    component: () => import("../views/admin/AdminOrders"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
   },
   {
     path: "/admin/edit/",
-    component: () => import("../views/AdminEntityEdit")
+    component: () => import("../views/admin/AdminEntityEdit"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
   },
   {
     path: "/admin/entity/",
-    component: () => import("../views/AdminEntityExample")
+    component: () => import("../views/admin/AdminEntityExample"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
   },
   {
     path: "/admin/*",
-    component: () => import("../views/AdminOrders"),
+    component: () => import("../views/admin/AdminOrders"),
 
     // route check function
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.getItem("auth")) {
-    //     next();
-    //   } else {
-    //     next({ name: "auth" });
-    //   }
-    // }
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
   }
 ];
 

@@ -1,16 +1,23 @@
 import Api from "../../../utils/api/Api";
-import FetchApi from "../../../utils/api/FetchApi";
 import { instance } from "../../../utils/api/instance";
 import AxiosApi from "../../../utils/api/AxiosApi";
 
 export default {
   state: {
-    accessToken: ""
+    accessToken: "",
+    authError: false,
+    authLoading: false
   },
 
   getters: {
     getAccessToken(state) {
       return state.accessToken;
+    },
+    getAuthError(state) {
+      return state.authError;
+    },
+    getAuthLoading(state) {
+      return state.authLoading;
     }
   },
 
@@ -24,12 +31,16 @@ export default {
       await api
         .postRequest("auth/login", userData)
         .then(result => {
-          localStorage.setItem("auth", true);
-          console.log(result);
           commit("updateAccessToken", result.access_token);
+          commit("updateLoading", false);
+          commit("updateError", false);
+          localStorage.setItem("auth", true);
         })
         .catch(error => {
           console.log(error.message);
+
+          commit("updateLoading", false);
+          commit("updateError", true);
         });
     }
   },
@@ -37,6 +48,12 @@ export default {
   mutations: {
     updateAccessToken(state, token) {
       state.accessToken = token;
+    },
+    updateError(state, isError) {
+      state.authError = isError;
+    },
+    updateLoading(state, isLoading) {
+      state.authLoading = isLoading;
     }
   }
 };

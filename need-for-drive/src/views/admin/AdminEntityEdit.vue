@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import AdminSideBar from "../components/admin/AdminSideBar";
-import AdminHeader from "../components/admin/AdminHeader";
-import AdminFooter from "../components/admin/AdminFooter";
-import AdminError from "../components/admin/AdminError";
+import AdminSideBar from "../../components/admin/AdminSideBar";
+import AdminHeader from "../../components/admin/AdminHeader";
+import AdminFooter from "../../components/admin/AdminFooter";
+import AdminError from "../../components/admin/AdminError";
 
 export default {
   name: "AdminEntityEdit",
