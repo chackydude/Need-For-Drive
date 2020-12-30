@@ -4,7 +4,7 @@
       <div class="inputs__input input-field">
         <label class="input-field__title">Город</label>
         <input
-          type="text"
+          type="search"
           class="input-field__input"
           placeholder="Ваш город"
           v-model.trim="userCity"
@@ -20,7 +20,7 @@
       <div class="inputs__input input-field">
         <label class="input-field__title">Пункт выдачи</label>
         <input
-          type="text"
+          type="search"
           class="input-field__input"
           placeholder="Начните вводить пункт..."
           v-model.trim="userPoint"
