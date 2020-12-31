@@ -6,7 +6,7 @@
       <div class="header__current-city">
         <img src="@/assets/icons/place_icon.svg" alt="current-city" />
         <div>
-          {{ getCity || "Ульяновск" }}
+          {{ getCity || "Определяем город" }}
         </div>
       </div>
     </div>

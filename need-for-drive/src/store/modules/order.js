@@ -164,11 +164,16 @@ export default {
         )
         .then(result => {
           console.log(
-              result.response.GeoObjectCollection.featureMember[3].GeoObject.name
+            result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(
+              component => component.kind === "locality"
+            )[0].name
           );
+          console.log("hello");
           commit(
             "updateCity",
-            result.response.GeoObjectCollection.featureMember[3].GeoObject.name
+            result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(
+              component => component.kind === "locality"
+            )[0].name
           );
         })
         .catch(error => console.log(error.message));

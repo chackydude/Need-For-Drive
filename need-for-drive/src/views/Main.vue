@@ -8,7 +8,7 @@
         <div class="header__current-city">
           <img src="@/assets/icons/place_icon.svg" alt="current-city" />
           <div>
-            {{ getCity || "Ульяновск" }}
+            {{ getCity || "Определяем город" }}
           </div>
         </div>
       </header>
@@ -18,7 +18,11 @@
           <p class="title__second-phrase">Need for drive</p>
           <p class="title__description">Поминутная аренда авто твоего города</p>
         </div>
-        <router-link tag="button" :to="`/order/${getOrderId}`" class="welcome-area__button">
+        <router-link
+          tag="button"
+          :to="`/order/${getOrderId}`"
+          class="welcome-area__button"
+        >
           Забронировать
         </router-link>
       </main>
@@ -49,15 +53,29 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates", "getUserLocationCoordinates", "getUserLocationCityByCoordinates"]),
+    ...mapActions([
+      "fetchCities",
+      "fetchCars",
+      "fetchOrder",
+      "routeToOrder",
+      "fetchRates",
+      "getUserLocationCoordinates",
+      "getUserLocationCityByCoordinates"
+    ]),
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates", "getCity"])
+    ...mapGetters([
+      "getCities",
+      "getAllCars",
+      "getOrderId",
+      "getCurrentTab",
+      "getRates",
+      "getCity",
+      "getCoordinates"
+    ])
   },
   created() {
-    this.getUserLocationCityByCoordinates();
-
     if (this.getCities.length === 0) {
       this.fetchCities();
     }
@@ -71,6 +89,12 @@ export default {
       this.fetchOrder(localStorage.getItem("orderId"));
       this.updateOrderStatus(true);
     }
+  },
+
+  mounted() {
+    if (this.getCoordinates[0] == 0 && this.getCoordinates[1] == 0)
+      this.getUserLocationCoordinates();
+    this.getUserLocationCityByCoordinates();
   }
 };
 </script>

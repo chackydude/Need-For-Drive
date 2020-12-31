@@ -72,7 +72,8 @@ export default {
       "generateCurrentCityId",
       "generateCurrentPointId",
       "checkOrderProperties",
-      "getUserLocationCoordinates"
+      "getUserLocationCoordinates",
+      "getUserLocationCityByCoordinates"
     ]),
 
     updateUserInput() {
@@ -118,7 +119,8 @@ export default {
       "getPointsCoordinates",
       "getCurrentPoint",
       "getCurrentCityId",
-      "getCurrentTab"
+      "getCurrentTab",
+      "getMap"
     ]),
 
     isFilled() {
