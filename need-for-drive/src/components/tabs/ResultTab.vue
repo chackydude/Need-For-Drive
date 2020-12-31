@@ -9,7 +9,7 @@
       </p>
       <p class="car-info__date">
         Доступна с
-        <span class="car-info__property-value">{{ new Date(getDateFrom).toISOString() }}</span>
+        <span class="car-info__property-value">{{ dateFrom }}</span>
       </p>
     </div>
     <div class="result-tab__car-image car-image">
@@ -29,6 +29,8 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import dayjs from 'dayjs'
+
 export default {
   name: "ResultTab",
   computed: {
@@ -43,6 +45,9 @@ export default {
       } else {
         return this.getModel.tank;
       }
+    },
+    dateFrom() {
+      return dayjs(this.getDateFrom).format('DD.MM.YYYY hh:mm')
     }
   },
   methods: {
