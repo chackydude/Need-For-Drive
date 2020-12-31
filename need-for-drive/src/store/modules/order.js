@@ -343,8 +343,8 @@ export default {
       state.availableStatuses.some(availableStatus => {
         if (availableStatus.name === status) {
           state.currentOrderStatusId = availableStatus.id;
-          return availableStatus.name === status;
-        } else return false;
+        }
+        return availableStatus.name === status;
       });
     },
 

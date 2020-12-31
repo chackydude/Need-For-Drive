@@ -41,7 +41,7 @@ export default {
     fetchCities({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest( "db/city")
+        .getRequest("db/city")
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -112,14 +112,14 @@ export default {
       });
       let api = new Api(new AxiosApi());
 
-      for (let i = 0; i < points.length; i++) {
+      points.forEach(point => {
         api
           .getRequest(
             process.env.VUE_APP_GEOCODE_URL +
               process.env.VUE_APP_MAPS_API_KEY +
               "&format=json&geocode=" +
-              points[i].cityId.name +
-              points[i].address
+              point.cityId.name +
+              point.address
           )
           .then(result => {
             let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -129,27 +129,29 @@ export default {
             commit("updatePointsWithCoordinates", {
               status: "add",
               coordinates: coords,
-              name: points[i].address
+              name: point.address
             });
           })
           .catch(error => console.log(error.message));
-      }
+      });
     },
 
     generateCurrentCityId({ commit, getters }, cityName) {
-      for (let i = 0; i < getters.getCities.length; i++) {
-        if (getters.getCities[i].name === cityName) {
-          commit("updateCurrentCityId", getters.getCities[i].id);
+      getters.getCities.some(city => {
+        if (city.name === cityName) {
+          commit("updateCurrentCityId", city.id);
         }
-      }
+        return city.name === cityName;
+      });
     },
 
     generateCurrentPointId({ commit, getters }, pointName) {
-      for (let i = 0; i < getters.getPoints.length; i++) {
-        if (getters.getPoints[i].address === pointName) {
-          commit("updateCurrentPointId", getters.getPoints[i].id);
+      getters.getPoints.some(point => {
+        if (point.address === pointName) {
+          commit("updateCurrentPointId", point.id);
         }
-      }
+        return point.name === pointName;
+      });
     }
   },
 

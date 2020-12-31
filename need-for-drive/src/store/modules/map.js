@@ -57,22 +57,22 @@ export default {
       // eslint-disable-next-line no-undef
       let placemarksCollection = new ymaps.GeoObjectCollection(null);
 
-      for (let i = 0; i < state.placemarks.length; i++) {
+      state.placemarks.forEach(placemarkData => {
         // eslint-disable-next-line no-undef
         let placemark = new ymaps.Placemark(
-          state.placemarks[i].center,
-          { hintContent: state.placemarks[i].name },
+          placemarkData.center,
+          { hintContent: placemarkData.name },
           { preset: "islands#darkGreenCircleIcon" }
         );
         placemark.events.add("click", function() {
-          state.myMap.setCenter(state.placemarks[i].center, 12, {
+          state.myMap.setCenter(placemarkData.center, 12, {
             duration: 500
           });
-          state.currentPoint = state.placemarks[i].name;
+          state.currentPoint = placemarkData.name;
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
-      }
+      });
     },
 
     // refocus map on the new center
@@ -87,22 +87,22 @@ export default {
       // eslint-disable-next-line no-undef
       let placemarksCollection = new ymaps.GeoObjectCollection(null);
 
-      for (let i = 0; i < state.placemarks.length; i++) {
+      state.placemarks.forEach(placemarkData => {
         // eslint-disable-next-line no-undef
         let placemark = new ymaps.Placemark(
-          state.placemarks[i].center,
-          { hintContent: state.placemarks[i].name },
+          placemarkData.center,
+          { hintContent: placemarkData.name },
           { preset: "islands#darkGreenCircleIcon" }
         );
         placemark.events.add("click", function() {
-          state.myMap.setCenter(state.placemarks[i].center, 12, {
+          state.myMap.setCenter(placemarkData.center, 12, {
             duration: 500
           });
-          state.currentPoint = state.placemarks[i].name;
+          state.currentPoint = placemarkData.name;
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
-      }
+      });
     }
   }
 };
