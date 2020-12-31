@@ -76,6 +76,8 @@ export default {
     ])
   },
   created() {
+    this.getUserLocationCoordinates(); // прилетели координаты, но в это время уже заработал getUserLocationCityByCoordinates
+
     if (this.getCities.length === 0) {
       this.fetchCities();
     }
@@ -91,10 +93,10 @@ export default {
     }
   },
 
-  mounted() {
-    if (this.getCoordinates[0] == 0 && this.getCoordinates[1] == 0)
-      this.getUserLocationCoordinates();
-    this.getUserLocationCityByCoordinates();
+  watch: {
+    getCoordinates: function() {
+      this.getUserLocationCityByCoordinates();
+    }
   }
 };
 </script>

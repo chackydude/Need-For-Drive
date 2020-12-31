@@ -155,7 +155,7 @@ export default {
     // getting user's location city
     async getUserLocationCityByCoordinates({ rootState, commit }) {
       let api = new Api(new AxiosApi());
-      await api
+      api
         .getRequest(
           process.env.VUE_APP_GEOCODE_URL +
             process.env.VUE_APP_MAPS_API_KEY +
@@ -170,7 +170,6 @@ export default {
               component => component.kind === "locality"
             )[0].name
           );
-          console.log("hello");
           commit(
             "updateCity",
             result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(

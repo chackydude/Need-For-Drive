@@ -69,6 +69,8 @@ export default {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
+        console.log([latitude, longitude]);
+
         commit("updateCurrentCityCoordinates", [latitude, longitude]);
       }
 
