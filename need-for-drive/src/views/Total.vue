@@ -92,7 +92,7 @@ $padding: 64px;
 }
 
 .tabs {
-  padding: 0 $padding 0 $padding;
+  padding: 8px $padding 8px $padding;
   border-top: 1px solid $gray-light-color;
   border-bottom: 1px solid $gray-light-color;
   height: 32px;
