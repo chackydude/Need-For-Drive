@@ -117,8 +117,9 @@ export default {
       let isFullTank = false;
       let isNeedChildChair = false;
       let isRightWheel = false;
-      for (let i = 0; i < state.extraServices.length; i++) {
-        switch (state.extraServices[i].text) {
+
+      state.extraServices.forEach(service => {
+        switch (service.text) {
           case "Детское кресло":
             isNeedChildChair = true;
             break;
@@ -129,7 +130,8 @@ export default {
             isFullTank = true;
             break;
         }
-      }
+      });
+
       let orderStub = {
         orderStatusId: state.currentOrderStatusId,
         pointId: rootState.place.currentPointId,
@@ -339,12 +341,12 @@ export default {
 
     // updating status id with the name of status
     updateStatusId(state, status) {
-      for (let i = 0; i < state.availableStatuses.length; i++) {
-        if (state.availableStatuses[i].name === status) {
-          state.currentOrderStatusId = state.availableStatuses[i].id;
-          break;
-        }
-      }
+      state.availableStatuses.some(availableStatus => {
+        if (availableStatus.name === status) {
+          state.currentOrderStatusId = availableStatus.id;
+          return availableStatus.name === status;
+        } else return false;
+      });
     },
 
     updateOrder(state, newOrder) {

@@ -5,7 +5,7 @@ export default {
   state: {
     cities: [],
     currentPoints: [],
-    currentCityCoordinates: [55.751574, 37.573856], // Moscow
+    currentCityCoordinates: [54.320883, 48.403123], // default
     currentCityId: "",
     pointsWithCoordinates: [],
     currentPointId: ""
