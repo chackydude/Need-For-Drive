@@ -60,7 +60,8 @@ export default {
       "routeToOrder",
       "fetchRates",
       "getUserLocationCoordinates",
-      "getUserLocationCityByCoordinates"
+      "getUserLocationCityByCoordinates",
+      "generateCurrentCityId"
     ]),
     ...mapMutations(["updateOrderStatus"])
   },
@@ -76,7 +77,11 @@ export default {
     ])
   },
   created() {
-    this.getUserLocationCoordinates(); // прилетели координаты, но в это время уже заработал getUserLocationCityByCoordinates
+    if (
+      this.getCoordinates[0] === 54.320883 &&
+      this.getCoordinates[1] === 48.403123
+    )
+      this.getUserLocationCoordinates(); // прилетели координаты, но в это время уже заработал getUserLocationCityByCoordinates
 
     if (this.getCities.length === 0) {
       this.fetchCities();
@@ -94,8 +99,11 @@ export default {
   },
 
   watch: {
-    getCoordinates: function() {
+    getCoordinates: async function() {
+      // fixme
       this.getUserLocationCityByCoordinates();
+      await this.fetchCities();
+      this.generateCurrentCityId();
     }
   }
 };
