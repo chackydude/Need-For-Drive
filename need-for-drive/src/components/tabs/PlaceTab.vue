@@ -1,6 +1,14 @@
 <template>
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
+      <!--      <v-select-->
+      <!--              class="input-field__input"-->
+      <!--              :options="getCities.map(city => city.name)"-->
+      <!--              placeholder="Ваш город"-->
+      <!--              @input="updateUserInput"-->
+      <!--              v-model.trim="userCity"-->
+      <!--      ></v-select>-->
+
       <div class="inputs__input input-field">
         <label class="input-field__title">Город</label>
         <input
@@ -45,6 +53,7 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Map from "../elements/Map";
+import "vue-select/dist/vue-select.css";
 
 export default {
   name: "PlaceTab",
@@ -152,7 +161,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../../../public/css/mixins";
 @import "../../../public/css/variables";
 
@@ -181,6 +190,7 @@ export default {
 .input-field__title {
   text-align: right;
   min-width: 92px;
+  align-self: flex-end;
   @include fontStylesLight;
 }
 
@@ -189,6 +199,29 @@ export default {
   border-bottom: 1px solid $gray-color;
   @include fontStylesLight;
   min-width: 224px;
+}
+
+.vs__selected,
+.vs__search,
+.vs__selected:focus {
+  padding: 0 !important;
+  border: none !important;
+  @include fontStylesLight;
+}
+
+.input-field__input .vs__search::placeholder,
+.input-field__input .vs__dropdown-toggle,
+.input-field__input .vs__dropdown-menu {
+  border: none;
+  padding-bottom: 0;
+  padding-left: 0 !important;
+  @include fontStylesLight;
+  color: darken($gray-color, 15);
+  margin-top: 0px;
+}
+
+.input-field__input .vs__open-indicator {
+  display: none;
 }
 
 .place-tab__map {
