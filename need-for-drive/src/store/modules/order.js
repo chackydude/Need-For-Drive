@@ -291,9 +291,9 @@ export default {
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
-        state.extraServices = state.extraServices.filter(item => {
-          item.text !== payload.value.text;
-        });
+        state.extraServices = state.extraServices.filter(item =>
+          item.text !== payload.value.text
+        );
       }
     },
 
