@@ -129,7 +129,8 @@ export default {
             commit("updatePointsWithCoordinates", {
               status: "add",
               coordinates: coords,
-              name: point.address
+              name: point.address,
+              city: point.cityId.name
             });
           })
           .catch(error => console.log(error.message));
@@ -180,7 +181,8 @@ export default {
       if (payload.status == "add") {
         state.pointsWithCoordinates.push({
           center: payload.coordinates,
-          name: payload.name
+          name: payload.name,
+          city: payload.city
         });
       } else {
         state.pointsWithCoordinates = [];

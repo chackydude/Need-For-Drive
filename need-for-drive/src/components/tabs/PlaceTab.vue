@@ -1,6 +1,7 @@
 <template>
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
+
       <!--      <v-select-->
       <!--              class="input-field__input"-->
       <!--              :options="getCities.map(city => city.name)"-->
@@ -34,8 +35,9 @@
           v-model.trim="userPoint"
           @input="updateUserPoint"
           list="points"
-          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"
+          :disabled="getCities.map((city) => city.name).indexOf(getCity) === -1"
         />
+        {{ userPoint }}
         <datalist id="points">
           <option v-for="point in getPoints" :key="point.name">
             {{ point.address }}
@@ -47,6 +49,7 @@
       <p class="map-area__title">Выберите на карте:</p>
       <Map :center="getCoordinates" :placemarks="getPointsCoordinates" />
     </div>
+    {{ getCurrentCity }}
   </div>
 </template>
 
@@ -58,12 +61,12 @@ import "vue-select/dist/vue-select.css";
 export default {
   name: "PlaceTab",
   components: {
-    Map
+    Map,
   },
   data() {
     return {
       userCity: "",
-      userPoint: ""
+      userPoint: "",
     };
   },
   methods: {
@@ -71,7 +74,9 @@ export default {
       "updateCity",
       "updatePlace",
       "updateFillStatus",
-      "checkTabsState"
+      "checkTabsState",
+      "updateCurrentCity",
+      "updateCurrentPoint",
     ]),
     ...mapActions([
       "fetchCities",
@@ -82,11 +87,15 @@ export default {
       "generateCurrentPointId",
       "checkOrderProperties",
       "getUserLocationCoordinates",
-      "getUserLocationCityByCoordinates"
+      "getUserLocationCityByCoordinates",
     ]),
 
     updateUserInput() {
       this.updateCity(this.userCity);
+
+      // map
+      this.updateCurrentCity(this.userCity);
+
       this.generateCurrentCityId(this.userCity);
       if (this.getCurrentCityId) this.fetchPoints(this.getCurrentCityId);
       this.updateFillStatus(this.isFilled);
@@ -100,23 +109,21 @@ export default {
     },
 
     updateUserPoint() {
-      if (
-        this.getPoints.map(point => point.address).indexOf(this.userPoint) !==
-        -1
-      ) {
-        this.updatePlace(this.userPoint);
-        this.generateCurrentPointId(this.userPoint);
-        this.updateFillStatus(this.isFilled);
-        this.updateCityCoordinates();
-        this.checkOrderProperties(this.getCurrentTab.id);
-        this.checkTabsState(this.getCurrentTab.id);
-      }
+      // console.log("template: " + this.userPoint);
+      // console.log("vuex: " + this.getPoint);
+      
+      this.updatePlace(this.userPoint);
+      this.generateCurrentPointId(this.userPoint);
+      this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateCityCoordinates() {
       if (this.getCity.trim() !== "")
         this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
-    }
+    },
   },
   computed: {
     ...mapGetters([
@@ -127,14 +134,15 @@ export default {
       "getCoordinates",
       "getPointsCoordinates",
       "getCurrentPoint",
+      "getCurrentCity",
       "getCurrentCityId",
       "getCurrentTab",
-      "getMap"
+      "getMap",
     ]),
 
     isFilled() {
       return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
-    }
+    },
   },
   created() {
     this.userCity = this.getCity;
@@ -145,7 +153,7 @@ export default {
   },
 
   watch: {
-    getCurrentPoint: function() {
+    getCurrentPoint: function () {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
       this.updateFillStatus(this.isFilled);
@@ -154,10 +162,20 @@ export default {
       this.checkTabsState(this.getCurrentTab.id);
     },
 
-    getPoints: function() {
+    // система реактивности
+    getCurrentCity: function () {
+      this.userCity = this.getCurrentCity;
+      this.updateCity(this.getCurrentCity);
+      this.updateFillStatus(this.isFilled);
+      // fixme
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
+    },
+
+    getPoints: function () {
       this.generateCoordinatesForPoints(this.getPoints);
-    }
-  }
+    },
+  },
 };
 </script>
 

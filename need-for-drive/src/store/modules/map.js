@@ -4,7 +4,8 @@ export default {
     // input coordinates (not map's attributes yet)
     center: [],
     placemarks: [],
-    currentPoint: ""
+    currentPoint: "",
+    currentCity: ""
   },
 
   getters: {
@@ -22,6 +23,10 @@ export default {
 
     getCurrentPoint(state) {
       return state.currentPoint;
+    },
+
+    getCurrentCity(state) {
+      return state.currentCity;
     }
   },
 
@@ -39,6 +44,14 @@ export default {
 
     updatePlacemarks(state, placemarks) {
       state.placemarks = placemarks;
+    },
+
+    updateCurrentCity(state, city) {
+      state.currentCity = city;
+    },
+
+    updateCurrentPoint(state, point) {
+      state.currentPoint = point;
     },
 
     // initializing map
@@ -69,6 +82,8 @@ export default {
             duration: 500
           });
           state.currentPoint = placemarkData.name;
+          state.currentCity = placemarkData.city;
+          console.log(placemarkData);
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
@@ -99,6 +114,8 @@ export default {
             duration: 500
           });
           state.currentPoint = placemarkData.name;
+          state.currentCity = placemarkData.city
+          console.log(placemarkData)
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
