@@ -59,7 +59,6 @@
       <p class="map-area__title">Выберите на карте:</p>
       <Map :center="getCoordinates" :placemarks="getPointsCoordinates" />
     </div>
-    {{ getCurrentCity }}
   </div>
 </template>
 
@@ -101,8 +100,6 @@ export default {
     ]),
 
     updateUserInput() {
-      console.log(this.getCities);
-
       this.updateCity(this.userCity);
 
       // map
@@ -115,6 +112,7 @@ export default {
       if (this.userCity === null) {
         this.userPoint = "";
         this.updateUserPoint();
+        this.updateCurrentPoint(null);
       }
       this.checkOrderProperties(this.getCurrentTab.id);
       this.checkTabsState(this.getCurrentTab.id);
@@ -169,8 +167,12 @@ export default {
 
   watch: {
     getCurrentPoint: function() {
+      this.userCity = this.getCurrentCity;
+      this.updateCity(this.getCurrentCity);
+
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
+
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
       this.checkOrderProperties(this.getCurrentTab.id);
@@ -181,8 +183,13 @@ export default {
     getCurrentCity: function() {
       this.userCity = this.getCurrentCity;
       this.updateCity(this.getCurrentCity);
+
+      this.userPoint = this.getCurrentPoint;
+      this.updatePlace(this.getCurrentPoint);
+
       this.updateFillStatus(this.isFilled);
       // fixme
+
       this.checkOrderProperties(this.getCurrentTab.id);
       this.checkTabsState(this.getCurrentTab.id);
     },

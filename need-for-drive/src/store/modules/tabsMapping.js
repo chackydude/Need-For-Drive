@@ -1,8 +1,8 @@
 export default {
   state: {
     tabMap: {
-      orderCity: { tabId: 0, default: "" },
-      orderPlace: { tabId: 0, default: "" },
+      orderCity: { tabId: 0, default: null },
+      orderPlace: { tabId: 0, default: null },
       orderModel: { tabId: 1, default: {} },
       modelColor: { tabId: 2, default: "" },
       rentalTime: { tabId: 2, default: [] },
