@@ -109,15 +109,14 @@ export default {
     },
 
     updateUserPoint() {
-      // console.log("template: " + this.userPoint);
-      // console.log("vuex: " + this.getPoint);
-      
-      this.updatePlace(this.userPoint);
-      this.generateCurrentPointId(this.userPoint);
-      this.updateFillStatus(this.isFilled);
-      this.updateCityCoordinates();
-      this.checkOrderProperties(this.getCurrentTab.id);
-      this.checkTabsState(this.getCurrentTab.id);
+      if (this.getPoints.map(point => point.address).includes(this.userPoint) || this.getPoints.map(point => point.address).includes(this.getPoint)) {
+        this.updatePlace(this.userPoint);
+        this.generateCurrentPointId(this.userPoint);
+        this.updateFillStatus(this.isFilled);
+        this.updateCityCoordinates();
+        this.checkOrderProperties(this.getCurrentTab.id);
+        this.checkTabsState(this.getCurrentTab.id);
+      }
     },
 
     updateCityCoordinates() {
