@@ -83,7 +83,6 @@ export default {
           });
           state.currentPoint = placemarkData.name;
           state.currentCity = placemarkData.city;
-          console.log(placemarkData);
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);
@@ -115,7 +114,6 @@ export default {
           });
           state.currentPoint = placemarkData.name;
           state.currentCity = placemarkData.city
-          console.log(placemarkData)
         });
         placemarksCollection.add(placemark);
         state.myMap.geoObjects.add(placemarksCollection);

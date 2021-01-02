@@ -165,11 +165,6 @@ export default {
             rootState.place.currentCityCoordinates[0]
         )
         .then(result => {
-          console.log(
-            result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(
-              component => component.kind === "locality"
-            )[0].name
-          );
           commit(
             "updateCity",
             result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(

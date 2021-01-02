@@ -69,8 +69,6 @@ export default {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        console.log([latitude, longitude]);
-
         commit("updateCurrentCityCoordinates", [latitude, longitude]);
       }
 
@@ -149,6 +147,7 @@ export default {
     generateCurrentPointId({ commit, getters }, pointName) {
       getters.getPoints.some(point => {
         if (point.address === pointName) {
+          console.log(point.id)
           commit("updateCurrentPointId", point.id);
         }
         return point.name === pointName;
