@@ -1,8 +1,10 @@
 <template>
   <div class="result-tab">
-    <div class="result-tab__car-info car-info">
+    <div class="result-tab__car-info car-info"  v-if="!isLoading">
       <p class="car-info__name">{{ getModel.name }}</p>
-      <p  v-if="getModel.number" class="car-info__number">{{ getModel.number | toNumber }}</p>
+      <p v-if="getModel.number" class="car-info__number">
+        {{ getModel.number | toNumber }}
+      </p>
       <p class="car-info__tank">
         Топливо:
         <span class="car-info__property-value">{{ tank }}%</span>
@@ -12,7 +14,7 @@
         <span class="car-info__property-value">{{ dateFrom }}</span>
       </p>
     </div>
-    <div class="result-tab__car-image car-image">
+    <div class="result-tab__car-image car-image" v-if="!isLoading">
       <img
         :src="
           'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
@@ -24,20 +26,36 @@
         referrerPolicy="origin"
       />
     </div>
+    <div class="result-tab__loader" v-if="isLoading">
+      <pulse-loader :loading="isLoading" color="#0ec261"></pulse-loader>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import dayjs from 'dayjs'
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import dayjs from "dayjs";
 
 export default {
   name: "ResultTab",
+  components: {
+    PulseLoader
+  },
   computed: {
-    ...mapGetters(["getModel", "getDateFrom", "getExtraServices"]),
+    ...mapGetters([
+      "getModel",
+      "getDateFrom",
+      "getExtraServices",
+      "getOrderStatus",
+      "getSendStatus"
+    ]),
     tank() {
       if (this.getModel.tank !== 100) {
-        if (this.getExtraServices.map(item => item.text).indexOf('Полный бак') !== -1) {
+        if (
+          this.getExtraServices.map(item => item.text).indexOf("Полный бак") !==
+          -1
+        ) {
           return 100;
         } else {
           return this.getModel.tank;
@@ -47,7 +65,10 @@ export default {
       }
     },
     dateFrom() {
-      return dayjs(this.getDateFrom).format('DD.MM.YYYY hh:mm')
+      return dayjs(this.getDateFrom).format("DD.MM.YYYY hh:mm");
+    },
+    isLoading() {
+      return this.getSendStatus && !localStorage.getItem("orderId");
     }
   },
   methods: {
@@ -80,6 +101,14 @@ export default {
   justify-content: space-between;
   max-width: 100%;
   width: 726px;
+}
+
+.result-tab__loader {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .car-info__name {

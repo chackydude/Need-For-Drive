@@ -31,7 +31,12 @@ export default {
     orderId: String
   },
   methods: {
-    ...mapMutations(["unlockNextTab", "updateStatusId", "updateToDefault"]),
+    ...mapMutations([
+      "unlockNextTab",
+      "updateStatusId",
+      "updateToDefault",
+      "updateSendStatus"
+    ]),
     ...mapActions([
       "routeToOrder",
       "postOrder",
@@ -48,6 +53,7 @@ export default {
       if (!this.getOrderStatus) {
         // update current order status:
         this.updateStatusId("new");
+        this.updateSendStatus(true);
         await this.postOrder(this.getOrder);
       } else {
         this.updateStatusId("cancelled");

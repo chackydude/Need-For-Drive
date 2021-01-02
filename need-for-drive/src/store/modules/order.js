@@ -22,6 +22,7 @@ export default {
     calculator: null,
     dateHandler: new DateHadler(),
     isPosted: false,
+    isSended: false,
 
     availableStatuses: [],
     currentOrderStatusId: "",
@@ -37,6 +38,10 @@ export default {
 
     getPoint(state) {
       return state.orderPlace;
+    },
+
+    getSendStatus(state) {
+      return state.isSended;
     },
 
     getModel(state) {
@@ -210,6 +215,7 @@ export default {
       await api
         .postRequest("db/order", order)
         .then(result => {
+          commit("updateSendStatus", false);
           commit("updateOrderId", result.data.id);
           localStorage.setItem("orderId", result.data.id);
         })
@@ -327,6 +333,10 @@ export default {
 
     updateStatuses(state, statuses) {
       state.availableStatuses = statuses;
+    },
+
+    updateSendStatus(state, status) {
+      state.isSended = status;
     },
 
     updateCalculator(state, calc) {
