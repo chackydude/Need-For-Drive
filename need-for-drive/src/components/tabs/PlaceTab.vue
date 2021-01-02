@@ -2,47 +2,57 @@
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
 
-      <!--      <v-select-->
-      <!--              class="input-field__input"-->
-      <!--              :options="getCities.map(city => city.name)"-->
-      <!--              placeholder="Ваш город"-->
-      <!--              @input="updateUserInput"-->
-      <!--              v-model.trim="userCity"-->
-      <!--      ></v-select>-->
-
       <div class="inputs__input input-field">
         <label class="input-field__title">Город</label>
-        <input
-          type="search"
+        <v-select
           class="input-field__input"
+          :options="getCities.map(city => city.name)"
           placeholder="Ваш город"
-          v-model.trim="userCity"
           @input="updateUserInput"
-          list="cities"
-        />
-        <datalist id="cities">
-          <option v-for="city in getCities" :key="city.id">
-            {{ city.name }}
-          </option>
-        </datalist>
+          v-model.trim="userCity"
+        ></v-select>
+
+        <!--        <input-->
+        <!--          type="search"-->
+        <!--          class="input-field__input"-->
+        <!--          placeholder="Ваш город"-->
+        <!--          v-model.trim="userCity"-->
+        <!--          @input="updateUserInput"-->
+        <!--          list="cities"-->
+        <!--        />-->
+        <!--        <datalist id="cities">-->
+        <!--          <option v-for="city in getCities" :key="city.id">-->
+        <!--            {{ city.name }}-->
+        <!--          </option>-->
+        <!--        </datalist>-->
       </div>
       <div class="inputs__input input-field">
         <label class="input-field__title">Пункт выдачи</label>
-        <input
-          type="search"
+
+        <v-select
           class="input-field__input"
+          :label="'label'"
+          :options="getPoints.map(point => point.address)"
           placeholder="Начните вводить пункт..."
-          v-model.trim="userPoint"
           @input="updateUserPoint"
-          list="points"
-          :disabled="getCities.map((city) => city.name).indexOf(getCity) === -1"
-        />
-        {{ userPoint }}
-        <datalist id="points">
-          <option v-for="point in getPoints" :key="point.name">
-            {{ point.address }}
-          </option>
-        </datalist>
+          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"
+          v-model.trim="userPoint"
+        ></v-select>
+        <!--        <input-->
+        <!--          type="search"-->
+        <!--          class="input-field__input"-->
+        <!--          placeholder="Начните вводить пункт..."-->
+        <!--          v-model.trim="userPoint"-->
+        <!--          @input="updateUserPoint"-->
+        <!--          list="points"-->
+        <!--          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"-->
+        <!--        />-->
+        <!--        {{ userPoint }}-->
+        <!--        <datalist id="points">-->
+        <!--          <option v-for="point in getPoints" :key="point.name">-->
+        <!--            {{ point.address }}-->
+        <!--          </option>-->
+        <!--        </datalist>-->
       </div>
     </div>
     <div class="place-tab__map map-area">
@@ -61,12 +71,12 @@ import "vue-select/dist/vue-select.css";
 export default {
   name: "PlaceTab",
   components: {
-    Map,
+    Map
   },
   data() {
     return {
       userCity: "",
-      userPoint: "",
+      userPoint: ""
     };
   },
   methods: {
@@ -76,7 +86,7 @@ export default {
       "updateFillStatus",
       "checkTabsState",
       "updateCurrentCity",
-      "updateCurrentPoint",
+      "updateCurrentPoint"
     ]),
     ...mapActions([
       "fetchCities",
@@ -87,10 +97,12 @@ export default {
       "generateCurrentPointId",
       "checkOrderProperties",
       "getUserLocationCoordinates",
-      "getUserLocationCityByCoordinates",
+      "getUserLocationCityByCoordinates"
     ]),
 
     updateUserInput() {
+      console.log(this.getCities);
+
       this.updateCity(this.userCity);
 
       // map
@@ -100,7 +112,7 @@ export default {
       if (this.getCurrentCityId) this.fetchPoints(this.getCurrentCityId);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
-      if (this.userCity.length === 0) {
+      if (this.userCity === null) {
         this.userPoint = "";
         this.updateUserPoint();
       }
@@ -109,20 +121,23 @@ export default {
     },
 
     updateUserPoint() {
-      if (this.getPoints.map(point => point.address).includes(this.userPoint) || this.getPoints.map(point => point.address).includes(this.getPoint)) {
-        this.updatePlace(this.userPoint);
-        this.generateCurrentPointId(this.userPoint);
-        this.updateFillStatus(this.isFilled);
-        this.updateCityCoordinates();
-        this.checkOrderProperties(this.getCurrentTab.id);
-        this.checkTabsState(this.getCurrentTab.id);
-      }
+      // if (
+      //   this.getPoints.map(point => point.address).includes(this.userPoint) ||
+      //   this.getPoints.map(point => point.address).includes(this.getPoint)
+      // ) {
+      this.updatePlace(this.userPoint);
+      this.generateCurrentPointId(this.userPoint);
+      this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
+      // }
     },
 
     updateCityCoordinates() {
-      if (this.getCity.trim() !== "")
+      if (this.getCity !== null)
         this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
-    },
+    }
   },
   computed: {
     ...mapGetters([
@@ -136,12 +151,13 @@ export default {
       "getCurrentCity",
       "getCurrentCityId",
       "getCurrentTab",
-      "getMap",
+      "getMap"
     ]),
 
     isFilled() {
-      return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
-    },
+      // return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
+      return this.getPoint !== null && this.getCity !== null;
+    }
   },
   created() {
     this.userCity = this.getCity;
@@ -152,7 +168,7 @@ export default {
   },
 
   watch: {
-    getCurrentPoint: function () {
+    getCurrentPoint: function() {
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
       this.updateFillStatus(this.isFilled);
@@ -162,7 +178,7 @@ export default {
     },
 
     // система реактивности
-    getCurrentCity: function () {
+    getCurrentCity: function() {
       this.userCity = this.getCurrentCity;
       this.updateCity(this.getCurrentCity);
       this.updateFillStatus(this.isFilled);
@@ -171,10 +187,10 @@ export default {
       this.checkTabsState(this.getCurrentTab.id);
     },
 
-    getPoints: function () {
+    getPoints: function() {
       this.generateCoordinatesForPoints(this.getPoints);
-    },
-  },
+    }
+  }
 };
 </script>
 
