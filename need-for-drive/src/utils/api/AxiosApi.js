@@ -3,7 +3,7 @@ import { instance } from "./instance";
 
 export default class AxiosApi extends BaseApi {
   async getRequest(url) {
-    return await instance
+    let response = await instance
       .get(url)
       .then(response => {
         return response.data;
@@ -19,10 +19,11 @@ export default class AxiosApi extends BaseApi {
           console.error("Something went wrong, pls refresh the page");
         }
       });
+    return response;
   }
 
   async postRequest(url, body) {
-    return await instance
+    let response = await instance
       .post(url, body)
       .then(response => {
         return response.data;
@@ -38,10 +39,11 @@ export default class AxiosApi extends BaseApi {
           console.error("Something went wrong, pls refresh the page");
         }
       });
+    return response;
   }
 
   async putRequest(url, body) {
-    return await instance
+    let response = await instance
       .put(url, body)
       .then(response => {
         return response.data;
@@ -57,5 +59,6 @@ export default class AxiosApi extends BaseApi {
           console.error("Something went wrong, pls refresh the page");
         }
       });
+    return response;
   }
 }
