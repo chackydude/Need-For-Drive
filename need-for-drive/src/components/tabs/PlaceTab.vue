@@ -239,7 +239,6 @@ export default {
   border-bottom: 1px solid $gray-color;
   @include fontStylesLight;
   min-width: 224px;
-  z-index: 0;
 }
 
 .vs__selected,
@@ -248,6 +247,7 @@ export default {
   padding: 0 !important;
   border: none !important;
   @include fontStylesLight;
+  z-index: 0;  
 }
 
 .input-field__input .vs__search::placeholder,
