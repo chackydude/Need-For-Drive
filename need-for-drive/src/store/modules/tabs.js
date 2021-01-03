@@ -79,11 +79,11 @@ export default {
     },
 
     updateFillStatus(state, isFilled) {
-      for (let i = 0; i < state.tabs.length; i++) {
-        if (state.tabs[i].isActive) {
-          state.tabs[i].isFilled = isFilled;
+      state.tabs.forEach(tab => {
+        if (tab.isActive) {
+          tab.isFilled = isFilled;
         }
-      }
+      })
     },
 
     checkTabsState(state, tabId) {

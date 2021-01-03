@@ -1,38 +1,58 @@
 <template>
   <div class="place-tab">
     <div class="place-tab__inputs inputs">
+
       <div class="inputs__input input-field">
         <label class="input-field__title">Город</label>
-        <input
-          type="text"
+        <v-select
           class="input-field__input"
+          :options="getCities.map(city => city.name)"
           placeholder="Ваш город"
-          v-model.trim="userCity"
           @input="updateUserInput"
-          list="cities"
-        />
-        <datalist id="cities">
-          <option v-for="city in getCities" :key="city.id">
-            {{ city.name }}
-          </option>
-        </datalist>
+          v-model.trim="userCity"
+        ></v-select>
+
+        <!--        <input-->
+        <!--          type="search"-->
+        <!--          class="input-field__input"-->
+        <!--          placeholder="Ваш город"-->
+        <!--          v-model.trim="userCity"-->
+        <!--          @input="updateUserInput"-->
+        <!--          list="cities"-->
+        <!--        />-->
+        <!--        <datalist id="cities">-->
+        <!--          <option v-for="city in getCities" :key="city.id">-->
+        <!--            {{ city.name }}-->
+        <!--          </option>-->
+        <!--        </datalist>-->
       </div>
       <div class="inputs__input input-field">
         <label class="input-field__title">Пункт выдачи</label>
-        <input
-          type="text"
+
+        <v-select
           class="input-field__input"
+          :label="'label'"
+          :options="getPoints.map(point => point.address)"
           placeholder="Начните вводить пункт..."
-          v-model.trim="userPoint"
           @input="updateUserPoint"
-          list="points"
           :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"
-        />
-        <datalist id="points">
-          <option v-for="point in getPoints" :key="point.name">
-            {{ point.address }}
-          </option>
-        </datalist>
+          v-model.trim="userPoint"
+        ></v-select>
+        <!--        <input-->
+        <!--          type="search"-->
+        <!--          class="input-field__input"-->
+        <!--          placeholder="Начните вводить пункт..."-->
+        <!--          v-model.trim="userPoint"-->
+        <!--          @input="updateUserPoint"-->
+        <!--          list="points"-->
+        <!--          :disabled="getCities.map(city => city.name).indexOf(getCity) === -1"-->
+        <!--        />-->
+        <!--        {{ userPoint }}-->
+        <!--        <datalist id="points">-->
+        <!--          <option v-for="point in getPoints" :key="point.name">-->
+        <!--            {{ point.address }}-->
+        <!--          </option>-->
+        <!--        </datalist>-->
       </div>
     </div>
     <div class="place-tab__map map-area">
@@ -45,6 +65,8 @@
 <script>
 import { mapMutations, mapGetters, mapActions } from "vuex";
 import Map from "../elements/Map";
+import "vue-select/dist/vue-select.css";
+
 export default {
   name: "PlaceTab",
   components: {
@@ -61,7 +83,9 @@ export default {
       "updateCity",
       "updatePlace",
       "updateFillStatus",
-      "checkTabsState"
+      "checkTabsState",
+      "updateCurrentCity",
+      "updateCurrentPoint"
     ]),
     ...mapActions([
       "fetchCities",
@@ -70,39 +94,46 @@ export default {
       "generateCoordinatesForPoints",
       "generateCurrentCityId",
       "generateCurrentPointId",
-      "checkOrderProperties"
+      "checkOrderProperties",
+      "getUserLocationCoordinates",
+      "getUserLocationCityByCoordinates"
     ]),
 
     updateUserInput() {
       this.updateCity(this.userCity);
+
+      // map
+      this.updateCurrentCity(this.userCity);
+
       this.generateCurrentCityId(this.userCity);
-      this.fetchPoints(this.getCurrentCityId);
+      if (this.getCurrentCityId) this.fetchPoints(this.getCurrentCityId);
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
-      if (this.userCity.length === 0) {
+      if (this.userCity === null) {
         this.userPoint = "";
         this.updateUserPoint();
+        this.updateCurrentPoint(null);
       }
       this.checkOrderProperties(this.getCurrentTab.id);
       this.checkTabsState(this.getCurrentTab.id);
     },
 
     updateUserPoint() {
-      if (
-        this.getPoints.map(point => point.address).indexOf(this.userPoint) !==
-        -1
-      ) {
-        this.updatePlace(this.userPoint);
-        this.generateCurrentPointId(this.userPoint);
-        this.updateFillStatus(this.isFilled);
-        this.updateCityCoordinates();
-        this.checkOrderProperties(this.getCurrentTab.id);
-        this.checkTabsState(this.getCurrentTab.id);
-      }
+      // if (
+      //   this.getPoints.map(point => point.address).includes(this.userPoint) ||
+      //   this.getPoints.map(point => point.address).includes(this.getPoint)
+      // ) {
+      this.updatePlace(this.userPoint);
+      this.generateCurrentPointId(this.userPoint);
+      this.updateFillStatus(this.isFilled);
+      this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
+      // }
     },
 
     updateCityCoordinates() {
-      if (this.getCity.trim() !== "")
+      if (this.getCity !== null)
         this.generatePlaceCoordinates(this.getCity + " " + this.getPoint);
     }
   },
@@ -115,12 +146,15 @@ export default {
       "getCoordinates",
       "getPointsCoordinates",
       "getCurrentPoint",
+      "getCurrentCity",
       "getCurrentCityId",
-      "getCurrentTab"
+      "getCurrentTab",
+      "getMap"
     ]),
 
     isFilled() {
-      return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
+      // return this.getPoint.trim() !== "" && this.getCity.trim() !== "";
+      return this.getPoint !== null && this.getCity !== null;
     }
   },
   created() {
@@ -130,20 +164,32 @@ export default {
       this.fetchCities();
     }
   },
-  // mounted() {
-  //   // eslint-disable-next-line no-unused-vars
-  //   this.$store.subscribe((mutation, state) => {
-  //     if (mutation.type !== "updateProperty") {
-  //       this.checkOrderProperties({ propertyData: mutation.payload, tab: this.getCurrentTab.id });
-  //     }
-  //   });
-  // },
+
   watch: {
     getCurrentPoint: function() {
+      this.userCity = this.getCurrentCity;
+      this.updateCity(this.getCurrentCity);
+
       this.userPoint = this.getCurrentPoint;
       this.updatePlace(this.getCurrentPoint);
+
       this.updateFillStatus(this.isFilled);
       this.updateCityCoordinates();
+      this.checkOrderProperties(this.getCurrentTab.id);
+      this.checkTabsState(this.getCurrentTab.id);
+    },
+
+    // система реактивности
+    getCurrentCity: function() {
+      this.userCity = this.getCurrentCity;
+      this.updateCity(this.getCurrentCity);
+
+      this.userPoint = this.getCurrentPoint;
+      this.updatePlace(this.getCurrentPoint);
+
+      this.updateFillStatus(this.isFilled);
+      // fixme
+
       this.checkOrderProperties(this.getCurrentTab.id);
       this.checkTabsState(this.getCurrentTab.id);
     },
@@ -155,7 +201,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "../../../public/css/mixins";
 @import "../../../public/css/variables";
 
@@ -184,6 +230,7 @@ export default {
 .input-field__title {
   text-align: right;
   min-width: 92px;
+  align-self: flex-end;
   @include fontStylesLight;
 }
 
@@ -192,6 +239,29 @@ export default {
   border-bottom: 1px solid $gray-color;
   @include fontStylesLight;
   min-width: 224px;
+}
+
+.vs__selected,
+.vs__search,
+.vs__selected:focus {
+  padding: 0 !important;
+  border: none !important;
+  @include fontStylesLight;
+}
+
+.input-field__input .vs__search::placeholder,
+.input-field__input .vs__dropdown-toggle,
+.input-field__input .vs__dropdown-menu {
+  border: none;
+  padding-bottom: 0;
+  padding-left: 0 !important;
+  @include fontStylesLight;
+  color: darken($gray-color, 15);
+  margin-top: 0px;
+}
+
+.input-field__input .vs__open-indicator {
+  display: none;
 }
 
 .place-tab__map {

@@ -5,7 +5,7 @@ export default {
   state: {
     cities: [],
     currentPoints: [],
-    currentCityCoordinates: [55.751574, 37.573856], // Moscow
+    currentCityCoordinates: [54.320883, 48.403123], // default
     currentCityId: "",
     pointsWithCoordinates: [],
     currentPointId: ""
@@ -41,9 +41,7 @@ export default {
     fetchCities({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/city"
-        )
+        .getRequest("db/city")
         .then(result => {
           commit("updateCities", result.data);
         })
@@ -55,9 +53,7 @@ export default {
     fetchPoints({ commit }, cityId) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-          process.env.VUE_APP_BASE_URL + "db/point?cityId=" + cityId
-        )
+        .getRequest("db/point?cityId=" + cityId)
         .then(result => {
           commit("updatePoints", result.data);
         })
@@ -66,10 +62,33 @@ export default {
         });
     },
 
+    // getting user's location coordinates
+    getUserLocationCoordinates({ commit }) {
+      function success(position) {
+        // получили координаты юзера
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        commit("updateCurrentCityCoordinates", [latitude, longitude]);
+      }
+
+      function error() {
+        // Unable to retrieve your location
+      }
+
+      if (!navigator.geolocation) {
+        // Geolocation is not supported by your browser
+      } else {
+        // Locating…
+        navigator.geolocation.getCurrentPosition(success, error);
+      }
+    },
+
     generatePlaceCoordinates({ commit }, address) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(  process.env.VUE_APP_GEOCODE_URL +
+        .getRequest(
+          process.env.VUE_APP_GEOCODE_URL +
             process.env.VUE_APP_MAPS_API_KEY +
             "&format=json&geocode=" +
             address
@@ -91,14 +110,14 @@ export default {
       });
       let api = new Api(new AxiosApi());
 
-      for (let i = 0; i < points.length; i++) {
+      points.forEach(point => {
         api
           .getRequest(
             process.env.VUE_APP_GEOCODE_URL +
               process.env.VUE_APP_MAPS_API_KEY +
               "&format=json&geocode=" +
-              points[i].cityId.name +
-              points[i].address
+              point.cityId.name +
+              point.address
           )
           .then(result => {
             let coords = result.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
@@ -108,27 +127,31 @@ export default {
             commit("updatePointsWithCoordinates", {
               status: "add",
               coordinates: coords,
-              name: points[i].address
+              name: point.address,
+              city: point.cityId.name
             });
           })
           .catch(error => console.log(error.message));
-      }
+      });
     },
 
     generateCurrentCityId({ commit, getters }, cityName) {
-      for (let i = 0; i < getters.getCities.length; i++) {
-        if (getters.getCities[i].name === cityName) {
-          commit("updateCurrentCityId", getters.getCities[i].id);
+      getters.getCities.some(city => {
+        if (city.name === cityName) {
+          commit("updateCurrentCityId", city.id);
         }
-      }
+        return city.name === cityName;
+      });
     },
 
     generateCurrentPointId({ commit, getters }, pointName) {
-      for (let i = 0; i < getters.getPoints.length; i++) {
-        if (getters.getPoints[i].address === pointName) {
-          commit("updateCurrentPointId", getters.getPoints[i].id);
+      getters.getPoints.some(point => {
+        if (point.address === pointName) {
+          console.log(point.id)
+          commit("updateCurrentPointId", point.id);
         }
-      }
+        return point.name === pointName;
+      });
     }
   },
 
@@ -157,7 +180,8 @@ export default {
       if (payload.status == "add") {
         state.pointsWithCoordinates.push({
           center: payload.coordinates,
-          name: payload.name
+          name: payload.name,
+          city: payload.city
         });
       } else {
         state.pointsWithCoordinates = [];

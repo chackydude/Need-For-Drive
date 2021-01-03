@@ -47,7 +47,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getAccessToken", "getAuthError", "getAuthLoading"])
+    ...mapGetters(["getAccessToken", "getAuthError", "getAuthLoading"]),
   },
   watch: {
     getAccessToken: function() {

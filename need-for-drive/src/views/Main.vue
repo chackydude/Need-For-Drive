@@ -8,7 +8,7 @@
         <div class="header__current-city">
           <img src="@/assets/icons/place_icon.svg" alt="current-city" />
           <div>
-            Ульяновск
+            {{ getCity || "Определяем город" }}
           </div>
         </div>
       </header>
@@ -18,7 +18,11 @@
           <p class="title__second-phrase">Need for drive</p>
           <p class="title__description">Поминутная аренда авто твоего города</p>
         </div>
-        <router-link tag="button" :to="`/order/${getOrderId}`" class="welcome-area__button">
+        <router-link
+          tag="button"
+          :to="`/order/${getOrderId}`"
+          class="welcome-area__button"
+        >
           Забронировать
         </router-link>
       </main>
@@ -49,13 +53,35 @@ export default {
     PageSlider
   },
   methods: {
-    ...mapActions(["fetchCities", "fetchCars", "fetchOrder", "routeToOrder", "fetchRates"]),
+    ...mapActions([
+      "fetchCities",
+      "fetchCars",
+      "fetchOrder",
+      "routeToOrder",
+      "fetchRates",
+      "getUserLocationCoordinates",
+      "getUserLocationCityByCoordinates",
+      "generateCurrentCityId"
+    ]),
     ...mapMutations(["updateOrderStatus"])
   },
   computed: {
-    ...mapGetters(["getCities", "getAllCars", "getOrderId", "getCurrentTab", "getRates"])
+    ...mapGetters([
+      "getCities",
+      "getAllCars",
+      "getOrderId",
+      "getCurrentTab",
+      "getRates",
+      "getCity",
+      "getCoordinates"
+    ])
   },
   created() {
+    if (
+      this.getCoordinates[0] === 54.320883 &&
+      this.getCoordinates[1] === 48.403123
+    )
+      this.getUserLocationCoordinates(); // прилетели координаты, но в это время уже заработал getUserLocationCityByCoordinates
 
     if (this.getCities.length === 0) {
       this.fetchCities();
@@ -69,6 +95,15 @@ export default {
     if (localStorage.getItem("orderId") !== null) {
       this.fetchOrder(localStorage.getItem("orderId"));
       this.updateOrderStatus(true);
+    }
+  },
+
+  watch: {
+    getCoordinates: async function() {
+      // fixme
+      this.getUserLocationCityByCoordinates();
+      await this.fetchCities();
+      this.generateCurrentCityId();
     }
   }
 };

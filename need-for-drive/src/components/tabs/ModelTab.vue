@@ -47,6 +47,7 @@
         :number="car.number"
         :tank="car.tank"
         :id="car.id"
+        :comparing-id="getModel.id"
         @change-car="updateCarData"
       />
     </div>
@@ -99,7 +100,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory", "getCurrentTab"]),
+    ...mapGetters(["getCarsAmount", "getAllCars", "getCategory", "getCurrentTab", "getModel"]),
     pagesAmount() {
       return Math.ceil(this.getAllCars.length / this.onpageCarsAmount);
     },

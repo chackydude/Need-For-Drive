@@ -22,6 +22,7 @@ export default {
     calculator: null,
     dateHandler: new DateHadler(),
     isPosted: false,
+    isSended: false,
 
     availableStatuses: [],
     currentOrderStatusId: "",
@@ -37,6 +38,10 @@ export default {
 
     getPoint(state) {
       return state.orderPlace;
+    },
+
+    getSendStatus(state) {
+      return state.isSended;
     },
 
     getModel(state) {
@@ -117,8 +122,9 @@ export default {
       let isFullTank = false;
       let isNeedChildChair = false;
       let isRightWheel = false;
-      for (let i = 0; i < state.extraServices.length; i++) {
-        switch (state.extraServices[i].text) {
+
+      state.extraServices.forEach(service => {
+        switch (service.text) {
           case "Детское кресло":
             isNeedChildChair = true;
             break;
@@ -129,7 +135,8 @@ export default {
             isFullTank = true;
             break;
         }
-      }
+      });
+
       let orderStub = {
         orderStatusId: state.currentOrderStatusId,
         pointId: rootState.place.currentPointId,
@@ -149,6 +156,30 @@ export default {
   },
 
   actions: {
+    // example: https://geocode-maps.yandex.ru/1.x/?geocode=27.525773,53.89079
+    // getting user's location city
+    async getUserLocationCityByCoordinates({ rootState, commit }) {
+      let api = new Api(new AxiosApi());
+      api
+        .getRequest(
+          process.env.VUE_APP_GEOCODE_URL +
+            process.env.VUE_APP_MAPS_API_KEY +
+            "&format=json&geocode=" +
+            rootState.place.currentCityCoordinates[1] +
+            "," +
+            rootState.place.currentCityCoordinates[0]
+        )
+        .then(result => {
+          commit(
+            "updateCity",
+            result.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address.Components.filter(
+              component => component.kind === "locality"
+            )[0].name
+          );
+        })
+        .catch(error => console.log(error.message));
+    },
+
     // роутимся на страничку заказа и обновляем сопутствующую информацию
     routeToOrder({ commit, state }) {
       if (!state.isPosted) {
@@ -184,6 +215,7 @@ export default {
       await api
         .postRequest("db/order", order)
         .then(result => {
+          commit("updateSendStatus", false);
           commit("updateOrderId", result.data.id);
           localStorage.setItem("orderId", result.data.id);
         })
@@ -205,9 +237,7 @@ export default {
     fetchRates({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-            "db/rate",
-        )
+        .getRequest("db/rate")
         .then(result => {
           commit("updateRates", result.data);
           commit(
@@ -227,9 +257,7 @@ export default {
     fetchOrderStatuses({ commit }) {
       let api = new Api(new AxiosApi());
       api
-        .getRequest(
-            "db/orderStatus",
-        )
+        .getRequest("db/orderStatus")
         .then(result => {
           commit("updateStatuses", result.data);
         })
@@ -264,9 +292,9 @@ export default {
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
-        state.extraServices = state.extraServices.filter(item => {
-          item.text !== payload.value.text;
-        });
+        state.extraServices = state.extraServices.filter(item =>
+          item.text !== payload.value.text
+        );
       }
     },
 
@@ -307,18 +335,22 @@ export default {
       state.availableStatuses = statuses;
     },
 
+    updateSendStatus(state, status) {
+      state.isSended = status;
+    },
+
     updateCalculator(state, calc) {
       state.calculator = calc;
     },
 
     // updating status id with the name of status
     updateStatusId(state, status) {
-      for (let i = 0; i < state.availableStatuses.length; i++) {
-        if (state.availableStatuses[i].name === status) {
-          state.currentOrderStatusId = state.availableStatuses[i].id;
-          break;
+      state.availableStatuses.some(availableStatus => {
+        if (availableStatus.name === status) {
+          state.currentOrderStatusId = availableStatus.id;
         }
-      }
+        return availableStatus.name === status;
+      });
     },
 
     updateOrder(state, newOrder) {
