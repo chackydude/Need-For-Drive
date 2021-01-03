@@ -239,6 +239,7 @@ export default {
   border-bottom: 1px solid $gray-color;
   @include fontStylesLight;
   min-width: 224px;
+  z-index: 0;
 }
 
 .vs__selected,
