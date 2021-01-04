@@ -247,6 +247,7 @@ export default {
   padding: 0 !important;
   border: none !important;
   @include fontStylesLight;
+  z-index: 0;  
 }
 
 .input-field__input .vs__search::placeholder,

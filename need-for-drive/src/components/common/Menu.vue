@@ -2,7 +2,7 @@
   <div>
     <div
       class="menu-wrapper"
-      :class="{ 'is-dark': dark }"
+      :class="{ 'is-dark': dark, 'fixed': isActive }"
       @click="isActive = !isActive"
     >
       <div
@@ -221,6 +221,10 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .fixed {
+    position: fixed;
+  }
+
   .nav-bar {
     .nav-bar__links {
       margin-left: 25px;
