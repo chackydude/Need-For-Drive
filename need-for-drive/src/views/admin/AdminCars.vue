@@ -33,7 +33,13 @@ export default {
     return {
       searchFilters: [
         {id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
-        {id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"]}
+        {id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
+        {id: 2, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
+        {id: 3, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
+        {id: 4, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
+        {id: 5, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
+        {id: 6, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
+        {id: 7, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
       ]
     }
   }

@@ -87,7 +87,7 @@ export default {
   min-height: 29px;
   min-width: 110px;
   border-radius: 3px;
-  margin-right: 15px;
+  margin: 8px 15px 0 0;
 }
 
 .vs__search::placeholder,
@@ -118,7 +118,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px 15px 20px;
 }
 
 .admin-button {
@@ -199,18 +199,15 @@ export default {
   }
 
   .v-select {
-    font-size: 8px;
     height: 25px;
     width: 65px;
-    margin:0 5px 0 0 !important;
+    margin: 5px 5px 0 0 !important;
   }
 
-  .vs__search {
-    width: 20px;
-  }
-
-  .vs__search::placeholder {
-    font-size: 8px;
+  .v-select, .vs__search::placeholder,
+  .vs__dropdown-toggle,
+  .vs__dropdown-menu {
+    font-size: 10px;
   }
 }
 </style>
