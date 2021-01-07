@@ -35,7 +35,7 @@
     </router-link>
     <router-link
       tag="div"
-      to="/admin/entity"
+      to="/admin/cars"
       class="admin-side-bar__item side-bar-item"
       :class="{ 'side-bar-item--active': active === 1 }"
     >

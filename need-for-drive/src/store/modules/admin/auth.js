@@ -4,7 +4,7 @@ import AxiosApi from "../../../utils/api/AxiosApi";
 
 export default {
   state: {
-    accessToken: "",
+    accessToken: "386db487078cb1f7c3ec9e5aa831e0c06dbe0112", // 386db487078cb1f7c3ec9e5aa831e0c06dbe0112
     authError: false,
     authLoading: false
   },

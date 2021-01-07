@@ -50,8 +50,8 @@ const routes = [
     }
   },
   {
-    path: "/admin/entity/",
-    component: () => import("../views/admin/AdminEntityExample"),
+    path: "/admin/cars/",
+    component: () => import("../views/admin/AdminCars"),
 
     beforeEnter(to, from, next) {
       if (localStorage.getItem("auth")) {

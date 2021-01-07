@@ -2,10 +2,16 @@
   <div class="admin-order-list">
     <div class="admin-order-list__filters filters">
       <div class="filters__select-container">
-        <input type="text" class="filters__select" placeholder="Ваш город" />
-        <input type="text" class="filters__select" placeholder="Ваш город" />
-        <input type="text" class="filters__select" placeholder="Ваш город" />
-        <input type="text" class="filters__select" placeholder="Ваш город" />
+
+        <v-select
+          v-for="searchFilter in searchFilters"
+          :key="searchFilter.id"
+          type="text"
+          class="filters__select"
+          :placeholder="searchFilter.name"
+          :options="searchFilter.options"
+        ></v-select>
+
       </div>
       <button class="filters__accept-button admin-button">
         Применить
@@ -32,20 +38,37 @@
 
 <script>
 import Paginate from "vuejs-paginate";
+import "vue-select/dist/vue-select.css";
+
 export default {
   name: "AdminOrderList",
+  props: {
+    searchFilters: {
+      type: Array,
+      // Для объектов или массивов значения по умолчанию
+      // должны возвращаться из функции
+      default: function() {
+        return [
+          { id: 0, name: "Ваш город", options: ["option", "option1", "option2"] },
+          { id: 1, name: "Ваш город", options: ["option", "option1", "option2"] },
+          { id: 2, name: "Ваш город", options: ["option", "option1", "option2"] },
+          { id: 3, name: "Ваш город", options: ["option", "option1", "option2"] }
+        ];
+      }
+    }
+  },
   components: {
     Paginate
   },
   data() {
     return {
       currentPage: 1
-    }
+    };
   },
   methods: {
     clickCallback: function(page) {
       this.currentPage = page;
-    },
+    }
   }
 };
 </script>
@@ -53,6 +76,30 @@ export default {
 <style lang="scss">
 @import "public/css/mixins";
 @import "public/css/variables";
+
+.filters__select-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.v-select {
+  min-height: 29px;
+  min-width: 110px;
+  border-radius: 3px;
+  margin-right: 15px;
+}
+
+.vs__search::placeholder,
+.vs__dropdown-toggle,
+.vs__dropdown-menu {
+  @include fontStylesLight;
+  font-weight: lighter !important;
+}
+
+.vs__open-indicator {
+  display: none;
+}
 
 .admin-order-list {
   display: flex;
@@ -72,16 +119,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px 10px 20px;
-}
-
-.filters__select {
-  height: 29px;
-  width: 110px;
-  border-radius: 3px;
-  margin-right: 15px;
-  padding: 10px;
-  border: 1px solid #e1e5eb;
-  font-weight: lighter;
 }
 
 .admin-button {
@@ -155,11 +192,25 @@ export default {
 }
 
 @media (max-width: 850px) {
-  .filters__select, .filters__accept-button {
+  .filters__accept-button {
+    font-size: 8px;
+    height: 25px;
+    margin: 5px 5px 0 0;
+  }
+
+  .v-select {
     font-size: 8px;
     height: 25px;
     width: 65px;
-    margin: 5px 5px 0 0;
+    margin:0 5px 0 0 !important;
+  }
+
+  .vs__search {
+    width: 20px;
+  }
+
+  .vs__search::placeholder {
+    font-size: 8px;
   }
 }
 </style>

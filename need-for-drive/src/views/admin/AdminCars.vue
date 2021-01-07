@@ -1,18 +1,14 @@
 <template>
   <div class="admin-page">
-    <AdminSideBar :active="2" class="admin-page__side-bar" />
+    <AdminSideBar :active="1" class="admin-page__side-bar" />
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <p class="admin-content__title">Заказы</p>
-        <AdminOrderList class="admin-content__order-list">
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-        </AdminOrderList>
+        <p class="admin-content__title">Автомобили</p>
+        <AdminEntityList class="admin-content__order-list"
+        :search-filters="searchFilters">
+
+        </AdminEntityList>
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -23,24 +19,23 @@
 import AdminSideBar from "../../components/admin/AdminSideBar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
-import AdminOrderList from "../../components/admin/AdminEntityList";
-import AdminOrderItem from "../../components/admin/AdminOrderItem";
-import { mapActions } from "vuex";
+import AdminEntityList from "../../components/admin/AdminEntityList";
 
 export default {
-  name: "Admin",
+  name: "AdminCars",
   components: {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    AdminOrderList,
-    AdminOrderItem
+    AdminEntityList
   },
-  methods: {
-    ...mapActions(["fetchOrders"])
-  },
-  mounted() {
-    this.fetchOrders();
+  data() {
+    return {
+      searchFilters: [
+        {id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
+        {id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"]}
+      ]
+    }
   }
 };
 </script>
