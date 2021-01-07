@@ -162,6 +162,7 @@ export default {
       if (!this.getOrderStatus) {
         // update current order status:
         this.updateStatusId("new");
+
         await this.postOrder(this.getOrder);
       } else {
         this.updateStatusId("cancelled");
