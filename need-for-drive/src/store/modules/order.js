@@ -292,8 +292,8 @@ export default {
       if (payload.status === "add") {
         state.extraServices.push(payload.value);
       } else {
-        state.extraServices = state.extraServices.filter(item =>
-          item.text !== payload.value.text
+        state.extraServices = state.extraServices.filter(
+          item => item.text !== payload.value.text
         );
       }
     },
@@ -346,7 +346,11 @@ export default {
     // updating status id with the name of status
     updateStatusId(state, status) {
       state.availableStatuses.some(availableStatus => {
-        if (availableStatus.name === status) {
+        // added cancelled cuz somebody removed 'new' status from available statuses
+        if (
+          availableStatus.name === status ||
+          availableStatus.name === "cancelled"
+        ) {
           state.currentOrderStatusId = availableStatus.id;
         }
         return availableStatus.name === status;
