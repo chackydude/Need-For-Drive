@@ -24,7 +24,7 @@ import AdminSideBar from "../../components/admin/AdminSideBar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import AdminOrderList from "../../components/admin/AdminEntityList";
-import AdminOrderItem from "../../components/admin/AdminOrderItem";
+import AdminOrderItem from "../../components/admin/entity-items/AdminOrderItem";
 import { mapActions } from "vuex";
 
 export default {

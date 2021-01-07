@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import CheckInputItem from "../common/CheckInputItem";
+import CheckInputItem from "../../common/CheckInputItem";
 export default {
   name: "AdminOrderItem",
   props: {
@@ -77,8 +77,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../../public/css/mixins";
+@import "../../../../public/css/variables";
 
 .order {
   display: flex;

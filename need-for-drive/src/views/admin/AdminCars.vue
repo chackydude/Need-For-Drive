@@ -7,7 +7,9 @@
         <p class="admin-content__title">Автомобили</p>
         <AdminEntityList class="admin-content__order-list"
         :search-filters="searchFilters">
-
+          <AdminCarItem />
+          <AdminCarItem />
+          <AdminCarItem />
         </AdminEntityList>
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -20,6 +22,7 @@ import AdminSideBar from "../../components/admin/AdminSideBar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import AdminEntityList from "../../components/admin/AdminEntityList";
+import AdminCarItem from "../../components/admin/entity-items/AdminCarItem";
 
 export default {
   name: "AdminCars",
@@ -27,19 +30,14 @@ export default {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    AdminEntityList
+    AdminEntityList,
+    AdminCarItem
   },
   data() {
     return {
       searchFilters: [
         {id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
         {id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
-        {id: 2, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
-        {id: 3, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
-        {id: 4, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
-        {id: 5, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
-        {id: 6, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
-        {id: 7, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
       ]
     }
   }
