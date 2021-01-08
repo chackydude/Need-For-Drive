@@ -10,6 +10,9 @@
           <AdminCarItem />
           <AdminCarItem />
           <AdminCarItem />
+          <AdminCarItem />
+          <AdminCarItem />
+          <AdminCarItem />
         </AdminEntityList>
       </div>
       <AdminFooter class="admin-page__footer" />

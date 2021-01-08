@@ -1,6 +1,13 @@
 <template>
   <div class="car-item">
-    <div class="car-item__name">Hyundai, Tucson</div>
+    <div class="car-item__info">
+      <img
+        src="@/assets/images/car-example.png"
+        alt="car-image"
+        class="car-item__image"
+      />
+      <div class="car-item__name">Hyundai, Tucson</div>
+    </div>
     <div class="car-item__category">Премиум</div>
     <div class="car-item__number">м000ок</div>
     <div class="car-item__colors">
@@ -29,9 +36,14 @@ export default {
 }
 
 .car-item > div {
-    text-align: center;
-    justify-self: center;
-    padding: 7px;
+  text-align: center;
+  justify-self: center;
+  padding: 7px;
+}
+
+.car-item__image {
+  height: 5vw;
+  margin-bottom: 10px;
 }
 
 .car-item__number {
