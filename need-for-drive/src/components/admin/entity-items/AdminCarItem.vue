@@ -27,12 +27,14 @@ export default {
 @import "public/css/variables";
 
 .car-item {
+  font-size: 13px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   min-height: 88px;
   padding: 13px 21px 13px 21px;
+  border-bottom: 1px $gray-light-color solid;
 }
 
 .car-item > div {

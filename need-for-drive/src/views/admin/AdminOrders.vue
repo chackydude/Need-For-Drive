@@ -10,8 +10,8 @@
           <AdminOrderItem />
           <AdminOrderItem />
           <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
+<!--          <AdminOrderItem />-->
+<!--          <AdminOrderItem />-->
         </AdminOrderList>
       </div>
       <AdminFooter class="admin-page__footer" />
