@@ -95,8 +95,8 @@ export default {
   align-items: center;
   background-color: #fff;
   color: $admin-text-gray;
-  border: 1px solid #becad6;
-  border-radius: 4px;
+  border: 1px solid #becad6 !important;
+  border-radius: 4px !important;
   @include buttonStylesByColor(#fff);
   cursor: pointer;
 
