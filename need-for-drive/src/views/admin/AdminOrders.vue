@@ -25,6 +25,8 @@
               :is-full-tank="order.isFullTank"
               :is-need-child-chair="order.isFullTank"
               :is-right-wheel="order.isRightWheel"
+              :date-from="order.dateFrom"
+              :date-to="order.dateTo"
             />
           </div>
         </AdminOrderList>

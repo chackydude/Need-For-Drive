@@ -14,7 +14,7 @@
         />
         <p class="order__description">
           <span>{{ modelName }}</span> в <span>{{ cityName }}</span>, {{ pointAddress }} <br />
-          12.06.2019 12:00 — 13.06.2019 12:00 <br />
+          {{ dateFrom | toDate }} — {{ dateTo | toDate }} <br />
           Цвет: <span>{{ color }}</span>
         </p>
       </div>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="order__additional-info">
-      <p class="order__price">{{ price }} ₽</p>
+      <p class="order__price">{{ price | toPrice }} ₽</p>
       <div class="order__action-buttons">
         <button class="action-button">
           <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" />
@@ -71,6 +71,7 @@
 
 <script>
 import CheckInputItem from "../../common/CheckInputItem";
+import dayjs from "dayjs";
 export default {
   name: "AdminOrderItem",
   props: {
@@ -83,10 +84,33 @@ export default {
     price: Number,
     isFullTank: Boolean,
     isNeedChildChair: Boolean,
-    isRightWheel: Boolean
+    isRightWheel: Boolean,
+    dateTo: Number,
+    dateFrom: Number
   },
   components: {
     CheckInputItem
+  },
+  filters: {
+    toPrice(str) {
+      str = str.toString().replace(/(\.(.*))/g, "");
+      let arr = str.split("");
+      let strTemp = "";
+      if (str.length > 3) {
+        for (let i = arr.length - 1, j = 1; i >= 0; i--, j++) {
+          strTemp = arr[i] + strTemp;
+          if (j % 3 === 0) {
+            strTemp = " " + strTemp;
+          }
+        }
+        return strTemp;
+      } else {
+        return str;
+      }
+    },
+    toDate(date) {
+      return dayjs(date).format("DD.MM.YYYY hh:mm");
+    }
   },
 };
 </script>
