@@ -128,7 +128,6 @@ export default {
 }
 
 .order__image {
-  height: 63px;
   width: 138px;
   margin-right: 28px;
 }

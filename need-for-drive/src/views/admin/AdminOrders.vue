@@ -5,7 +5,13 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Заказы</p>
-        <AdminOrderList class="admin-content__order-list" :search-filters="listFilters">
+        <AdminOrderList
+          class="admin-content__order-list"
+          :search-filters="listFilters"
+          :total-amount="getOrdersCount"
+          :page-limit="5"
+          :for-click-callback="fetchOrders"
+        >
           <pulse-loader
             class="list__loader"
             :loading="getOrders.length === 0"
@@ -63,16 +69,16 @@ export default {
         { id: 2, name: "Категория", options: ["option", "option1", "option2"] },
         { id: 3, name: "Цвет", options: ["option", "option1", "option2"] }
       ]
-    }
+    };
   },
   methods: {
     ...mapActions(["fetchOrders"])
   },
   computed: {
-    ...mapGetters(["getOrders"])
+    ...mapGetters(["getOrders", "getOrdersCount"])
   },
   mounted() {
-    this.fetchOrders();
+    this.fetchOrders({ page: 1, limit: 5 });
   }
 };
 </script>

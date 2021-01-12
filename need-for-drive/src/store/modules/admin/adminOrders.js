@@ -4,25 +4,31 @@ import { instance } from "../../../utils/api/instance";
 
 export default {
   state: {
-    orders: []
+    orders: [],
+    ordersCount: 0
   },
   getters: {
     getOrders(state) {
-      return state.orders;
+      // с API прилетают некоторые заказы с order.carId === null
+      return state.orders.filter(order => order.carId !== null);
+    },
+    getOrdersCount(state) {
+      return state.ordersCount;
     }
   },
   actions: {
-    fetchOrders({ commit, rootState }) {
+    fetchOrders({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
 
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
-
       api
-        .getRequest("db/order?page=1&limit=5")
+        .getRequest(`db/order?page=${payload.page}&limit=${payload.limit}`)
         .then(result => {
           commit("updateOrders", result.data);
-          console.log(result.data)
+          commit("updateOrderCount", result.count);
+          console.log(result.data);
+          console.log(result.count);
         })
         .catch(error => {
           console.log(error.message);
@@ -32,6 +38,9 @@ export default {
   mutations: {
     updateOrders(state, orders) {
       state.orders = orders;
+    },
+    updateOrderCount(state, count) {
+      state.ordersCount = count;
     }
   }
 };

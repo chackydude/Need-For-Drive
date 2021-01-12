@@ -2,7 +2,6 @@
   <div class="admin-order-list">
     <div class="admin-order-list__filters filters">
       <div class="filters__select-container">
-
         <v-select
           v-for="searchFilter in searchFilters"
           :key="searchFilter.id"
@@ -11,7 +10,6 @@
           :placeholder="searchFilter.name"
           :options="searchFilter.options"
         ></v-select>
-
       </div>
       <button class="filters__accept-button admin-button">
         Применить
@@ -22,7 +20,7 @@
     </div>
     <div class="admin-order-list__pagination">
       <paginate
-        :pageCount="2"
+        :pageCount="Math.floor(totalAmount / pageLimit)"
         :containerClass="'pagination'"
         prev-text="«"
         next-text="»"
@@ -43,16 +41,39 @@ import "vue-select/dist/vue-select.css";
 export default {
   name: "AdminOrderList",
   props: {
+    totalAmount: {
+      default: 1000,
+      type: Number,
+    },
+    pageLimit: {
+      default: 5,
+      type: Number
+    },
+    forClickCallback: Function,
     searchFilters: {
       type: Array,
-      // Для объектов или массивов значения по умолчанию
-      // должны возвращаться из функции
       default: function() {
         return [
-          { id: 0, name: "Ваш город", options: ["option", "option1", "option2"] },
-          { id: 1, name: "Ваш город", options: ["option", "option1", "option2"] },
-          { id: 2, name: "Ваш город", options: ["option", "option1", "option2"] },
-          { id: 3, name: "Ваш город", options: ["option", "option1", "option2"] }
+          {
+            id: 0,
+            name: "Ваш город",
+            options: ["option", "option1", "option2"]
+          },
+          {
+            id: 1,
+            name: "Ваш город",
+            options: ["option", "option1", "option2"]
+          },
+          {
+            id: 2,
+            name: "Ваш город",
+            options: ["option", "option1", "option2"]
+          },
+          {
+            id: 3,
+            name: "Ваш город",
+            options: ["option", "option1", "option2"]
+          }
         ];
       }
     }
@@ -67,7 +88,9 @@ export default {
   },
   methods: {
     clickCallback: function(page) {
+      console.log(page)
       this.currentPage = page;
+      this.forClickCallback({ page: this.currentPage, limit: this.pageLimit });
     }
   }
 };
@@ -169,10 +192,10 @@ export default {
 }
 
 .page-item {
-  margin: 0 2px 0 2px;
+  margin: 0 5px 0 5px;
   padding: 1px 5px 1px 5px;
-  border-radius: 50%;
-  width: 20px;
+  border-radius: 4px;
+  width: fit-content;
 }
 
 .nav-item {
@@ -184,6 +207,7 @@ export default {
 .page-item:active {
   color: #fff;
   background-color: $admin-blue-color;
+  border-radius: 4px;
 }
 
 .page-item--active {
@@ -204,7 +228,8 @@ export default {
     margin: 5px 5px 0 0 !important;
   }
 
-  .v-select, .vs__search::placeholder,
+  .v-select,
+  .vs__search::placeholder,
   .vs__dropdown-toggle,
   .vs__dropdown-menu {
     font-size: 10px;
