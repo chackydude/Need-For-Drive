@@ -5,7 +5,7 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Заказы</p>
-        <AdminOrderList class="admin-content__order-list">
+        <AdminOrderList class="admin-content__order-list" :search-filters="listFilters">
           <pulse-loader
             class="list__loader"
             :loading="getOrders.length === 0"
@@ -54,6 +54,16 @@ export default {
     AdminOrderList,
     PulseLoader,
     AdminOrderItem
+  },
+  data() {
+    return {
+      listFilters: [
+        { id: 0, name: "Модель", options: ["option", "option1", "option2"] },
+        { id: 1, name: "Город", options: ["option", "option1", "option2"] },
+        { id: 2, name: "Категория", options: ["option", "option1", "option2"] },
+        { id: 3, name: "Цвет", options: ["option", "option1", "option2"] }
+      ]
+    }
   },
   methods: {
     ...mapActions(["fetchOrders"])
