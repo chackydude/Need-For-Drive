@@ -9,7 +9,7 @@
           class="admin-content__order-list"
           :search-filters="listFilters"
           :total-amount="getOrdersCount"
-          :page-limit="5"
+          :page-limit="pageLimit"
           :for-click-callback="fetchOrders"
         >
           <pulse-loader
@@ -63,6 +63,7 @@ export default {
   },
   data() {
     return {
+      pageLimit: 5,
       listFilters: [
         { id: 0, name: "Модель", options: ["option", "option1", "option2"] },
         { id: 1, name: "Город", options: ["option", "option1", "option2"] },
@@ -78,7 +79,7 @@ export default {
     ...mapGetters(["getOrders", "getOrdersCount"])
   },
   mounted() {
-    this.fetchOrders({ page: 1, limit: 5 });
+    this.fetchOrders({ page: 1, limit: this.pageLimit });
   }
 };
 </script>

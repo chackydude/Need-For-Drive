@@ -20,7 +20,7 @@
     </div>
     <div class="admin-order-list__pagination">
       <paginate
-        :pageCount="Math.floor(totalAmount / pageLimit)"
+        :pageCount="Math.floor(totalAmount / pageLimit) + 1"
         :containerClass="'pagination'"
         prev-text="«"
         next-text="»"
@@ -41,14 +41,8 @@ import "vue-select/dist/vue-select.css";
 export default {
   name: "AdminOrderList",
   props: {
-    totalAmount: {
-      default: 1000,
-      type: Number,
-    },
-    pageLimit: {
-      default: 5,
-      type: Number
-    },
+    totalAmount: Number,
+    pageLimit: Number,
     forClickCallback: Function,
     searchFilters: {
       type: Array,
