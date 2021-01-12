@@ -114,6 +114,7 @@ export default {
   color: #889098;
   font-weight: lighter;
   padding-right: 20px;
+  max-width: 250px;
 
   span {
     color: black;
