@@ -3,16 +3,19 @@
     <div class="order__info">
       <div class="order-info__container">
         <img
-          src="@/assets/images/car-example.png"
+          :src="
+            'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
+              imgPath
+          "
           alt="car-image"
           class="order__image"
           crossOrigin="anonymous"
           referrerPolicy="origin"
         />
         <p class="order__description">
-          <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42 <br />
+          <span>{{ modelName }}</span> в <span>{{ cityName }}</span>, {{ pointAddress }} <br />
           12.06.2019 12:00 — 13.06.2019 12:00 <br />
-          Цвет: <span>Голубой</span>
+          Цвет: <span>{{ color }}</span>
         </p>
       </div>
       <div class="order__extra order-extra">
@@ -20,31 +23,34 @@
           class="order-extra__input"
           input-type="checkbox"
           name="Полный бак"
-          :value="{ text: 'Полный бак', amount: 1600 }"
-          :is-checked="false"
-          id="1"
+          :value="{ text: 'Полный бак', amount: 500 }"
+          :checked="isFullTank"
+          :id="id.toString() + '1'"
+          :is-locked="true"
         />
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="Полный бак"
-          :value="{ text: 'Полный бак', amount: 1600 }"
-          :is-checked="false"
-          id="1"
+          name="Детское кресло"
+          :value="{ text: 'Детское кресло', amount: 200 }"
+          :is-checked="isNeedChildChair"
+          :id="id.toString() + '2'"
+          :is-locked="true"
         />
         <CheckInputItem
           class="order-extra__input"
           input-type="checkbox"
-          name="Полный бак"
-          :value="{ text: 'Полный бак', amount: 1600 }"
-          :is-checked="false"
-          id="1"
+          name="Правый руль"
+          :value="{ text: 'Правый руль', amount: 1600 }"
+          :is-checked="isRightWheel"
+          :id="id.toString() + '3'"
+          :is-locked="true"
         />
       </div>
     </div>
 
     <div class="order__additional-info">
-      <p class="order__price">4 300 ₽</p>
+      <p class="order__price">{{ price }} ₽</p>
       <div class="order__action-buttons">
         <button class="action-button">
           <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" />
@@ -68,11 +74,20 @@ import CheckInputItem from "../../common/CheckInputItem";
 export default {
   name: "AdminOrderItem",
   props: {
-    imgPath: String
+    id: String,
+    imgPath: String,
+    modelName: String,
+    cityName: String,
+    pointAddress: String,
+    color: String,
+    price: Number,
+    isFullTank: Boolean,
+    isNeedChildChair: Boolean,
+    isRightWheel: Boolean
   },
   components: {
     CheckInputItem
-  }
+  },
 };
 </script>
 

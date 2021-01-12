@@ -4,9 +4,13 @@ import { instance } from "../../../utils/api/instance";
 
 export default {
   state: {
-    orders: {}
+    orders: []
   },
-  getters: {},
+  getters: {
+    getOrders(state) {
+      return state.orders;
+    }
+  },
   actions: {
     fetchOrders({ commit, rootState }) {
       let api = new Api(new AxiosApi());
@@ -15,10 +19,10 @@ export default {
         "Bearer " + rootState.auth.accessToken;
 
       api
-        .getRequest("db/order")
+        .getRequest("db/order?page=1&limit=5")
         .then(result => {
           commit("updateOrders", result.data);
-          console.log(result);
+          console.log(result.data)
         })
         .catch(error => {
           console.log(error.message);

@@ -6,12 +6,27 @@
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Заказы</p>
         <AdminOrderList class="admin-content__order-list">
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-          <AdminOrderItem />
-<!--          <AdminOrderItem />-->
-<!--          <AdminOrderItem />-->
+          <pulse-loader
+            class="list__loader"
+            :loading="getOrders.length === 0"
+            color="#007BFF"
+          ></pulse-loader>
+          <div class="list-items" v-if="getOrders.length !== 0">
+            <AdminOrderItem
+              v-for="order in getOrders"
+              :key="order.id"
+              :id="order.id"
+              :img-path="order.carId.thumbnail.path"
+              :model-name="order.carId.name"
+              :city-name="order.cityId.name"
+              :point-address="order.pointId.address"
+              :color="order.color"
+              :price="order.price"
+              :is-full-tank="order.isFullTank"
+              :is-need-child-chair="order.isFullTank"
+              :is-right-wheel="order.isRightWheel"
+            />
+          </div>
         </AdminOrderList>
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -25,7 +40,8 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import AdminOrderList from "../../components/admin/AdminEntityList";
 import AdminOrderItem from "../../components/admin/entity-items/AdminOrderItem";
-import { mapActions } from "vuex";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Admin",
@@ -34,10 +50,14 @@ export default {
     AdminHeader,
     AdminFooter,
     AdminOrderList,
+    PulseLoader,
     AdminOrderItem
   },
   methods: {
     ...mapActions(["fetchOrders"])
+  },
+  computed: {
+    ...mapGetters(["getOrders"])
   },
   mounted() {
     this.fetchOrders();
@@ -90,6 +110,14 @@ export default {
 
 .admin-content__order-list {
   margin-top: 30px;
+}
+
+.list__loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 600px) {
