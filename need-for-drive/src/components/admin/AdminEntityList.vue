@@ -12,13 +12,10 @@
           v-model="searchFilter.modelingValue.value"
         ></v-select>
       </div>
-      <button class="filters__accept-button admin-button">
+      <button class="filters__accept-button admin-button" @click="clickCallback">
         Применить
       </button>
     </div>
-
-    <div v-for="searchFilter in searchFilters" :key="searchFilter.name">{{ searchFilter.modelingValue.name }}: {{ searchFilter.modelingValue.value }}</div>
-
     <div class="admin-order-list__content">
       <slot />
     </div>
@@ -54,24 +51,10 @@ export default {
         return [
           {
             id: 0,
-            name: "Ваш город",
-            options: ["option", "option1", "option2"]
+            name: "Placeholder",
+            options: ["you", "forgot", "to pass", "filter", "parameters"],
+            modelingValue: { name: "option", value: "" }
           },
-          {
-            id: 1,
-            name: "Ваш город",
-            options: ["option", "option1", "option2"]
-          },
-          {
-            id: 2,
-            name: "Ваш город",
-            options: ["option", "option1", "option2"]
-          },
-          {
-            id: 3,
-            name: "Ваш город",
-            options: ["option", "option1", "option2"]
-          }
         ];
       }
     }
@@ -86,7 +69,6 @@ export default {
   },
   methods: {
     clickCallback: function(page) {
-      console.log(page)
       this.currentPage = page;
       this.forClickCallback({ page: this.currentPage, limit: this.pageLimit, params: this.searchFilters.map(searchFilter => searchFilter.modelingValue) });
     }

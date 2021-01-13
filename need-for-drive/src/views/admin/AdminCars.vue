@@ -6,7 +6,7 @@
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Автомобили</p>
         <AdminEntityList class="admin-content__order-list"
-        :search-filters="searchFilters">
+      >
           <AdminCarItem />
           <AdminCarItem />
           <AdminCarItem />

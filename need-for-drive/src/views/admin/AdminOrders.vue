@@ -69,20 +69,27 @@ export default {
       category: "",
       color: "",
       listFilters: [
-        { id: 0, name: "Модель", options: ["option", "option1", "option2"], modelingValue: { name: "model", value: "" } },
-        { id: 1, name: "Город", options: ["option", "option1", "option2"], modelingValue: { name: "city", value: "" } },
-        { id: 2, name: "Категория", options: ["option", "option1", "option2"], modelingValue: { name: "category", value: "" } },
-        { id: 3, name: "Цвет", options: ["option", "option1", "option2"], modelingValue: { name: "color", value: "" } }
+        // { id: 0, name: "Модель", label: "name", options: this.getCars, modelingValue: { name: "carId", value: "" } }, // id модели
+        // { id: 1, name: "Город", options: ["option", "option1", "option2"], modelingValue: { name: "cityId", value: "" } }, // надо будет достать id города
+        { id: 3, name: "Цвет", options: ["Голубой", "Красный", "Белый"], modelingValue: { name: "color", value: "" } } // просто цвет
       ]
     };
   },
   methods: {
-    ...mapActions(["fetchOrders"])
+    ...mapActions("adminOrders/", ["fetchOrders", "fetchCars", "fetchCities"])
   },
   computed: {
-    ...mapGetters(["getOrders", "getOrdersCount"])
+    ...mapGetters("adminOrders/", [
+      "getOrders",
+      "getOrdersCount",
+      "getCars",
+      "getCities",
+      "getColors"
+    ])
   },
   mounted() {
+    this.fetchCars();
+    this.fetchCities();
     this.fetchOrders({ page: 1, limit: this.pageLimit });
   }
 };
@@ -93,7 +100,7 @@ export default {
 @import "../../../public/css/variables";
 
 * {
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: normal;
 }
 
