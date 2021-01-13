@@ -20,6 +20,8 @@ export default {
     fetchOrders({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
 
+      console.log(payload.params);
+
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
       api

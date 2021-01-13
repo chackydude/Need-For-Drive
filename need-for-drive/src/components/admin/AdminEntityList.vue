@@ -9,12 +9,16 @@
           class="filters__select"
           :placeholder="searchFilter.name"
           :options="searchFilter.options"
+          v-model="searchFilter.modelingValue.value"
         ></v-select>
       </div>
       <button class="filters__accept-button admin-button">
         Применить
       </button>
     </div>
+
+    <div v-for="searchFilter in searchFilters" :key="searchFilter.name">{{ searchFilter.modelingValue.name }}: {{ searchFilter.modelingValue.value }}</div>
+
     <div class="admin-order-list__content">
       <slot />
     </div>
@@ -84,7 +88,7 @@ export default {
     clickCallback: function(page) {
       console.log(page)
       this.currentPage = page;
-      this.forClickCallback({ page: this.currentPage, limit: this.pageLimit });
+      this.forClickCallback({ page: this.currentPage, limit: this.pageLimit, params: this.searchFilters.map(searchFilter => searchFilter.modelingValue) });
     }
   }
 };

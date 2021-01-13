@@ -64,11 +64,15 @@ export default {
   data() {
     return {
       pageLimit: 5,
+      model: "",
+      city: "",
+      category: "",
+      color: "",
       listFilters: [
-        { id: 0, name: "Модель", options: ["option", "option1", "option2"] },
-        { id: 1, name: "Город", options: ["option", "option1", "option2"] },
-        { id: 2, name: "Категория", options: ["option", "option1", "option2"] },
-        { id: 3, name: "Цвет", options: ["option", "option1", "option2"] }
+        { id: 0, name: "Модель", options: ["option", "option1", "option2"], modelingValue: { name: "model", value: "" } },
+        { id: 1, name: "Город", options: ["option", "option1", "option2"], modelingValue: { name: "city", value: "" } },
+        { id: 2, name: "Категория", options: ["option", "option1", "option2"], modelingValue: { name: "category", value: "" } },
+        { id: 3, name: "Цвет", options: ["option", "option1", "option2"], modelingValue: { name: "color", value: "" } }
       ]
     };
   },
