@@ -5,9 +5,17 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Карточка автомобиля</p>
-        <EntityFileInput
-          :progress="60"
-        />
+        <div class="admin-content__items">
+          <EntityFileInput
+                  :progress="60"
+          />
+          <EntityFileInput
+                  :progress="60"
+          />
+          <EntityFileInput
+                  :progress="60"
+          />
+        </div>
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -52,5 +60,14 @@ export default {
 <style scoped lang="scss">
 .admin-content__title {
   margin-bottom: 30px;
+}
+
+.admin-content__items {
+  display: flex;
+  flex-direction: row;
+
+  div {
+    margin-right: 20px;
+  }
 }
 </style>
