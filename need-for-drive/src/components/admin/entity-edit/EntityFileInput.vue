@@ -15,7 +15,8 @@
         class="type-input-editor__input-file"
         ref="imageInput"
         id="car-image"
-        @change="addFile"
+        accept="image/*"
+        @change="handleFileUpload"
       />
       <button @click="$refs.imageInput.click()">Обзор</button>
     </div>
@@ -54,13 +55,27 @@ export default {
   },
   data() {
     return {
-      file: null,
+      file: null
     };
   },
   methods: {
-    addFile(event) {
+    handleFileUpload(event) {
       this.file = event.target.files[0];
-      this.$refs.carImage.src = URL.createObjectURL(event.target.files[0]);
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function() {
+          this.$refs.carImage.src = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.file) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.file.name)) {
+          reader.readAsDataURL(this.file);
+        }
+      }
     }
   }
 };
