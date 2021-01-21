@@ -1,0 +1,165 @@
+<template>
+  <div class="type-input-editor">
+    <img
+      src="@/assets/images/car-example.png"
+      alt="car-image"
+      class="car-item__image type-input-editor__image"
+      ref="carImage"
+    />
+    <p class="type-input-editor__name">Hyndai, i30N</p>
+    <p class="type-input-editor__type">Компакт-кар</p>
+    <div class="type-input-editor__image-input">
+      <label for="car-image">{{ file ? file.name : "Выберите файл..." }}</label>
+      <input
+        type="file"
+        class="type-input-editor__input-file"
+        ref="imageInput"
+        id="car-image"
+        @change="addFile"
+      />
+      <button @click="$refs.imageInput.click()">Обзор</button>
+    </div>
+
+    <div class="type-input-editor__progress">
+      <div class="progress-status">
+        <p>Заполнено:</p>
+        <p>{{ progress }}%</p>
+      </div>
+      <progress-bar :val="progress" :max="total" :bar-border-radius="2" />
+    </div>
+
+    <div class="type-input-editor__description">
+      <p class="type-input-editor__title">Описание</p>
+      <p class="type-input-editor__text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque,
+        quidem, commodi soluta qui quae quod dolorum sint alias, possimus illum
+        assumenda eligendi cumque?
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "EntityFileInput",
+  props: {
+    progress: {
+      type: Number,
+      default: 0
+    },
+    total: {
+      type: Number,
+      default: 100
+    }
+  },
+  data() {
+    return {
+      file: null,
+    };
+  },
+  methods: {
+    addFile(event) {
+      this.file = event.target.files[0];
+      this.$refs.carImage.src = URL.createObjectURL(event.target.files[0]);
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+@import "public/css/variables";
+@import "public/css/mixins";
+
+.type-input-editor {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 35px 23px 35px 23px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 5px rgba(38, 46, 52, 0.2);
+  align-items: center;
+  max-width: 334px;
+  min-height: 500px;
+}
+
+.type-input-editor__image {
+  max-height: 110px;
+}
+
+.type-input-editor__name {
+  font-size: 24px;
+  color: $admin-text-dark;
+  margin-top: 10px;
+}
+
+.type-input-editor__type {
+  font-size: 13px;
+  color: $admin-text-light;
+  margin-top: 10px;
+}
+
+.type-input-editor__image-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 30px;
+  width: 70%;
+  border: 1px $gray-light-color solid;
+  border-radius: 6px;
+  padding: 0 0 0 10px;
+  margin-top: 10px;
+
+  .type-input-editor__input-file {
+    display: none;
+  }
+
+  button {
+    border-radius: 0 5px 5px 0;
+    border: none;
+    font-size: 10px;
+    height: 100%;
+    min-width: 60px;
+    @include buttonStyles;
+  }
+
+  label {
+    font-size: 10px;
+  }
+}
+
+.progress-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  color: $admin-text-light;
+
+  margin-bottom: 6px;
+}
+
+.type-input-editor__progress {
+  margin-top: 10px;
+  min-height: 60px;
+  width: 100%;
+  border-top: 1px $admin-light-gray solid;
+  border-bottom: 1px $admin-light-gray solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.type-input-editor__description {
+  font-size: 14px;
+  color: $admin-text-gray;
+}
+
+.type-input-editor__title {
+  color: $admin-text-light;
+  margin-top: 10px;
+}
+
+.type-input-editor__text {
+  margin-top: 10px;
+}
+</style>

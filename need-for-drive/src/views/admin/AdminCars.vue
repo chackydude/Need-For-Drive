@@ -5,8 +5,7 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Автомобили</p>
-        <AdminEntityList class="admin-content__order-list"
-      >
+        <AdminEntityList class="admin-content__order-list">
           <AdminCarItem />
           <AdminCarItem />
           <AdminCarItem />
@@ -39,10 +38,10 @@ export default {
   data() {
     return {
       searchFilters: [
-        {id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"]},
-        {id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"]},
+        { id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"] },
+        { id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"] }
       ]
-    }
+    };
   }
 };
 </script>
