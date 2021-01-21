@@ -8,41 +8,57 @@
         <div class="admin-content__items content-items">
           <EntityFileInput :progress="60" class="input-file-item" />
           <div class="content-items__main main-edit-items">
-            <h2 class="main-edit-items__title">Настройки автомобиля</h2>
-            <div class="main-edit-items__items">
-              <div class="edit-item">
-                <label for="car-type">Модель автомобиля</label>
-                <input type="text" id="car-type" placeholder="Hyndai, i30N" />
-              </div>
+            <div class="main-edit-items__content">
+              <h2 class="main-edit-items__title">Настройки автомобиля</h2>
+              <div class="main-edit-items__items">
+                <div class="edit-item">
+                  <label for="car-type">Модель автомобиля</label>
+                  <input type="text" id="car-type" placeholder="Hyndai, i30N" />
+                </div>
 
-              <div class="edit-item">
-                <label for="car-model">Тип автомобиля</label>
-                <input type="text" id="car-model" placeholder="Компакт-кар" />
-              </div>
+                <div class="edit-item">
+                  <label for="car-model">Тип автомобиля</label>
+                  <input type="text" id="car-model" placeholder="Компакт-кар" />
+                </div>
 
-              <div class="edit-item">
-                <label for="car-color">Доступные цвета</label>
-                <div>
-                  <input
-                    type="text"
-                    id="car-color"
-                    placeholder="Синий"
-                    v-model="currentColor"
-                  />
-                  <button @click="addColor">+</button>
+                <div class="edit-item">
+                  <label for="car-color">Доступные цвета</label>
+                  <div>
+                    <input
+                      type="text"
+                      id="car-color"
+                      placeholder="Синий"
+                      v-model="currentColor"
+                    />
+                    <button @click="addColor">+</button>
+                  </div>
                 </div>
               </div>
+              <div class="main-edit-items__colors">
+                <CheckInputItem
+                  v-for="color in colors"
+                  :key="color"
+                  input-type="checkbox"
+                  :value="{ text: color, amount: 0 }"
+                  :name="color"
+                  :is-checked="true"
+                  :is-locked="true"
+                />
+              </div>
             </div>
-            <div class="main-edit-items__colors">
-              <CheckInputItem
-                v-for="color in colors"
-                :key="color"
-                input-type="checkbox"
-                :value="{ text: color, amount: 0 }"
-                :name="color"
-                :is-checked="true"
-                :is-locked="true"
-              />
+
+            <div class="main-edit-items__buttons edit-result-buttons">
+              <div class="edit-result-buttons__save-cancel-button">
+                <button class="edit-result-buttons__save-button">
+                  Сохранить
+                </button>
+                <button class="edit-result-buttons__cancel-button">
+                  Отмена
+                </button>
+              </div>
+              <button class="edit-result-buttons__delete-button">
+                Удалить
+              </button>
             </div>
           </div>
         </div>
@@ -91,7 +107,9 @@ export default {
       if (
         typeof this.currentColor === "string" &&
         this.currentColor.length !== 0 &&
-        !this.colors.map(color => color.toLowerCase()).includes(this.currentColor)
+        !this.colors
+          .map(color => color.toLowerCase())
+          .includes(this.currentColor)
       ) {
         this.colors.push(this.currentColor);
       }
@@ -115,6 +133,12 @@ export default {
   div.input-file-item {
     margin-right: 20px;
   }
+}
+
+.main-edit-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .main-edit-items__title {
@@ -180,6 +204,38 @@ export default {
 
   div {
     margin-top: 8px;
+  }
+}
+
+.main-edit-items__buttons {
+  display: flex;
+  justify-content: space-between;
+
+  .edit-result-buttons__save-button,
+  .edit-result-buttons__cancel-button,
+  .edit-result-buttons__delete-button {
+    width: 100px;
+    height: 29px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    @include buttonStyles;
+  }
+
+  .edit-result-buttons__save-button {
+    color: #fff;
+    background-color: $admin-blue-color;
+  }
+
+  .edit-result-buttons__cancel-button {
+    color: $admin-text-dark;
+    background-color: $admin-light-gray;
+    margin-left: 8px;
+  }
+
+  .edit-result-buttons__delete-button {
+    color: #fff;
+    background-color: $admin-error;
   }
 }
 </style>
