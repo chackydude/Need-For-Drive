@@ -6,7 +6,7 @@
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Карточка автомобиля</p>
         <div class="admin-content__items content-items">
-          <EntityFileInput :progress="60" />
+          <EntityFileInput :progress="60" class="input-file-item" />
           <div class="content-items__main main-edit-items">
             <h2 class="main-edit-items__title">Настройки автомобиля</h2>
             <div class="main-edit-items__items">
@@ -23,10 +23,26 @@
               <div class="edit-item">
                 <label for="car-color">Доступные цвета</label>
                 <div>
-                  <input type="text" id="car-color" placeholder="Синий" />
-                  <button>+</button>
+                  <input
+                    type="text"
+                    id="car-color"
+                    placeholder="Синий"
+                    v-model="currentColor"
+                  />
+                  <button @click="addColor">+</button>
                 </div>
               </div>
+            </div>
+            <div class="main-edit-items__colors">
+              <CheckInputItem
+                v-for="color in colors"
+                :key="color"
+                input-type="checkbox"
+                :value="{ text: color, amount: 0 }"
+                :name="color"
+                :is-checked="true"
+                :is-locked="true"
+              />
             </div>
           </div>
         </div>
@@ -42,6 +58,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 // import AdminError from "../../components/admin/AdminError";
 import EntityFileInput from "../../components/admin/entity-edit/EntityFileInput";
+import CheckInputItem from "../../components/common/CheckInputItem";
 
 export default {
   name: "AdminEntityEdit",
@@ -50,12 +67,15 @@ export default {
     AdminSideBar,
     AdminHeader,
     AdminFooter,
-    EntityFileInput
+    EntityFileInput,
+    CheckInputItem
   },
   data() {
     return {
       username: "",
-      avatar: null
+      avatar: null,
+      currentColor: "",
+      colors: ["Красный", "Синий", "Белый"]
     };
   },
   methods: {
@@ -66,6 +86,15 @@ export default {
       let fd = new FormData();
       fd.append("avatar", this.avatar, this.avatar.name);
       fd.append("username", this.username);
+    },
+    addColor() {
+      if (
+        typeof this.currentColor === "string" &&
+        this.currentColor.length !== 0 &&
+        !this.colors.map(color => color.toLowerCase()).includes(this.currentColor)
+      ) {
+        this.colors.push(this.currentColor);
+      }
     }
   }
 };
@@ -83,7 +112,7 @@ export default {
   display: flex;
   flex-direction: row;
 
-  div {
+  div.input-file-item {
     margin-right: 20px;
   }
 }
@@ -112,6 +141,7 @@ export default {
   width: 320px;
   height: 70px;
   justify-content: flex-end;
+  margin-right: 20px;
 
   label {
     font-size: 12px;
@@ -124,7 +154,7 @@ export default {
     padding: 10px;
     border-radius: 4px;
     border: 1px darken($admin-light-gray, 20) solid;
-
+    width: 100%;
   }
 
   div {
@@ -134,12 +164,22 @@ export default {
 
     button {
       width: 30px;
-      font-size: 20px;
       border: 1px darken($admin-light-gray, 20) solid;
       color: darken($admin-light-gray, 20);
       background-color: #fff;
       border-radius: 4px;
+      justify-self: flex-end;
+      margin-left: 10px;
+      @include buttonStyles;
     }
+  }
+}
+
+.main-edit-items__colors {
+  margin-top: 15px;
+
+  div {
+    margin-top: 8px;
   }
 }
 </style>
