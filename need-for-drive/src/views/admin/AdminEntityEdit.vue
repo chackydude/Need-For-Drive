@@ -191,6 +191,7 @@ export default {
       border: 1px darken($admin-light-gray, 20) solid;
       color: darken($admin-light-gray, 20);
       background-color: #fff;
+      cursor: pointer;
       border-radius: 4px;
       justify-self: flex-end;
       margin-left: 10px;
@@ -210,6 +211,7 @@ export default {
 .main-edit-items__buttons {
   display: flex;
   justify-content: space-between;
+  margin-top: 23px;
 
   .edit-result-buttons__save-button,
   .edit-result-buttons__cancel-button,
