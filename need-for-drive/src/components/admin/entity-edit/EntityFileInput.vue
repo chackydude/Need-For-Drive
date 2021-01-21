@@ -118,7 +118,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-height: 30px;
+  min-height: 29px;
   width: 70%;
   border: 1px $gray-light-color solid;
   border-radius: 6px;
@@ -136,6 +136,7 @@ export default {
     height: 100%;
     min-width: 60px;
     @include buttonStyles;
+    cursor: pointer;
   }
 
   label {
