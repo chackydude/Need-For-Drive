@@ -14,7 +14,8 @@ export default {
   getters: {
     getOrders(state) {
       // с API прилетают некоторые заказы с order.carId === null
-      return state.orders.filter(order => order.carId !== null);
+      // return state.orders.filter(order => order.carId !== null);
+      return state.orders;
     },
     getOrdersCount(state) {
       return state.ordersCount;

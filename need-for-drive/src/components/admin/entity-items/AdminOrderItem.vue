@@ -3,17 +3,23 @@
     <div class="order__info">
       <div class="order-info__container">
         <img
-          :src="
-            'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
-              imgPath
-          "
+          v-if="carId !== null"
+          :src="getHandledCarId.imgPath"
           alt="car-image"
           class="order__image"
           crossOrigin="anonymous"
           referrerPolicy="origin"
         />
+        <img
+          v-if="carId === null"
+          src="@/assets/images/admin/unknown-car.jpg"
+          class="order__image order__image--unknown"
+          alt="unknown-car"
+        />
         <p class="order__description">
-          <span>{{ modelName }}</span> в <span>{{ cityName }}</span>, {{ pointAddress }} <br />
+          <span>{{ getHandledCarId.modelName }}</span> в
+          <span>{{ cityName }}</span
+          >, {{ pointAddress }} <br />
           {{ dateFrom | toDate }} — {{ dateTo | toDate }} <br />
           Цвет: <span>{{ color }}</span>
         </p>
@@ -76,8 +82,6 @@ export default {
   name: "AdminOrderItem",
   props: {
     id: String,
-    imgPath: String,
-    modelName: String,
     cityName: String,
     pointAddress: String,
     color: String,
@@ -86,7 +90,8 @@ export default {
     isNeedChildChair: Boolean,
     isRightWheel: Boolean,
     dateTo: Number,
-    dateFrom: Number
+    dateFrom: Number,
+    carId: Object
   },
   components: {
     CheckInputItem
@@ -112,6 +117,22 @@ export default {
       return dayjs(date).format("DD.MM.YYYY hh:mm");
     }
   },
+  computed: {
+    getHandledCarId() {
+      if (this.carId === null) {
+        return {
+          modelName: "NO DATA"
+        };
+      } else {
+        return {
+          imgPath:
+            "https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/" +
+            this.carId.thumbnail.path,
+          modelName: this.carId.name
+        };
+      }
+    }
+  }
 };
 </script>
 
@@ -259,6 +280,11 @@ export default {
     margin-right: 10px;
   }
 
+  .order__image--unknown {
+    height: 40px;
+    width: 66px;
+  }
+
   .order__price {
     margin-left: 10px;
   }
@@ -273,6 +299,14 @@ export default {
     height: 30px;
     width: 66px;
     margin-bottom: 10px;
+  }
+
+  .order__image--unknown {
+    height: 40px;
+    width: 66px;
+  }
+
+  .order__image--unknown {
   }
 
   .order__description {
