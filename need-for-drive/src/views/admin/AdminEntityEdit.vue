@@ -240,4 +240,34 @@ export default {
     background-color: $admin-error;
   }
 }
+
+@media (max-width: 900px) {
+  .admin-content__title {
+    text-align: center;
+  }
+
+  .admin-content__items {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .input-file-item {
+    margin: auto 0 20px 0 !important;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .main-edit-items__buttons {
+    align-items: flex-end;
+
+    .edit-result-buttons__cancel-button {
+      margin: 10px 0 0 0;
+    }
+  }
+
+  .edit-result-buttons__save-cancel-button {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>

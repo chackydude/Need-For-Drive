@@ -8,6 +8,7 @@ import cars from "./modules/cars";
 import tabsMapping from "./modules/tabsMapping";
 import auth from "./modules/admin/auth";
 import adminOrders from "./modules/admin/adminOrders";
+import carEdit from "./modules/admin/edit/carEdit";
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     cars,
     tabsMapping,
     auth,
-    adminOrders
+    adminOrders,
+    carEdit
   }
 });

@@ -31,11 +31,11 @@
 
     <div class="type-input-editor__description">
       <p class="type-input-editor__title">Описание</p>
-      <p class="type-input-editor__text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque,
-        quidem, commodi soluta qui quae quod dolorum sint alias, possimus illum
-        assumenda eligendi cumque?
-      </p>
+      <textarea
+        class="type-input-editor__text"
+        name="description"
+        placeholder="Description..."
+      ></textarea>
     </div>
   </div>
 </template>
@@ -88,12 +88,14 @@ export default {
 .type-input-editor {
   background-color: #fff;
   border-radius: 10px;
-  padding: 35px 23px 35px 23px;
+  padding: 35px 23px 23px 23px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 5px rgba(38, 46, 52, 0.2);
   align-items: center;
+  min-width: 300px;
   max-width: 334px;
+  width: auto;
   min-height: 500px;
 }
 
@@ -168,6 +170,11 @@ export default {
 .type-input-editor__description {
   font-size: 14px;
   color: $admin-text-gray;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .type-input-editor__title {
@@ -177,5 +184,19 @@ export default {
 
 .type-input-editor__text {
   margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  flex-grow: 1;
+  resize: none;
+  border-radius: 6px;
+  border: 1px darken($admin-light-gray, 20) solid;
+}
+
+@media (max-width: 600px) {
+  .type-input-editor__image-input {
+    button {
+      height: 30px;
+    }
+  }
 }
 </style>
