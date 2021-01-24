@@ -1,7 +1,7 @@
 <template>
   <div class="type-input-editor">
     <img
-      src="@/assets/images/car-example.png"
+      src="@/assets/images/admin/unknown-car.jpg"
       alt="car-image"
       class="car-item__image type-input-editor__image"
       ref="carImage"

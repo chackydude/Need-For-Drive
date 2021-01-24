@@ -136,7 +136,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../../../../public/css/mixins";
 @import "../../../../public/css/variables";
 

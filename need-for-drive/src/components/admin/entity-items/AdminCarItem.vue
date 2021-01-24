@@ -1,17 +1,21 @@
 <template>
   <div class="car-item">
-    <img
-      src="@/assets/images/car-example.png"
-      alt="car-image"
-      class="car-item__image"
-    />
-    <div class="car-item__info">
-      <div class="car-item__name">Hyundai, Tucson</div>
-      <div class="car-item__number">м000ок</div>
+    <div class="car-item__image-container">
+      <img
+        :src="imgPathHandled"
+        alt="car-image"
+        class="car-item__image"
+        crossOrigin="anonymous"
+        referrerPolicy="origin"
+      />
     </div>
-    <div class="car-item__category">Премиум</div>
+    <div class="car-item__info">
+      <div class="car-item__name">{{ modelName | valueHandle }}</div>
+      <div class="car-item__number">{{ number | valueHandle }}</div>
+    </div>
+    <div class="car-item__category">{{ categoryName | valueHandle }}</div>
     <div class="car-item__colors">
-      Черный, Красный, Белый, Зеленый
+      {{ colorsHandle.toString() }}
     </div>
     <div class="car-item__edit">
       <button class="action-button">
@@ -24,7 +28,41 @@
 
 <script>
 export default {
-  name: "AdminCarItem"
+  name: "AdminCarItem",
+  props: {
+    id: String,
+    imgPath: String,
+    modelName: String,
+    number: String,
+    categoryName: String,
+    colors: Array
+  },
+  computed: {
+    imgPathHandled() {
+      return (
+        "https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/" +
+        this.imgPath
+      );
+    },
+    colorsHandle() {
+      if (this.colors.length === 0) {
+        return "NO DATA";
+      } else {
+        return this.colors.map(
+          color => " " + color.charAt(0).toUpperCase() + color.slice(1)
+        );
+      }
+    }
+  },
+  filters: {
+    valueHandle(value) {
+      if (value === undefined) {
+        return "NO DATA";
+      } else {
+        return value;
+      }
+    }
+  }
 };
 </script>
 
@@ -64,9 +102,19 @@ export default {
   align-items: center;
 }
 
+.car-item__image-container {
+  width: 200px;
+  min-height: 100px;
+  background-color: lighten($admin-blue-color, 30);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
 .car-item__image {
   height: 5vw;
-  margin-bottom: 10px;
+  width: auto;
 }
 
 .car-item__number {
@@ -85,6 +133,10 @@ export default {
   max-height: 30px;
 }
 
+.car-item__colors {
+  width: 250px;
+}
+
 .action-button {
   height: 24px;
   width: auto;
@@ -94,7 +146,7 @@ export default {
   display: flex;
   align-items: center;
   background-color: #fff;
-  color: $admin-text-gray;
+  color: $admin-text-gray !important;
   border: 1px solid #becad6 !important;
   border-radius: 4px !important;
   @include buttonStylesByColor(#fff);
@@ -106,7 +158,7 @@ export default {
 }
 
 @media (max-width: 1260px) {
-  .car-item__image {
+  .car-item__image-container {
     display: none;
   }
 }

@@ -9,6 +9,7 @@ export default {
     orders: [],
     ordersCount: 0,
     cars: [],
+    carsCount: 0,
     cities: []
   },
   getters: {
@@ -22,6 +23,9 @@ export default {
     },
     getCars(state) {
       return state.cars;
+    },
+    getCarsCount(state) {
+      return state.carsCount;
     },
     getCities(state) {
       return state.cities;
@@ -61,14 +65,44 @@ export default {
         });
     },
 
-    fetchCars({ commit, rootState }) {
+    fetchCars({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
+
+      let params = "";
+
+      // adding params
+      if (payload.params) {
+        payload.params.forEach(param => {
+          if (param.value.length !== 0) {
+            params += "&" + param.name + "=" + param.value;
+          }
+        });
+      }
+
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
       api
-        .getRequest(`db/car`)
+        .getRequest(
+          `db/car?page=${payload.page}&limit=${payload.limit}?${params}`
+        )
         .then(result => {
           commit("updateCars", result.data);
+          console.log(result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    fetchCarsCount({ commit, rootState }) {
+      let api = new Api(new AxiosApi());
+
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+      api
+        .getRequest("db/car")
+        .then(result => {
+          commit("updateCarsCount", result.data.length);
           console.log(result.data);
         })
         .catch(error => {
@@ -103,6 +137,9 @@ export default {
     },
     updateCars(state, cars) {
       state.cars = cars;
+    },
+    updateCarsCount(state, count) {
+      state.carsCount = count;
     }
   }
 };

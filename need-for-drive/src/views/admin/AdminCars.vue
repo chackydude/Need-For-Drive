@@ -5,13 +5,29 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Автомобили</p>
-        <AdminEntityList class="admin-content__order-list">
-          <AdminCarItem />
-          <AdminCarItem />
-          <AdminCarItem />
-          <AdminCarItem />
-          <AdminCarItem />
-          <AdminCarItem />
+        <AdminEntityList
+          class="admin-content__order-list"
+          :total-amount="getCarsCount"
+          :for-click-callback="fetchCars"
+          :page-limit="pageLimit"
+        >
+          <pulse-loader
+            class="list__loader"
+            :loading="getCars.length === 0"
+            color="#007BFF"
+          ></pulse-loader>
+          <div class="list-items" v-if="getCars.length !== 0">
+            <AdminCarItem
+              v-for="car in getCars"
+              :key="car.id"
+              :id="car.id"
+              :img-path="car.thumbnail.path"
+              :model-name="car.name"
+              :number="car.number"
+              :category-name="car.categoryId.name"
+              :colors="car.colors"
+            />
+          </div>
         </AdminEntityList>
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -25,6 +41,8 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import AdminEntityList from "../../components/admin/AdminEntityList";
 import AdminCarItem from "../../components/admin/entity-items/AdminCarItem";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "AdminCars",
@@ -33,15 +51,27 @@ export default {
     AdminHeader,
     AdminFooter,
     AdminEntityList,
-    AdminCarItem
+    AdminCarItem,
+    PulseLoader
   },
   data() {
     return {
+      pageLimit: 5,
       searchFilters: [
         { id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"] },
         { id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"] }
       ]
     };
+  },
+  computed: {
+    ...mapGetters("adminOrders/", ["getCars", "getCarsCount"])
+  },
+  methods: {
+    ...mapActions("adminOrders/", ["fetchCars", "fetchCarsCount"])
+  },
+  mounted() {
+    this.fetchCarsCount();
+    this.fetchCars({ page: 1, limit: this.pageLimit });
   }
 };
 </script>

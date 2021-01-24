@@ -82,13 +82,12 @@ export default {
       "getOrders",
       "getOrdersCount",
       "getCars",
-      "getCities",
-      "getColors"
+      "getCities"
     ])
   },
   mounted() {
-    this.fetchCars();
-    this.fetchCities();
+    // this.fetchCars();
+    // this.fetchCities();
     this.fetchOrders({ page: 1, limit: this.pageLimit });
   }
 };
