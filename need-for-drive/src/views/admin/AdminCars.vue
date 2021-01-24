@@ -58,8 +58,8 @@ export default {
     return {
       pageLimit: 5,
       searchFilters: [
-        { id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"] },
-        { id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"] }
+        { id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"], modelingValue: { name: "option", value: "" } },
+        { id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"], modelingValue: { name: "option", value: "" } }
       ]
     };
   },
@@ -84,6 +84,15 @@ export default {
   font-family: Helvetica;
   font-weight: normal;
 }
+
+.list__loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .admin-page {
   display: flex;
@@ -129,6 +138,10 @@ export default {
     min-height: 100vh;
   }
 
+  .list__loader {
+    height: 40vh;
+  }
+  
   .admin-page__main-content {
     display: flex;
     flex: 1 0 auto;

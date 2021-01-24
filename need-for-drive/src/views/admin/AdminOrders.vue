@@ -154,6 +154,10 @@ export default {
     min-height: 100vh;
   }
 
+  .list__loader {
+    height: 40vh;
+  }
+
   .admin-page__main-content {
     display: flex;
     flex: 1 0 auto;
