@@ -18,7 +18,7 @@
       {{ colorsHandle.toString() }}
     </div>
     <div class="car-item__edit">
-      <button class="action-button">
+      <button class="action-button" @click="toEditEntity">
         <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" />
         <p class="action-button__text">Изменить</p>
       </button>
@@ -36,6 +36,11 @@ export default {
     number: String,
     categoryName: String,
     colors: Array
+  },
+  methods: {
+    toEditEntity() {
+      console.log(this.id);
+    }
   },
   computed: {
     imgPathHandled() {
