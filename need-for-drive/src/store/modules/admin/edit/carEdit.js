@@ -4,12 +4,22 @@
 
 export default {
   state: {
-    car: {},
+    lastCar: {}
   },
 
-  getters: {},
+  getters: {
+    getLastCar(state) {
+      return state.lastCar;
+    }
+  },
 
-  actions: {},
+  actions: {
+    
+  },
 
-  mutations: {}
+  mutations: {
+    updateLastCar(state, car) {
+      this.lastCar = car;
+    }
+  }
 };

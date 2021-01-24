@@ -106,12 +106,12 @@ export default {
     addColor() {
       if (
         typeof this.currentColor === "string" &&
-        this.currentColor.length !== 0 &&
+        this.currentColor.trim().length !== 0 &&
         !this.colors
           .map(color => color.toLowerCase())
-          .includes(this.currentColor)
+          .includes(this.currentColor.trim())
       ) {
-        this.colors.push(this.currentColor);
+        this.colors.push(this.currentColor.trim());
       }
     }
   }
