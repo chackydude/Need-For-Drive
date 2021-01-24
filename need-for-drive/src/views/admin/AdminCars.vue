@@ -8,8 +8,9 @@
         <AdminEntityList
           class="admin-content__order-list"
           :total-amount="getCarsCount"
-          :for-click-callback="fetchCars"
+          :for-click-callback="fetchCarsWithAmount"
           :page-limit="pageLimit"
+          :search-filters="searchFilters"
         >
           <pulse-loader
             class="list__loader"
@@ -57,9 +58,14 @@ export default {
   data() {
     return {
       pageLimit: 5,
+      name: "",
       searchFilters: [
-        { id: 0, name: "Модели", options: ["Все", "Hyunday", "Nissan"], modelingValue: { name: "option", value: "" } },
-        { id: 1, name: "Тип", options: ["Все", "Эконом", "Премиум"], modelingValue: { name: "option", value: "" } }
+        {
+          id: 0,
+          name: "Модели",
+          options: ["Все", "Hyundai, H-1", "Nissan, Qashqai", "Nissan, X-Trail"],
+          modelingValue: { name: "name", value: "" }
+        },
       ]
     };
   },
@@ -67,10 +73,14 @@ export default {
     ...mapGetters("adminOrders/", ["getCars", "getCarsCount"])
   },
   methods: {
-    ...mapActions("adminOrders/", ["fetchCars", "fetchCarsCount"])
+    ...mapActions("adminOrders/", ["fetchCars", "fetchCarsCount"]),
+    fetchCarsWithAmount(payload) {
+      this.fetchCarsCount(payload);
+      this.fetchCars(payload);
+    }
   },
   mounted() {
-    this.fetchCarsCount();
+    this.fetchCarsCount({ params: "" });
     this.fetchCars({ page: 1, limit: this.pageLimit });
   }
 };
@@ -92,7 +102,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 
 .admin-page {
   display: flex;
@@ -141,7 +150,7 @@ export default {
   .list__loader {
     height: 40vh;
   }
-  
+
   .admin-page__main-content {
     display: flex;
     flex: 1 0 auto;

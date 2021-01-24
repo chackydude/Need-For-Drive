@@ -21,7 +21,7 @@
     </div>
     <div class="admin-order-list__pagination">
       <paginate
-        :pageCount="Math.floor(totalAmount / pageLimit)"
+        :pageCount="Math.floor(totalAmount / pageLimit) + 1"
         :containerClass="'pagination'"
         prev-text="«"
         next-text="»"

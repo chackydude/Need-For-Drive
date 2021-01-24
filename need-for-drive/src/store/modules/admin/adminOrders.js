@@ -40,7 +40,7 @@ export default {
       // adding params
       if (payload.params) {
         payload.params.forEach(param => {
-          if (param.value.length !== 0) {
+          if (param.value != null) {
             params += "&" + param.name + "=" + param.value;
           }
         });
@@ -73,7 +73,7 @@ export default {
       // adding params
       if (payload.params) {
         payload.params.forEach(param => {
-          if (param.value.length !== 0) {
+          if (param.value != null) {
             params += "&" + param.name + "=" + param.value;
           }
         });
@@ -94,13 +94,26 @@ export default {
         });
     },
 
-    fetchCarsCount({ commit, rootState }) {
+    fetchCarsCount({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
+
+      console.log("payload for cars count: ", payload)
+
+      let params = "";
+
+      // adding params
+      if (payload.params) {
+        payload.params.forEach(param => {
+          if (param.value != null) {
+            params += "&" + param.name + "=" + param.value;
+          }
+        });
+      }
 
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
       api
-        .getRequest("db/car")
+        .getRequest(`db/car?${params}`)
         .then(result => {
           commit("updateCarsCount", result.data.length);
           console.log(result.data);
