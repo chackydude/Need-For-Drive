@@ -8,7 +8,7 @@ export default {
     lastCar: {},
     carEditProgress: 0,
     file: {},
-    carImagePath: "",
+    carImagePath: ""
   },
 
   getters: {
@@ -43,42 +43,53 @@ export default {
     async postNewCar({ state, rootState }) {
       let api = new Api(new AxiosApi());
 
-      // form data example
-      let data = new FormData();
-
-      data.append("description", state.lastCar.description);
-      data.append("priceMin", state.lastCar.priceMin);
-      data.append("priceMax", state.lastCar.priceMax);
-      data.append("name", state.lastCar.name);
-      // решена проблема с файлами
-      data.append("thumbnail", state.file);
-      data.append("number", state.lastCar.number);
-      // решена проблема с массивами
-      for (let i = 0; i < state.lastCar.colors.length; i++) {
-        data.append("colors", state.lastCar.colors[i]);
-      }
-      // с объектами
-      data.append("categoryId", state.lastCar.categoryId.id);
-
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
 
-      instance.defaults.headers["Content-Type"] = "multipart/form-data";
+      if (state.file.size === undefined) {
+        let lastCarObject = {
+          priceMax: state.lastCar.priceMax,
+          priceMin: state.lastCar.priceMin,
+          name: state.lastCar.name,
+          number: state.lastCar.number,
+          thumbnail: {
+            path: state.lastCar.thumbnail.path,
+            mimetype: state.lastCar.thumbnail.mimetype,
+            originalname: state.lastCar.thumbnail.originalname,
+            size: state.lastCar.thumbnail.size
+          },
+          description: state.lastCar.thumbnail.description,
+          categoryId: state.lastCar.categoryId.id,
+          colors: state.lastCar.colors
+        };
+        console.log(lastCarObject);
+        await api.postRequest("db/car", lastCarObject);
+      } else {
+        let data = new FormData();
+        // решена проблема с файлами
+        data.append("thumbnail", state.file);
+        data.append("description", state.lastCar.description);
+        data.append("priceMin", state.lastCar.priceMin);
+        data.append("priceMax", state.lastCar.priceMax);
+        data.append("name", state.lastCar.name);
+        data.append("number", state.lastCar.number);
+        // решена проблема с массивами
+        for (let i = 0; i < state.lastCar.colors.length; i++) {
+          data.append("colors", state.lastCar.colors[i]);
+        }
+        data.append("categoryId", state.lastCar.categoryId.id);
 
-      await api
-        .postRequest("db/car", data)
-        .then(result => {
-          console.log(result);
-        })
-        .catch(error => {
-          console.log(error.message);
-        });
+        instance.defaults.headers["Content-Type"] = "multipart/form-data";
+
+        await api.postRequest("db/car", data);
+      }
     }
   },
 
   mutations: {
     updateLastCar(state, car) {
       state.lastCar = car;
+      state.file = {};
       state.carImagePath = "";
     },
 

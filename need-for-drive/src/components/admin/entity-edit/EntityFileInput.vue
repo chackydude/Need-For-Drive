@@ -132,7 +132,7 @@ export default {
 }
 
 .type-input-editor__image {
-  max-height: 110px;
+  max-height: 90px;
 }
 
 .type-input-editor__name {

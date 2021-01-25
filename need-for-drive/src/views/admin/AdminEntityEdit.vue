@@ -4,7 +4,8 @@
     <div class="admin-page__main-content">
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
-        <p class="admin-content__title">Карточка автомобиля</p>
+        <p class="admin-content__title">Карточка автомобиля           {{ getCarFile.size !== undefined }}
+        </p>
         <div class="admin-content__items content-items">
           <EntityFileInput :progress="0" class="input-file-item" :car="getLastCar"/>
           <EntityDefaultInputs :car="getLastCar"/>
