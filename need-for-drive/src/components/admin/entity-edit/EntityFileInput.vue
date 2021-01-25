@@ -98,7 +98,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getLastCar", "getCarImagePath"]),
+    ...mapGetters(["getLastCar", "getCarImagePath", "getCar "]),
     imgSource() {
       if (this.getCarImagePath !== "") {
         return this.getCarImagePath;

@@ -83,6 +83,24 @@ export default {
 
         await api.postRequest("db/car", data);
       }
+    },
+
+    cancelCarEditing({ commit }) {
+      commit("updateLastCar", {});
+      commit("updateCarFile", {});
+      commit("updateCarImagePath", "");
+    },
+
+    deleteLastCar({ commit, rootState }, id) {
+      let api = new Api(new AxiosApi());
+      instance.defaults.headers["Authorization"] =
+          "Bearer " + rootState.auth.accessToken;
+
+      commit("updateLastCar", {});
+      commit("updateCarFile", {});
+      commit("updateCarImagePath", "");
+
+      api.postRequest(`db/car/${id}`);
     }
   },
 
@@ -113,3 +131,5 @@ export default {
       }
     }
  */
+
+// TODO: баг при заполнении нового автомобиля - при нажатии на "отмена" не очищается изображение
