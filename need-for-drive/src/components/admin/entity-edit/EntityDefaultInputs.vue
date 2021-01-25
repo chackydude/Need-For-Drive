@@ -3,38 +3,42 @@
     <div class="main-edit-items__content">
       <h2 class="main-edit-items__title">Настройки автомобиля</h2>
       <div class="main-edit-items__items">
-        <div class="edit-item">
-          <label for="car-type">Модель автомобиля</label>
-          <input type="text" id="car-type" placeholder="Hyndai, i30N" />
-        </div>
+        <TextField
+          label-name="Модель автомобиля"
+          type="text"
+          placehoder="Hyndai, i30N"
+          :modeling-value="{ name: 'name', value: '' }"
+        />
 
-        <div class="edit-item">
-          <label for="car-model">Тип автомобиля</label>
-          <input type="text" id="car-model" placeholder="Компакт-кар" />
-        </div>
+        <TextField
+          label-name="Минимальная цена"
+          type="number"
+          placehoder="5 000"
+          :modeling-value="{ name: 'priceMin', value: '' }"
+        />
 
-        <div class="edit-item">
-          <label for="car-color">Доступные цвета</label>
-          <div>
-            <input
-              type="text"
-              id="car-color"
-              placeholder="Синий"
-              v-model="currentColor"
-            />
-            <button @click="addColor">+</button>
-          </div>
-        </div>
-      </div>
-      <div class="main-edit-items__colors">
-        <CheckInputItem
-          v-for="color in colors"
-          :key="color"
-          input-type="checkbox"
-          :value="{ text: color, amount: 0 }"
-          :name="color"
-          :is-checked="true"
-          :is-locked="true"
+        <TextField
+          label-name="Максимальная цена"
+          type="number"
+          placehoder="10 000"
+          :modeling-value="{ name: 'priceMax', value: '' }"
+        />
+
+        <TextField
+          label-name="Номер"
+          type="text"
+          placehoder="м123ав"
+          :modeling-value="{ name: 'priceMax', value: '' }"
+        />
+
+        <ArrayField
+          label-name="Цвет"
+          type="text"
+          placehoder="Синий"
+          :modeling-value="{
+            name: 'colors',
+            value: colors
+          }"
         />
       </div>
     </div>
@@ -56,33 +60,23 @@
 </template>
 
 <script>
-import CheckInputItem from "../../common/CheckInputItem";
+import ArrayField from "./edit-types/ArrayField";
+import TextField from "./edit-types/TextField";
+
 export default {
   name: "EntityDefaultInputs",
   components: {
-    CheckInputItem
+    TextField,
+    ArrayField
+  },
+  props: {
+    car: Object,
   },
   data() {
     return {
-      username: "",
-      avatar: null,
-      currentColor: "",
       colors: ["Красный", "Синий", "Белый"]
     };
   },
-  methods: {
-    addColor() {
-      if (
-        typeof this.currentColor === "string" &&
-        this.currentColor.trim().length !== 0 &&
-        !this.colors
-          .map(color => color.toLowerCase())
-          .includes(this.currentColor.trim())
-      ) {
-        this.colors.push(this.currentColor.trim());
-      }
-    }
-  }
 };
 </script>
 

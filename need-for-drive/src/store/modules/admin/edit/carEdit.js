@@ -39,3 +39,14 @@ export default {
     }
   }
 };
+
+/*
+  props example:
+    {
+      inputType: file / text / array
+      modelingValue: {
+        name: name of field in the API
+        value: value of field
+      }
+    }
+ */

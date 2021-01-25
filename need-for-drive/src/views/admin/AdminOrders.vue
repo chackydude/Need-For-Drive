@@ -5,7 +5,6 @@
       <AdminHeader class="admin-page__header" />
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Заказы</p>
-        {{ color }}
         <AdminOrderList
           class="admin-content__order-list"
           :search-filters="listFilters"
