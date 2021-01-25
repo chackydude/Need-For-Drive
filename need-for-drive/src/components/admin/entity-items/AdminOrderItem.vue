@@ -146,6 +146,11 @@ export default {
   align-items: center;
   min-height: 88px;
   padding: 13px 21px 13px 21px;
+  transition: 1s;
+
+  &:hover {
+    background-color: $admin-light-gray;
+  }
 }
 
 .order__image {

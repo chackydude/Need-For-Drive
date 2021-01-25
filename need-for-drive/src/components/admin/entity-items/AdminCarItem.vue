@@ -89,6 +89,11 @@ export default {
   min-height: 50px;
   padding: 13px 21px 13px 21px;
   border-bottom: 1px $gray-light-color solid;
+  transition:  1s;
+
+  &:hover {
+    background-color: $admin-light-gray;
+  }
 }
 
 .car-item {
@@ -115,11 +120,12 @@ export default {
 .car-item__image-container {
   width: 200px;
   min-height: 100px;
-  background-color: lighten($admin-blue-color, 30);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+  background-color: lighten($admin-blue-color, 40);
+  background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
 }
 
 .car-item__image {
