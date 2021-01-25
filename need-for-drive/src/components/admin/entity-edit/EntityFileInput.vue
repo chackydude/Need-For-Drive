@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "EntityFileInput",
   props: {
@@ -76,8 +76,10 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["updateCarFile"]),
     handleFileUpload(event) {
       this.file = event.target.files[0];
+      console.log(this.file)
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -91,12 +93,13 @@ export default {
       if (this.file) {
         if (/\.(jpe?g|png|gif)$/i.test(this.file.name)) {
           reader.readAsDataURL(this.file);
+          this.updateCarFile(this.file);
         }
       }
     }
   },
   computed: {
-    ...mapGetters(["getLastCar"]),
+    ...mapGetters(["getLastCar"])
   }
 };
 </script>

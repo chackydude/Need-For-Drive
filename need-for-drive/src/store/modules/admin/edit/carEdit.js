@@ -6,7 +6,8 @@ export default {
   state: {
     lastCarId: "",
     lastCar: {},
-    carEditProgress: 0
+    carEditProgress: 0,
+    file: {}
   },
 
   getters: {
@@ -32,35 +33,34 @@ export default {
         });
     },
 
-    async postNewCar({ rootState }, car) {
+    async postNewCar({ state, rootState }) {
       let api = new Api(new AxiosApi());
 
-      // let carExampleObject = {
-      //   priceMax: 0,
-      //   priceMin: 0,
-      //   name: "string",
-      //   thumbnail: {
-      //     mimetype: "image/png",
-      //     originalname: "qashqai.png",
-      //     path: "/files/5eb4137e099b810b946c87d9_qashqai.png",
-      //     size: 203858
-      //   },
-      //   description: "hello hello hello",
-      //   categoryId: {
-      //     description: "Премиум!",
-      //     id: "5e25c99a099b810b946c5d63",
-      //     name: "Премиум",
-      //   },
-      //   colors: ["string"]
-      // };
+      // form data example
+      let data = new FormData();
+
+      data.append("priceMin", state.lastCar.priceMin);
+      data.append("priceMax", state.lastCar.priceMax);
+      data.append("name", state.lastCar.name);
+      // файлами
+      data.append("thumbnail", state.file);
+      data.append("number", state.lastCar.number);
+      // решена проблема с массивами
+      for (let i = 0; i < state.lastCar.colors.length; i++) {
+        data.append("colors", state.lastCar.colors[i]);
+      }
+      // с объектами
+      data.append("categoryId", state.lastCar.categoryId.id);
 
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
 
+      instance.defaults.headers["Content-Type"] = "multipart/form-data";
+
       await api
-        .postRequest("db/car", car)
+        .postRequest("db/car", data)
         .then(result => {
-          console.log(result)
+          console.log(result);
         })
         .catch(error => {
           console.log(error.message);
@@ -71,6 +71,10 @@ export default {
   mutations: {
     updateLastCar(state, car) {
       state.lastCar = car;
+    },
+
+    updateCarFile(state, file) {
+      state.file = file;
     }
   }
 };

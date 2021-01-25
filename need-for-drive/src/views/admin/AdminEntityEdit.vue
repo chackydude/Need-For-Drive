@@ -9,6 +9,8 @@
           <EntityFileInput :progress="0" class="input-file-item" :car="getLastCar"/>
           <EntityDefaultInputs :car="getLastCar"/>
         </div>
+        <button @click="postNewCar">POST!</button>
+        {{ getLastCar }}
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -21,7 +23,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import EntityFileInput from "../../components/admin/entity-edit/EntityFileInput";
 import EntityDefaultInputs from "../../components/admin/entity-edit/EntityDefaultInputs";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "AdminEntityEdit",
@@ -31,6 +33,9 @@ export default {
     AdminFooter,
     EntityFileInput,
     EntityDefaultInputs
+  },
+  methods: {
+    ...mapActions(["postNewCar"])
   },
   computed: {
     ...mapGetters(["getLastCar"]),

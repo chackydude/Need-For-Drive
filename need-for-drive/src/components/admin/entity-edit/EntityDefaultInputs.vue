@@ -3,26 +3,46 @@
     <div class="main-edit-items__content">
       <h2 class="main-edit-items__title">Настройки автомобиля</h2>
       <div class="main-edit-items__items">
-        <TextField
-          label-name="Модель автомобиля"
-          type="text"
-          placehoder="Hyndai, i30N"
-          :modeling-value="{ name: 'name', value: car.name }"
-        />
+        <!--        <TextField-->
+        <!--          label-name="Модель автомобиля"-->
+        <!--          type="text"-->
+        <!--          placehoder="Hyndai, i30N"-->
+        <!--          :modeling-value="{ name: 'name', value: car.name }"-->
+        <!--        />-->
 
-        <TextField
-          label-name="Минимальная цена"
-          type="number"
-          placehoder="5 000"
-          :modeling-value="{ name: 'priceMin', value: car.priceMin }"
-        />
+        <!--        <TextField-->
+        <!--          label-name="Минимальная цена"-->
+        <!--          type="number"-->
+        <!--          placehoder="5 000"-->
+        <!--          :modeling-value="{ name: 'priceMin', value: car.priceMin }"-->
+        <!--        />-->
 
-        <TextField
-          label-name="Максимальная цена"
-          type="number"
-          placehoder="10 000"
-          :modeling-value="{ name: 'priceMax', value: car.priceMax }"
-        />
+        <!--        <TextField-->
+        <!--          label-name="Максимальная цена"-->
+        <!--          type="number"-->
+        <!--          placehoder="10 000"-->
+        <!--          :modeling-value="{ name: 'priceMax', value: car.priceMax }"-->
+        <!--        />-->
+
+        <div class="edit-item">
+          <label>Модель автомобиля</label>
+          <input type="text" placeholder="Hyndai, i30N" v-model="car.name" />
+        </div>
+
+        <div class="edit-item">
+          <label>Номер</label>
+          <input type="text" placeholder="м123ав" v-model="car.number" />
+        </div>
+
+        <div class="edit-item">
+          <label>Минимальная стоимость</label>
+          <input type="text" placeholder="5 000" v-model="car.priceMin" />
+        </div>
+
+        <div class="edit-item">
+          <label>Максимальная стоимость</label>
+          <input type="text" placeholder="10 000" v-model="car.priceMax" />
+        </div>
 
         <ArrayField
           label-name="Цвет"
@@ -54,27 +74,19 @@
 
 <script>
 import ArrayField from "./edit-types/ArrayField";
-import TextField from "./edit-types/TextField";
+// import TextField from "./edit-types/TextField";
 // import { mapMutations } from "vuex";
 
 export default {
   name: "EntityDefaultInputs",
   components: {
-    TextField,
+    // TextField,
     ArrayField
   },
   props: {
     car: Object
   },
-  computed: {
-    carObject() {
-      return {
-        name: this.car.name,
-        priceMin: this.car.priceMin,
-        priceMax: this.car.priceMax,
-        colors: this.car.colors
-      };
-    }
+  methods: {
   }
 };
 </script>
