@@ -7,12 +7,19 @@ export default {
     lastCarId: "",
     lastCar: {},
     carEditProgress: 0,
-    file: {}
+    file: {},
+    carImagePath: "",
   },
 
   getters: {
     getLastCar(state) {
       return state.lastCar;
+    },
+    getCarFile(state) {
+      return state.file;
+    },
+    getCarImagePath(state) {
+      return state.carImagePath;
     }
   },
 
@@ -39,10 +46,11 @@ export default {
       // form data example
       let data = new FormData();
 
+      data.append("description", state.lastCar.description);
       data.append("priceMin", state.lastCar.priceMin);
       data.append("priceMax", state.lastCar.priceMax);
       data.append("name", state.lastCar.name);
-      // файлами
+      // решена проблема с файлами
       data.append("thumbnail", state.file);
       data.append("number", state.lastCar.number);
       // решена проблема с массивами
@@ -71,10 +79,15 @@ export default {
   mutations: {
     updateLastCar(state, car) {
       state.lastCar = car;
+      state.carImagePath = "";
     },
 
     updateCarFile(state, file) {
       state.file = file;
+    },
+
+    updateCarImagePath(state, path) {
+      state.carImagePath = path;
     }
   }
 };

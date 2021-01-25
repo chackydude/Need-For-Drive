@@ -58,7 +58,7 @@
 
     <div class="main-edit-items__buttons edit-result-buttons">
       <div class="edit-result-buttons__save-cancel-button">
-        <button class="edit-result-buttons__save-button">
+        <button class="edit-result-buttons__save-button" @click="postNewCar">
           Сохранить
         </button>
         <button class="edit-result-buttons__cancel-button">
@@ -75,7 +75,7 @@
 <script>
 import ArrayField from "./edit-types/ArrayField";
 // import TextField from "./edit-types/TextField";
-// import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "EntityDefaultInputs",
@@ -87,6 +87,7 @@ export default {
     car: Object
   },
   methods: {
+    ...mapActions(["postNewCar"])
   }
 };
 </script>

@@ -9,8 +9,6 @@
           <EntityFileInput :progress="0" class="input-file-item" :car="getLastCar"/>
           <EntityDefaultInputs :car="getLastCar"/>
         </div>
-        <button @click="postNewCar">POST!</button>
-        {{ getLastCar }}
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -38,7 +36,7 @@ export default {
     ...mapActions(["postNewCar"])
   },
   computed: {
-    ...mapGetters(["getLastCar"]),
+    ...mapGetters(["getLastCar", "getCarFile"]),
   }
 };
 </script>

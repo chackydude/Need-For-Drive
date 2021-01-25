@@ -13,10 +13,7 @@
       alt="car-image"
       class="car-item__image type-input-editor__image"
       ref="carImage"
-      :src="
-        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
-          car.thumbnail.path
-      "
+      :src="imgSource"
       crossOrigin="anonymous"
       referrerPolicy="origin"
     />
@@ -76,16 +73,17 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updateCarFile"]),
+    ...mapMutations(["updateCarFile", "updateCarImagePath"]),
     handleFileUpload(event) {
       this.file = event.target.files[0];
-      console.log(this.file)
+      console.log(this.file);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
           this.$refs.carImage.src = reader.result;
+          this.updateCarImagePath(reader.result);
         }.bind(this),
         false
       );
@@ -93,13 +91,24 @@ export default {
       if (this.file) {
         if (/\.(jpe?g|png|gif)$/i.test(this.file.name)) {
           reader.readAsDataURL(this.file);
+          this.updateCarImagePath("");
           this.updateCarFile(this.file);
         }
       }
     }
   },
   computed: {
-    ...mapGetters(["getLastCar"])
+    ...mapGetters(["getLastCar", "getCarImagePath"]),
+    imgSource() {
+      if (this.getCarImagePath !== "") {
+        return this.getCarImagePath;
+      } else {
+        return (
+          "https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/" +
+          this.car.thumbnail.path
+        );
+      }
+    }
   }
 };
 </script>
