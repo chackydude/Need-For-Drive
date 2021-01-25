@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "AdminCarItem",
   props: {
@@ -38,11 +40,14 @@ export default {
     colors: Array
   },
   methods: {
+    ...mapActions(["fetchCarById"]),
     toEditEntity() {
       console.log(this.id);
+      this.fetchCarById(this.id);
     }
   },
   computed: {
+    ...mapGetters(["getLastCar"]),
     imgPathHandled() {
       return (
         "https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/" +

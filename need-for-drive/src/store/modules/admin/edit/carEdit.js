@@ -1,10 +1,12 @@
-// import Api from "../../../utils/api/Api";
-// import { instance } from "../../../utils/api/instance";
-// import AxiosApi from "../../../utils/api/AxiosApi";
+import Api from "@/utils/api/Api.js";
+import { instance } from "@/utils/api/instance";
+import AxiosApi from "@/utils/api/AxiosApi";
 
 export default {
   state: {
-    lastCar: {}
+    lastCarId: "",
+    lastCarData: {},
+    carEditProgress: 0
   },
 
   getters: {
@@ -14,12 +16,26 @@ export default {
   },
 
   actions: {
+    fetchCarById({ commit, rootState }, id) {
+      let api = new Api(new AxiosApi());
 
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+      api
+        .getRequest(`db/car/${id}`)
+        .then(result => {
+          commit("updateLastCar", result.data);
+          console.log(result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    }
   },
 
   mutations: {
     updateLastCar(state, car) {
-      this.lastCar = car;
+      state.lastCar = car;
     }
   }
 };

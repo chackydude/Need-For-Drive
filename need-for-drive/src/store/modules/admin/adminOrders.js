@@ -40,7 +40,7 @@ export default {
       // adding params
       if (payload.params) {
         payload.params.forEach(param => {
-          if (param.value != null) {
+          if (param.value != null && param.value.length !== 0) {
             params += "&" + param.name + "=" + param.value;
           }
         });
@@ -73,7 +73,7 @@ export default {
       // adding params
       if (payload.params) {
         payload.params.forEach(param => {
-          if (param.value != null) {
+          if (param.value != null && param.value.length !== 0) {
             params += "&" + param.name + "=" + param.value;
           }
         });
@@ -104,7 +104,7 @@ export default {
       // adding params
       if (payload.params) {
         payload.params.forEach(param => {
-          if (param.value != null) {
+          if (param.value != null && param.value.length !== 0) {
             params += "&" + param.name + "=" + param.value;
           }
         });
