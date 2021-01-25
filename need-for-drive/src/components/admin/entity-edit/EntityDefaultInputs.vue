@@ -7,28 +7,21 @@
           label-name="Модель автомобиля"
           type="text"
           placehoder="Hyndai, i30N"
-          :modeling-value="{ name: 'name', value: '' }"
+          :modeling-value="{ name: 'name', value: car.name }"
         />
 
         <TextField
           label-name="Минимальная цена"
           type="number"
           placehoder="5 000"
-          :modeling-value="{ name: 'priceMin', value: '' }"
+          :modeling-value="{ name: 'priceMin', value: car.priceMin }"
         />
 
         <TextField
           label-name="Максимальная цена"
           type="number"
           placehoder="10 000"
-          :modeling-value="{ name: 'priceMax', value: '' }"
-        />
-
-        <TextField
-          label-name="Номер"
-          type="text"
-          placehoder="м123ав"
-          :modeling-value="{ name: 'priceMax', value: '' }"
+          :modeling-value="{ name: 'priceMax', value: car.priceMax }"
         />
 
         <ArrayField
@@ -37,7 +30,7 @@
           placehoder="Синий"
           :modeling-value="{
             name: 'colors',
-            value: colors
+            value: car.colors
           }"
         />
       </div>
@@ -62,6 +55,7 @@
 <script>
 import ArrayField from "./edit-types/ArrayField";
 import TextField from "./edit-types/TextField";
+// import { mapMutations } from "vuex";
 
 export default {
   name: "EntityDefaultInputs",
@@ -70,13 +64,18 @@ export default {
     ArrayField
   },
   props: {
-    car: Object,
+    car: Object
   },
-  data() {
-    return {
-      colors: ["Красный", "Синий", "Белый"]
-    };
-  },
+  computed: {
+    carObject() {
+      return {
+        name: this.car.name,
+        priceMin: this.car.priceMin,
+        priceMax: this.car.priceMax,
+        colors: this.car.colors
+      };
+    }
+  }
 };
 </script>
 

@@ -3,6 +3,7 @@
     <label>{{ labelName }}</label>
     <input
       :type="type"
+      :id="modelingValue.name"
       :placeholder="placehoder"
       v-model="modelingValue.value"
     />
@@ -16,8 +17,8 @@ export default {
     labelName: String,
     type: String,
     placehoder: String,
-    modelingValue: Object
-  }
+    modelingValue: String
+  },
 };
 </script>
 

@@ -1,13 +1,27 @@
 <template>
   <div class="type-input-editor">
     <img
+      v-if="Object.keys(car).length == 0"
       src="@/assets/images/admin/unknown-car.jpg"
       alt="car-image"
       class="car-item__image type-input-editor__image"
       ref="carImage"
     />
-    <p class="type-input-editor__name">Hyndai, i30N</p>
-    <p class="type-input-editor__type">Компакт-кар</p>
+
+    <img
+      v-else
+      alt="car-image"
+      class="car-item__image type-input-editor__image"
+      ref="carImage"
+      :src="
+        'https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/' +
+          car.thumbnail.path
+      "
+      crossOrigin="anonymous"
+      referrerPolicy="origin"
+    />
+
+    <p class="type-input-editor__name">{{ car.name }}</p>
     <div class="type-input-editor__image-input">
       <label for="car-image">{{ file ? file.name : "Выберите файл..." }}</label>
       <input
@@ -35,12 +49,14 @@
         class="type-input-editor__text"
         name="description"
         placeholder="Description..."
+        v-model="car.description"
       ></textarea>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "EntityFileInput",
   props: {
@@ -51,7 +67,8 @@ export default {
     total: {
       type: Number,
       default: 100
-    }
+    },
+    car: Object
   },
   data() {
     return {
@@ -77,6 +94,9 @@ export default {
         }
       }
     }
+  },
+  computed: {
+    ...mapGetters(["getLastCar"]),
   }
 };
 </script>

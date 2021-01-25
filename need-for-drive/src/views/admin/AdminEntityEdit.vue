@@ -6,8 +6,8 @@
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Карточка автомобиля</p>
         <div class="admin-content__items content-items">
-          <EntityFileInput :progress="60" class="input-file-item" />
-          <EntityDefaultInputs />
+          <EntityFileInput :progress="0" class="input-file-item" :car="getLastCar"/>
+          <EntityDefaultInputs :car="getLastCar"/>
         </div>
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -21,6 +21,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
 import EntityFileInput from "../../components/admin/entity-edit/EntityFileInput";
 import EntityDefaultInputs from "../../components/admin/entity-edit/EntityDefaultInputs";
+import { mapGetters } from "vuex";
 
 export default {
   name: "AdminEntityEdit",
@@ -31,6 +32,9 @@ export default {
     EntityFileInput,
     EntityDefaultInputs
   },
+  computed: {
+    ...mapGetters(["getLastCar"]),
+  }
 };
 </script>
 
