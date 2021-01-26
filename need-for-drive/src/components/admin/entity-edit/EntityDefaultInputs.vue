@@ -58,14 +58,23 @@
 
     <div class="main-edit-items__buttons edit-result-buttons">
       <div class="edit-result-buttons__save-cancel-button">
-        <button class="edit-result-buttons__save-button" @click="postNewCarHandled">
+        <button
+          class="edit-result-buttons__save-button"
+          @click="postNewCarHandled"
+        >
           Сохранить
         </button>
-        <button class="edit-result-buttons__cancel-button" @click="cancelCarEditing">
+        <button
+          class="edit-result-buttons__cancel-button"
+          @click="cancelCarEditing"
+        >
           Отмена
         </button>
       </div>
-      <button class="edit-result-buttons__delete-button" @click="deleteLastCarHandled">
+      <button
+        class="edit-result-buttons__delete-button"
+        @click="deleteLastCarHandled"
+      >
         Удалить
       </button>
     </div>
@@ -75,7 +84,7 @@
 <script>
 import ArrayField from "./edit-types/ArrayField";
 // import TextField from "./edit-types/TextField";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "EntityDefaultInputs",
@@ -87,11 +96,29 @@ export default {
     car: Object
   },
   methods: {
-    ...mapActions(["postNewCar", "cancelCarEditing", "deleteLastCar"]),
+    ...mapActions([
+      "postNewCar",
+      "cancelCarEditing",
+      "deleteLastCar",
+      "updateCar"
+    ]),
     postNewCarHandled() {
-      if (this.car.thumbnail !== undefined) {
-        this.postNewCar();
-      }
+      // if (
+      //         this.car !==
+      //         {
+      //           priceMax: 0,
+      //           priceMin: 0,
+      //           name: "",
+      //           thumbnail: {},
+      //           description: "",
+      //           categoryId: {
+      //             id: "5e25c99a099b810b946c5d63"
+      //           },
+      //           colors: []
+      //         }
+      // ) {
+        this.getEditingStatus ? this.updateCar() : this.postNewCar();
+      // }
     },
     deleteLastCarHandled() {
       if (this.car.id !== undefined) {
@@ -99,6 +126,9 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(["getEditingStatus"])
+  }
 };
 </script>
 

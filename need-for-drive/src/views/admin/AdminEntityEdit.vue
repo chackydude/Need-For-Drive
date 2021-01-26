@@ -36,7 +36,7 @@ export default {
     ...mapActions(["postNewCar"])
   },
   computed: {
-    ...mapGetters(["getLastCar", "getCarFile"]),
+    ...mapGetters(["getLastCar", "getCarFile", "getEditingStatus"]),
   }
 };
 </script>
