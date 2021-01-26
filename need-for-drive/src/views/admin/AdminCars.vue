@@ -91,7 +91,7 @@ export default {
 @import "../../../public/css/variables";
 
 * {
-  font-family: Helvetica;
+  font-family: Helvetica, sans-serif;
   font-weight: normal;
 }
 

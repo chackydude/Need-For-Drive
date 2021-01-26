@@ -21,7 +21,7 @@
     </div>
     <div class="admin-order-list__pagination">
       <paginate
-        :pageCount="Math.floor(totalAmount / pageLimit) + 1"
+        :pageCount="getPageCount"
         :containerClass="'pagination'"
         prev-text="«"
         next-text="»"
@@ -71,6 +71,15 @@ export default {
     clickCallback: function(page) {
       this.currentPage = page;
       this.forClickCallback({ page: this.currentPage, limit: this.pageLimit, params: this.searchFilters.map(searchFilter => searchFilter.modelingValue) });
+    }
+  },
+  computed: {
+    getPageCount() {
+      if (Math.floor(this.totalAmount / this.pageLimit) === 0) {
+        return 1
+      } else {
+        return Math.floor(this.totalAmount / this.pageLimit);
+      }
     }
   }
 };

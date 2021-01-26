@@ -45,8 +45,63 @@ export default {
 @import "public/css/mixins";
 @import "public/css/variables";
 
+* {
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+.list__loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-page {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-page__main-content {
+  width: 100%;
+  background-color: $background-admin;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-page__header {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.admin-content {
+  display: flex;
+  flex: 1 0 auto;
+  padding: 32px;
+  flex-direction: column;
+}
+
+.admin-page__footer {
+  display: flex;
+  flex: 0 0 auto;
+}
+
 .admin-content__title {
+  font-size: 29px;
+  color: #3d5170;
   margin-bottom: 30px;
+}
+
+.admin-content__order-list {
+  margin-top: 30px;
+}
+
+.admin-page__main-content {
+  width: 100%;
+  background-color: $background-admin;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-content__items {
