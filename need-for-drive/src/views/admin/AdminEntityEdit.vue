@@ -12,10 +12,7 @@
             :car="getLastCar"
           />
           <EntityDefaultInputs :car="getLastCar" />
-          {{ getProgress }}
         </div>
-        {{ getLastCar }}
-
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
