@@ -38,8 +38,20 @@ const routes = [
     }
   },
   {
+    path: "/admin/orders/:id",
+    component: () => import("../views/admin/AdminOrderEdit"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
+  },
+  {
     path: "/admin/edit/",
-    component: () => import("../views/admin/AdminEntityEdit"),
+    component: () => import("../views/admin/AdminCarEdit"),
 
     beforeEnter(to, from, next) {
       if (localStorage.getItem("auth")) {

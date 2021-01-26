@@ -10,8 +10,9 @@
             :progress="getProgress"
             class="input-file-item"
             :car="getLastCar"
-          />
-          <EntityDefaultInputs :car="getLastCar" />
+          ></EntityFileInput>
+          <EntityDefaultInputs :car="getLastCar">
+          </EntityDefaultInputs>
         </div>
       </div>
       <AdminFooter class="admin-page__footer" />
@@ -37,7 +38,7 @@ export default {
     EntityDefaultInputs
   },
   methods: {
-    ...mapActions(["postNewCar"])
+    ...mapActions(["postNewCar"]),
   },
   computed: {
     ...mapGetters([

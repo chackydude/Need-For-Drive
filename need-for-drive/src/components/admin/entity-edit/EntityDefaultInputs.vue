@@ -105,6 +105,7 @@
 import ArrayField from "./edit-types/ArrayField";
 // import TextField from "./edit-types/TextField";
 import { mapActions, mapGetters } from "vuex";
+import router from "../../../router";
 
 export default {
   name: "EntityDefaultInputs",
@@ -139,6 +140,7 @@ export default {
         this.isValidNumber
       ) {
         this.getEditingStatus ? this.updateCar() : this.postNewCar();
+        router.push(`/admin/cars`);
       }
     },
     deleteLastCarHandled() {

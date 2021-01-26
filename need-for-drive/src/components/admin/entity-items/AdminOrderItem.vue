@@ -66,7 +66,7 @@
           <img src="@/assets/icons/admin/buttons/close.svg" alt="cancel" />
           <p class="action-button__text">Отмена</p>
         </button>
-        <button class="action-button">
+        <button class="action-button" @click="editOrder">
           <img src="@/assets/icons/admin/buttons/edit.svg" alt="edit" />
           <p class="action-button__text">Изменить</p>
         </button>
@@ -78,6 +78,9 @@
 <script>
 import CheckInputItem from "../../common/CheckInputItem";
 import dayjs from "dayjs";
+import { mapActions } from "vuex"
+import router from "../../../router";
+
 export default {
   name: "AdminOrderItem",
   props: {
@@ -95,6 +98,13 @@ export default {
   },
   components: {
     CheckInputItem
+  },
+  methods: {
+    ...mapActions(["fetchOrderById"]),
+    editOrder() {
+      this.fetchOrderById(this.id);
+      router.push(`/admin/orders/${this.id}`);
+    }
   },
   filters: {
     toPrice(str) {
