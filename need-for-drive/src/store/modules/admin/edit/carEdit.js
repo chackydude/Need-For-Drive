@@ -59,7 +59,7 @@ export default {
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
 
-      instance.defaults.headers["Content-Type"] = "multipart/form-data";
+      // instance.defaults.headers["Content-Type"] = "multipart/form-data";
 
       if (state.file.size === undefined) {
         let lastCarObject = {
@@ -104,7 +104,7 @@ export default {
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
 
-      instance.defaults.headers["Content-Type"] = "multipart/form-data";
+      // instance.defaults.headers["Content-Type"] = "multipart/form-data";
 
       if (state.file.size === undefined) {
         let lastCarObject = {
@@ -180,7 +180,7 @@ export default {
       commit("updateCarImagePath", "");
       commit("updateEditingStatus", false);
 
-      api.postRequest(`db/car/${id}`);
+      api.deleteRequest(`db/car/${id}`);
     }
   },
 

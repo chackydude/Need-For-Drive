@@ -28,6 +28,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import router from "../../../router";
 
 export default {
   name: "AdminCarItem",
@@ -42,8 +43,8 @@ export default {
   methods: {
     ...mapActions(["fetchCarById"]),
     toEditEntity() {
-      console.log(this.id);
       this.fetchCarById(this.id);
+      router.push(`/admin/edit`);
     }
   },
   computed: {
@@ -89,7 +90,7 @@ export default {
   min-height: 50px;
   padding: 13px 21px 13px 21px;
   border-bottom: 1px $gray-light-color solid;
-  transition:  1s;
+  transition: 1s;
 
   &:hover {
     background-color: $admin-light-gray;
@@ -125,7 +126,7 @@ export default {
   align-items: center;
   border-radius: 10px;
   background-color: lighten($admin-blue-color, 40);
-  background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+  background-image: linear-gradient(135deg, #8bc6ec 0%, #9599e2 100%);
 }
 
 .car-item__image {
