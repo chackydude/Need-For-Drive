@@ -106,21 +106,41 @@ export default {
 
       instance.defaults.headers["Content-Type"] = "multipart/form-data";
 
-      let data = new FormData();
-      // решена проблема с файлами
-      data.append("thumbnail", state.file);
-      data.append("description", state.lastCar.description);
-      data.append("priceMin", state.lastCar.priceMin);
-      data.append("priceMax", state.lastCar.priceMax);
-      data.append("name", state.lastCar.name);
-      data.append("number", state.lastCar.number);
-      // решена проблема с массивами
-      for (let i = 0; i < state.lastCar.colors.length; i++) {
-        data.append("colors", state.lastCar.colors[i]);
-      }
-      data.append("categoryId", state.lastCar.categoryId.id);
+      if (state.file.size === undefined) {
+        let lastCarObject = {
+          priceMax: state.lastCar.priceMax,
+          priceMin: state.lastCar.priceMin,
+          name: state.lastCar.name,
+          number: state.lastCar.number,
+          thumbnail: {
+            path: state.lastCar.thumbnail.path,
+            mimetype: state.lastCar.thumbnail.mimetype,
+            originalname: state.lastCar.thumbnail.originalname,
+            size: state.lastCar.thumbnail.size
+          },
+          description: state.lastCar.thumbnail.description,
+          categoryId: state.lastCar.categoryId.id,
+          colors: state.lastCar.colors
+        };
+        console.log(lastCarObject);
+        await api.putRequest(`db/car/${state.lastCar.id}`, lastCarObject);
+      } else {
+        let data = new FormData();
+        // решена проблема с файлами
+        data.append("thumbnail", state.file);
+        data.append("description", state.lastCar.description);
+        data.append("priceMin", state.lastCar.priceMin);
+        data.append("priceMax", state.lastCar.priceMax);
+        data.append("name", state.lastCar.name);
+        data.append("number", state.lastCar.number);
+        // решена проблема с массивами
+        for (let i = 0; i < state.lastCar.colors.length; i++) {
+          data.append("colors", state.lastCar.colors[i]);
+        }
+        data.append("categoryId", state.lastCar.categoryId.id);
 
-      await api.putRequest(`db/car/${state.lastCar.id}`, data);
+        await api.putRequest(`db/car/${state.lastCar.id}`, data);
+      }
     },
 
     cancelCarEditing({ commit }) {
