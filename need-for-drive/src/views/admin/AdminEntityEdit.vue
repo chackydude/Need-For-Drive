@@ -6,9 +6,16 @@
       <div class="admin-page__content admin-content">
         <p class="admin-content__title">Карточка автомобиля</p>
         <div class="admin-content__items content-items">
-          <EntityFileInput :progress="0" class="input-file-item" :car="getLastCar"/>
-          <EntityDefaultInputs :car="getLastCar"/>
+          <EntityFileInput
+            :progress="getProgress"
+            class="input-file-item"
+            :car="getLastCar"
+          />
+          <EntityDefaultInputs :car="getLastCar" />
+          {{ getProgress }}
         </div>
+        {{ getLastCar }}
+
       </div>
       <AdminFooter class="admin-page__footer" />
     </div>
@@ -36,7 +43,12 @@ export default {
     ...mapActions(["postNewCar"])
   },
   computed: {
-    ...mapGetters(["getLastCar", "getCarFile", "getEditingStatus"]),
+    ...mapGetters([
+      "getLastCar",
+      "getCarFile",
+      "getEditingStatus",
+      "getProgress"
+    ])
   }
 };
 </script>

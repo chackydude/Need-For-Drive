@@ -5,6 +5,7 @@ import AxiosApi from "@/utils/api/AxiosApi";
 export default {
   state: {
     isEditing: false, // редактируется ли изначально уже существующий автомобиль
+    fieldsCount: 7,
     lastCar: {
       priceMax: 0,
       priceMin: 0,
@@ -14,7 +15,8 @@ export default {
       categoryId: {
         id: "5e25c99a099b810b946c5d63" // костыль, пока чтобы не вводить отдельно поле для categoryId
       },
-      colors: []
+      colors: [],
+      number: ""
     },
     carEditProgress: 0,
     file: {},
@@ -33,6 +35,34 @@ export default {
     },
     getEditingStatus(state) {
       return state.isEditing;
+    },
+    getProgress(state) {
+      let progress = 0;
+      if (state.lastCar.priceMax != 0)
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (state.lastCar.priceMin != 0)
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (state.lastCar.name != "")
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (state.lastCar.number != "" && state.lastCar.number != undefined)
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (
+        state.lastCar.description != "" &&
+        state.lastCar.description !== undefined
+      )
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (state.lastCar.colors.length != 0)
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+      if (state.lastCar.thumbnail.path != undefined || state.carImagePath != "")
+        progress += Math.floor((1 / state.fieldsCount) * 100);
+
+      progress =
+        100 - progress >= Math.floor((1 / state.fieldsCount) * 100)
+          ? progress
+          : 100;
+      progress = progress > 100 ? 100 : progress;
+
+      return progress;
     }
   },
 
@@ -153,7 +183,8 @@ export default {
         categoryId: {
           id: "5e25c99a099b810b946c5d63"
         },
-        colors: []
+        colors: [],
+        number: ""
       });
       commit("updateCarFile", {});
       commit("updateCarImagePath", "");
@@ -174,7 +205,8 @@ export default {
         categoryId: {
           id: "5e25c99a099b810b946c5d63"
         },
-        colors: []
+        colors: [],
+        number: ""
       });
       commit("updateCarFile", {});
       commit("updateCarImagePath", "");
@@ -218,7 +250,7 @@ export default {
  */
 
 // FIXME: баг при заполнении нового автомобиля - при нажатии на "отмена" не очищается изображение
-// TODO: перекидывание на страницу с Id сущности, там она уже редачится
-// TODO: delete - 404, в чем проблема
+// TODO: перекидывание на страницу с Id сущности, там она уже редачится (done)
+// TODO: delete - 404, в чем проблема (done)
 // TODO: как разберешься с авто, перейти к заказам
 // TODO: после заказов -> одна любая другая сущность

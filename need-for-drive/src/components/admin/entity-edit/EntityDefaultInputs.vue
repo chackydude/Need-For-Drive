@@ -36,12 +36,12 @@
 
         <div class="edit-item">
           <label>Минимальная стоимость</label>
-          <input type="text" placeholder="5 000" v-model="car.priceMin" />
+          <input type="number" placeholder="5 000" v-model="car.priceMin" />
         </div>
 
         <div class="edit-item">
           <label>Максимальная стоимость</label>
-          <input type="text" placeholder="10 000" v-model="car.priceMax" />
+          <input type="number" placeholder="10 000" v-model="car.priceMax" />
         </div>
 
         <ArrayField
