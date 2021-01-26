@@ -63,7 +63,7 @@ export default {
         {
           id: 0,
           name: "Модели",
-          options: ["Все", "Hyundai, H-1", "Nissan, Qashqai", "Nissan, X-Trail"],
+          options: ["Все", "Hyundai, H-1", "Nissan, Qashqai", "Nissan, X-Trail", "Tesla Cybertruck"],
           modelingValue: { name: "name", value: "" }
         },
       ]

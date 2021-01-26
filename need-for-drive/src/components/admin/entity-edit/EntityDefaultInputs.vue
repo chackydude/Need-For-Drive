@@ -26,22 +26,42 @@
 
         <div class="edit-item">
           <label>Модель автомобиля</label>
-          <input type="text" placeholder="Hyndai, i30N" v-model="car.name" />
+          <input
+            type="text"
+            placeholder="Hyndai, i30N"
+            v-model="car.name"
+            :class="{ 'edit-item--error': !name }"
+          />
         </div>
 
         <div class="edit-item">
           <label>Номер</label>
-          <input type="text" placeholder="м123ав" v-model="car.number" />
+          <input
+            type="text"
+            placeholder="м123ав"
+            v-model="car.number"
+            :class="{ 'edit-item--error': !number }"
+          />
         </div>
 
         <div class="edit-item">
           <label>Минимальная стоимость</label>
-          <input type="number" placeholder="5 000" v-model="car.priceMin" />
+          <input
+            type="number"
+            placeholder="5 000"
+            v-model.number="car.priceMin"
+            :class="{ 'edit-item--error': !priceMin }"
+          />
         </div>
 
         <div class="edit-item">
           <label>Максимальная стоимость</label>
-          <input type="number" placeholder="10 000" v-model="car.priceMax" />
+          <input
+            type="number"
+            placeholder="10 000"
+            v-model.number="car.priceMax"
+            :class="{ 'edit-item--error': !priceMax }"
+          />
         </div>
 
         <ArrayField
@@ -66,7 +86,7 @@
         </button>
         <button
           class="edit-result-buttons__cancel-button"
-          @click="cancelCarEditing"
+          @click="cancelCarEditingHandled"
         >
           Отмена
         </button>
@@ -95,6 +115,14 @@ export default {
   props: {
     car: Object
   },
+  data() {
+    return {
+      name: true,
+      priceMin: true,
+      priceMax: true,
+      number: true
+    }
+  },
   methods: {
     ...mapActions([
       "postNewCar",
@@ -103,31 +131,53 @@ export default {
       "updateCar"
     ]),
     postNewCarHandled() {
-      // if (
-      //         this.car !==
-      //         {
-      //           priceMax: 0,
-      //           priceMin: 0,
-      //           name: "",
-      //           thumbnail: {},
-      //           description: "",
-      //           categoryId: {
-      //             id: "5e25c99a099b810b946c5d63"
-      //           },
-      //           colors: []
-      //         }
-      // ) {
+      this.validate();
+      if (
+        this.isValidMinPrice &&
+        this.isValidPriceMax &&
+        this.isValidName &&
+        this.isValidNumber
+      ) {
         this.getEditingStatus ? this.updateCar() : this.postNewCar();
-      // }
+      }
     },
     deleteLastCarHandled() {
       if (this.car.id !== undefined) {
         this.deleteLastCar(this.car.id);
       }
+    },
+    cancelCarEditingHandled() {
+      this.cancelCarEditing();
+      this.removeValidation();
+    },
+    validate() {
+      this.name = this.isValidName;
+      this.number = this.isValidNumber;
+      this.priceMax = this.isValidPriceMax;
+      this.priceMin = this.isValidMinPrice;
+    },
+    removeValidation() {
+      this.name = true;
+      this.number = true;
+      this.priceMin = true;
+      this.priceMax = true;
     }
   },
   computed: {
-    ...mapGetters(["getEditingStatus"])
+    ...mapGetters(["getEditingStatus"]),
+    // validation block
+    isValidName() {
+      return this.car.name.length !== 0;
+    },
+    isValidNumber() {
+      return /[a-z][0-9][0-9][0-9][a-z][a-z]/.test(this.car.number);
+    },
+    isValidMinPrice() {
+      return this.car.priceMin > 0 && this.car.priceMin < this.car.priceMax;
+    },
+    isValidPriceMax() {
+      return this.car.priceMax > 0 && this.car.priceMin < this.car.priceMax;
+    },
   }
 };
 </script>
@@ -199,6 +249,11 @@ export default {
       @include buttonStyles;
     }
   }
+}
+
+.edit-item--error {
+  border: 2px lighten($admin-error, 30) solid !important;
+  box-shadow: 0 0 3px rgba(38, 46, 52, 0.2);
 }
 
 .main-edit-items__colors {

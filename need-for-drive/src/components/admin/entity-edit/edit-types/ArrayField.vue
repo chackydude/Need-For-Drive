@@ -37,11 +37,11 @@ export default {
     labelName: String,
     type: String,
     placehoder: String,
-    modelingValue: Object
+    modelingValue: Object,
   },
   data() {
     return {
-      currentItem: ""
+      currentItem: "",
     };
   },
   methods: {
@@ -54,8 +54,9 @@ export default {
           .includes(this.currentItem.trim())
       ) {
         this.modelingValue.value.push(this.currentItem.trim());
+        this.currentItem = "";
       }
-    }
+    },
   }
 };
 </script>
