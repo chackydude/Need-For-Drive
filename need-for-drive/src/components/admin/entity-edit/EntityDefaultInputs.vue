@@ -58,7 +58,7 @@
 
     <div class="main-edit-items__buttons edit-result-buttons">
       <div class="edit-result-buttons__save-cancel-button">
-        <button class="edit-result-buttons__save-button" @click="postNewCar">
+        <button class="edit-result-buttons__save-button" @click="postNewCarHandled">
           Сохранить
         </button>
         <button class="edit-result-buttons__cancel-button" @click="cancelCarEditing">
@@ -88,6 +88,11 @@ export default {
   },
   methods: {
     ...mapActions(["postNewCar", "cancelCarEditing", "deleteLastCar"]),
+    postNewCarHandled() {
+      if (this.car.thumbnail !== undefined) {
+        this.postNewCar();
+      }
+    },
     deleteLastCarHandled() {
       if (this.car.id !== undefined) {
         this.deleteLastCar(this.car.id);

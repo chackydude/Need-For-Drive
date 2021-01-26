@@ -1,7 +1,7 @@
 <template>
   <div class="type-input-editor">
     <img
-      v-if="Object.keys(car).length == 0"
+      v-if="car.thumbnail.path === undefined && getCarImagePath === ''"
       src="@/assets/images/admin/unknown-car.jpg"
       alt="car-image"
       class="car-item__image type-input-editor__image"

@@ -4,8 +4,17 @@ import AxiosApi from "@/utils/api/AxiosApi";
 
 export default {
   state: {
-    lastCarId: "",
-    lastCar: {},
+    lastCar: {
+      priceMax: 0,
+      priceMin: 0,
+      name: "",
+      thumbnail: {},
+      description: "",
+      categoryId: {
+        id: "5e25c99a099b810b946c5d63" // костыль, пока чтобы не вводить отдельно поле для category
+      },
+      colors: []
+    },
     carEditProgress: 0,
     file: {},
     carImagePath: ""
@@ -85,8 +94,26 @@ export default {
       }
     },
 
+    async updateCar({ rootState, state }) {
+      let api = new Api(new AxiosApi());
+
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+      await api.postRequest(`db/car/${state.lastCar.id}`, state.lastCar);
+    },
+
     cancelCarEditing({ commit }) {
-      commit("updateLastCar", {});
+      commit("updateLastCar", {
+        priceMax: 0,
+        priceMin: 0,
+        name: "",
+        thumbnail: {},
+        description: "",
+        categoryId: {
+          id: "5e25c99a099b810b946c5d63" // костыль, пока чтобы не вводить отдельно поле для category
+        },
+        colors: []
+      });
       commit("updateCarFile", {});
       commit("updateCarImagePath", "");
     },
@@ -94,7 +121,7 @@ export default {
     deleteLastCar({ commit, rootState }, id) {
       let api = new Api(new AxiosApi());
       instance.defaults.headers["Authorization"] =
-          "Bearer " + rootState.auth.accessToken;
+        "Bearer " + rootState.auth.accessToken;
 
       commit("updateLastCar", {});
       commit("updateCarFile", {});
