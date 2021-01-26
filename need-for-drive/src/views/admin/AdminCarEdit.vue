@@ -11,7 +11,61 @@
             class="input-file-item"
             :car="getLastCar"
           ></EntityFileInput>
-          <EntityDefaultInputs :car="getLastCar">
+          <EntityDefaultInputs
+            title="Настройки автомобиля"
+            @post="postNewCarHandled"
+            @cancel="cancelCarEditingHandled"
+            @delete="deleteLastCarHandled"
+          >
+            <div class="edit-item">
+              <label>Модель автомобиля</label>
+              <input
+                type="text"
+                placeholder="Hyndai, i30N"
+                v-model="getLastCar.name"
+                :class="{ 'edit-item--error': !name }"
+              />
+            </div>
+
+            <div class="edit-item">
+              <label>Номер</label>
+              <input
+                type="text"
+                placeholder="м123ав"
+                v-model="getLastCar.number"
+                :class="{ 'edit-item--error': !number }"
+              />
+            </div>
+
+            <div class="edit-item">
+              <label>Минимальная стоимость</label>
+              <input
+                type="number"
+                placeholder="5 000"
+                v-model.number="getLastCar.priceMin"
+                :class="{ 'edit-item--error': !priceMin }"
+              />
+            </div>
+
+            <div class="edit-item">
+              <label>Максимальная стоимость</label>
+              <input
+                type="number"
+                placeholder="10 000"
+                v-model.number="getLastCar.priceMax"
+                :class="{ 'edit-item--error': !priceMax }"
+              />
+            </div>
+
+            <ArrayField
+              label-name="Цвет"
+              type="text"
+              placehoder="Синий"
+              :modeling-value="{
+                name: 'colors',
+                value: getLastCar.colors
+              }"
+            />
           </EntityDefaultInputs>
         </div>
       </div>
@@ -24,9 +78,11 @@
 import AdminSideBar from "../../components/admin/AdminSideBar";
 import AdminHeader from "../../components/admin/AdminHeader";
 import AdminFooter from "../../components/admin/AdminFooter";
-import EntityFileInput from "../../components/admin/entity-edit/EntityFileInput";
-import EntityDefaultInputs from "../../components/admin/entity-edit/EntityDefaultInputs";
+import EntityFileInput from "../../components/admin/entity-edit/EntitExtraInputWrapper";
+import EntityDefaultInputs from "../../components/admin/entity-edit/EntitMainInputWrapper";
+import ArrayField from "../../components/admin/entity-edit/edit-types/ArrayField";
 import { mapGetters, mapActions } from "vuex";
+import router from "../../router";
 
 export default {
   name: "AdminEntityEdit",
@@ -35,18 +91,73 @@ export default {
     AdminHeader,
     AdminFooter,
     EntityFileInput,
-    EntityDefaultInputs
+    EntityDefaultInputs,
+    ArrayField
+  },
+  data() {
+    return {
+      name: true,
+      priceMin: true,
+      priceMax: true,
+      number: true
+    };
   },
   methods: {
-    ...mapActions(["postNewCar"]),
+    ...mapActions([
+      "postNewCar",
+      "cancelCarEditing",
+      "deleteLastCar",
+      "updateCar"
+    ]),
+    postNewCarHandled() {
+      this.validate();
+      if (
+        this.isValidMinPrice &&
+        this.isValidPriceMax &&
+        this.isValidName &&
+        this.isValidNumber
+      ) {
+        this.getEditingStatus ? this.updateCar() : this.postNewCar();
+        router.push(`/admin/cars`);
+      }
+    },
+    deleteLastCarHandled() {
+      if (this.getLastCar.id !== undefined) {
+        this.deleteLastCar(this.getLastCar.id);
+      }
+    },
+    cancelCarEditingHandled() {
+      this.cancelCarEditing();
+      this.removeValidation();
+    },
+    validate() {
+      this.name = this.isValidName;
+      this.number = this.isValidNumber;
+      this.priceMax = this.isValidPriceMax;
+      this.priceMin = this.isValidMinPrice;
+    },
+    removeValidation() {
+      this.name = true;
+      this.number = true;
+      this.priceMin = true;
+      this.priceMax = true;
+    }
   },
   computed: {
-    ...mapGetters([
-      "getLastCar",
-      "getCarFile",
-      "getEditingStatus",
-      "getProgress"
-    ])
+    ...mapGetters(["getEditingStatus", "getLastCar", "getProgress"]),
+    // validation block
+    isValidName() {
+      return this.getLastCar.name.length !== 0;
+    },
+    isValidNumber() {
+      return /[a-z][0-9][0-9][0-9][a-z][a-z]/.test(this.getLastCar.number);
+    },
+    isValidMinPrice() {
+      return this.getLastCar.priceMin > 0 && this.getLastCar.priceMin < this.getLastCar.priceMax;
+    },
+    isValidPriceMax() {
+      return this.getLastCar.priceMax > 0 && this.getLastCar.priceMin < this.getLastCar.priceMax;
+    }
   }
 };
 </script>
@@ -150,6 +261,13 @@ export default {
   .edit-result-buttons__save-cancel-button {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-page {
+    flex-direction: column;
+    min-height: 100vh;
   }
 }
 </style>

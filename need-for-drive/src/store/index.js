@@ -9,7 +9,7 @@ import tabsMapping from "./modules/tabsMapping";
 import auth from "./modules/admin/auth";
 import adminOrders from "./modules/admin/adminOrders";
 import carEdit from "./modules/admin/edit/carEdit";
-import orderEdit from "./modules/admin/edit/orderedit";
+import orderEdit from "./modules/admin/edit/orderEdit";
 
 Vue.use(Vuex);
 

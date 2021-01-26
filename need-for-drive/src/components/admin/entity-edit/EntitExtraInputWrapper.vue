@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "public/css/variables";
 @import "public/css/mixins";
 

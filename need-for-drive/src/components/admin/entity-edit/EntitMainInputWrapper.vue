@@ -1,7 +1,7 @@
 <template>
   <div class="content-items__main main-edit-items">
     <div class="main-edit-items__content">
-      <h2 class="main-edit-items__title">Настройки автомобиля</h2>
+      <h2 class="main-edit-items__title">{{ title }}</h2>
       <div class="main-edit-items__items">
         <!--        <TextField-->
         <!--          label-name="Модель автомобиля"-->
@@ -24,77 +24,26 @@
         <!--          :modeling-value="{ name: 'priceMax', value: car.priceMax }"-->
         <!--        />-->
 
-        <div class="edit-item">
-          <label>Модель автомобиля</label>
-          <input
-            type="text"
-            placeholder="Hyndai, i30N"
-            v-model="car.name"
-            :class="{ 'edit-item--error': !name }"
-          />
-        </div>
-
-        <div class="edit-item">
-          <label>Номер</label>
-          <input
-            type="text"
-            placeholder="м123ав"
-            v-model="car.number"
-            :class="{ 'edit-item--error': !number }"
-          />
-        </div>
-
-        <div class="edit-item">
-          <label>Минимальная стоимость</label>
-          <input
-            type="number"
-            placeholder="5 000"
-            v-model.number="car.priceMin"
-            :class="{ 'edit-item--error': !priceMin }"
-          />
-        </div>
-
-        <div class="edit-item">
-          <label>Максимальная стоимость</label>
-          <input
-            type="number"
-            placeholder="10 000"
-            v-model.number="car.priceMax"
-            :class="{ 'edit-item--error': !priceMax }"
-          />
-        </div>
-
-        <ArrayField
-          label-name="Цвет"
-          type="text"
-          placehoder="Синий"
-          :modeling-value="{
-            name: 'colors',
-            value: car.colors
-          }"
-        />
+        <slot>
+          <!--inputs-->
+        </slot>
       </div>
     </div>
 
+    <slot name="message" class="message">
+      <!--message-->
+    </slot>
+
     <div class="main-edit-items__buttons edit-result-buttons">
       <div class="edit-result-buttons__save-cancel-button">
-        <button
-          class="edit-result-buttons__save-button"
-          @click="postNewCarHandled"
-        >
+        <button class="edit-result-buttons__save-button" @click="emitPost">
           Сохранить
         </button>
-        <button
-          class="edit-result-buttons__cancel-button"
-          @click="cancelCarEditingHandled"
-        >
+        <button class="edit-result-buttons__cancel-button" @click="emitCancel">
           Отмена
         </button>
       </div>
-      <button
-        class="edit-result-buttons__delete-button"
-        @click="deleteLastCarHandled"
-      >
+      <button class="edit-result-buttons__delete-button" @click="emitDelete">
         Удалить
       </button>
     </div>
@@ -102,84 +51,28 @@
 </template>
 
 <script>
-import ArrayField from "./edit-types/ArrayField";
-// import TextField from "./edit-types/TextField";
-import { mapActions, mapGetters } from "vuex";
-import router from "../../../router";
+// import ArrayField from "./edit-types/ArrayField";
 
 export default {
   name: "EntityDefaultInputs",
   components: {
     // TextField,
-    ArrayField
+    // ArrayField
   },
   props: {
-    car: Object
-  },
-  data() {
-    return {
-      name: true,
-      priceMin: true,
-      priceMax: true,
-      number: true
-    }
+    car: Object,
+    title: String
   },
   methods: {
-    ...mapActions([
-      "postNewCar",
-      "cancelCarEditing",
-      "deleteLastCar",
-      "updateCar"
-    ]),
-    postNewCarHandled() {
-      this.validate();
-      if (
-        this.isValidMinPrice &&
-        this.isValidPriceMax &&
-        this.isValidName &&
-        this.isValidNumber
-      ) {
-        this.getEditingStatus ? this.updateCar() : this.postNewCar();
-        router.push(`/admin/cars`);
-      }
+    emitPost() {
+      this.$emit("post");
     },
-    deleteLastCarHandled() {
-      if (this.car.id !== undefined) {
-        this.deleteLastCar(this.car.id);
-      }
+    emitCancel() {
+      this.$emit("cancel");
     },
-    cancelCarEditingHandled() {
-      this.cancelCarEditing();
-      this.removeValidation();
-    },
-    validate() {
-      this.name = this.isValidName;
-      this.number = this.isValidNumber;
-      this.priceMax = this.isValidPriceMax;
-      this.priceMin = this.isValidMinPrice;
-    },
-    removeValidation() {
-      this.name = true;
-      this.number = true;
-      this.priceMin = true;
-      this.priceMax = true;
+    emitDelete() {
+      this.$emit("delete");
     }
-  },
-  computed: {
-    ...mapGetters(["getEditingStatus"]),
-    // validation block
-    isValidName() {
-      return this.car.name.length !== 0;
-    },
-    isValidNumber() {
-      return /[a-z][0-9][0-9][0-9][a-z][a-z]/.test(this.car.number);
-    },
-    isValidMinPrice() {
-      return this.car.priceMin > 0 && this.car.priceMin < this.car.priceMax;
-    },
-    isValidPriceMax() {
-      return this.car.priceMax > 0 && this.car.priceMin < this.car.priceMax;
-    },
   }
 };
 </script>
@@ -297,6 +190,10 @@ export default {
     color: #fff;
     background-color: $admin-error;
   }
+}
+
+.message {
+  margin: auto;
 }
 
 @media (max-width: 900px) {
