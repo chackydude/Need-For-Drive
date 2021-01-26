@@ -18,6 +18,9 @@ export default {
       isNeedChildChair: true,
       isRightWheel: true
     }
+    // comfirmed - 5e26a1f0099b810b946c5d8b
+    // cancelled - 5e26a1f5099b810b946c5d8c
+    // new - 5e26a191099b810b946c5d89
   },
 
   getters: {
@@ -42,6 +45,24 @@ export default {
           console.log(error.message);
         });
     },
+
+    // updateLastOrderStatus({ state, rootState }, payload) {
+    //   let api = new Api(new AxiosApi());
+    //
+    //   instance.defaults.headers["Authorization"] =
+    //       "Bearer " + rootState.auth.accessToken;
+    //
+    //   // state.lastOrder.
+    //
+    //   api
+    //       .putRequest(`db/order/${id}`, state.lastOrder)
+    //       .then(result => {
+    //         console.log(result.data);
+    //       })
+    //       .catch(error => {
+    //         console.log(error.message);
+    //       });
+    // },
 
     updateNewOrder({ state, rootState }, id) {
       let api = new Api(new AxiosApi());

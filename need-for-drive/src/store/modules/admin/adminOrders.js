@@ -10,7 +10,7 @@ export default {
     ordersCount: 0,
     cars: [],
     carsCount: 0,
-    cities: []
+    cities: [],
   },
   getters: {
     getOrders(state) {

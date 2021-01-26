@@ -21,7 +21,7 @@
           <span>{{ cityName }}</span
           >, {{ pointAddress }} <br />
           {{ dateFrom | toDate }} — {{ dateTo | toDate }} <br />
-          Цвет: <span>{{ color }}</span>
+          Цвет: <span>{{ color }}</span> Статус: <span>{{ orderStatus }}</span>
         </p>
       </div>
       <div class="order__extra order-extra">
@@ -94,7 +94,8 @@ export default {
     isRightWheel: Boolean,
     dateTo: Number,
     dateFrom: Number,
-    carId: Object
+    carId: Object,
+    orderStatus: String
   },
   components: {
     CheckInputItem

@@ -32,6 +32,7 @@
               :is-right-wheel="order.isRightWheel"
               :date-from="order.dateFrom"
               :date-to="order.dateTo"
+              :order-status="order.orderStatusId.name"
             />
           </div>
         </AdminOrderList>

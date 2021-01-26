@@ -72,6 +72,8 @@
                 Невалидный заказ в базе данных
               </div>
             </template>
+
+            {{ getLastOrder }}
           </EntitMainInputWrapper>
         </div>
       </div>
