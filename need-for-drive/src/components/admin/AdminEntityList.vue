@@ -12,9 +12,20 @@
           v-model="searchFilter.modelingValue.value"
         ></v-select>
       </div>
-      <button class="filters__accept-button admin-button" @click="clickCallback">
-        Применить
-      </button>
+      <div class="button-container">
+        <button
+          class="filters__accept-button admin-button reset-button"
+          @click="resetCallback"
+        >
+          Сбросить
+        </button>
+        <button
+          class="filters__accept-button admin-button"
+          @click="clickCallback"
+        >
+          Применить
+        </button>
+      </div>
     </div>
     <div class="admin-order-list__content">
       <slot />
@@ -54,7 +65,7 @@ export default {
             name: "Placeholder",
             options: ["you", "forgot", "to pass", "filter", "parameters"],
             modelingValue: { name: "option", value: "" }
-          },
+          }
         ];
       }
     }
@@ -68,15 +79,29 @@ export default {
     };
   },
   methods: {
-    clickCallback: function(page) {
+    clickCallback(page) {
       this.currentPage = page;
-      this.forClickCallback({ page: this.currentPage, limit: this.pageLimit, params: this.searchFilters.map(searchFilter => searchFilter.modelingValue) });
+      this.forClickCallback({
+        page: this.currentPage,
+        limit: this.pageLimit,
+        params: this.searchFilters.map(
+          searchFilter => searchFilter.modelingValue
+        )
+      });
+    },
+    resetCallback() {
+      this.searchFilters.forEach(filter => (filter.modelingValue.value = ""));
+      this.forClickCallback({
+        page: this.currentPage,
+        limit: this.pageLimit,
+        params: ""
+      });
     }
   },
   computed: {
     getPageCount() {
       if (Math.floor(this.totalAmount / this.pageLimit) === 0) {
-        return 1
+        return 1;
       } else {
         return Math.floor(this.totalAmount / this.pageLimit);
       }
@@ -146,6 +171,12 @@ export default {
   padding: 0 8px 0 8px;
 }
 
+.reset-button {
+  background-color: $admin-error;
+  @include buttonStylesByColor($admin-error);
+  margin-right: 10px;
+}
+
 .admin-order-list__pagination {
   min-height: 59px;
   width: 100%;
@@ -209,6 +240,12 @@ export default {
     font-size: 8px;
     height: 25px;
     margin: 5px 5px 0 0;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .v-select {

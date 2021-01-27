@@ -70,6 +70,7 @@ export default {
   border: none;
   margin-left: 10px;
   width: 100%;
+  font-size: 15px;
 }
 
 .admin-info {
