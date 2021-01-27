@@ -83,6 +83,57 @@
 
       <p class="side-bar-item__text">Заказы</p>
     </router-link>
+    <router-link
+      tag="div"
+      to="/admin/cities"
+      class="admin-side-bar__item side-bar-item"
+      :class="{ 'side-bar-item--active': active === 3 }"
+    >
+      <svg
+        width="13"
+        height="12"
+        viewBox="0 0 13 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="side-bar-item__icon"
+      >
+        <path
+          id="order"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M7.5 1H3.5C2.95 1 2.505 1.45 2.505 2L2.5 10C2.5 10.55 2.945 11 3.495 11H9.5C10.05 11 10.5 10.55 10.5 10V4L7.5 1ZM8.5 8H7V9.5H6V8H4.5V7H6V5.5H7V7H8.5V8ZM7 1.75V4.5H9.75L7 1.75Z"
+          fill="#CACEDB"
+        />
+      </svg>
+
+      <p class="side-bar-item__text">Города</p>
+    </router-link>
+
+    <router-link
+      tag="div"
+      to="/admin/error"
+      class="admin-side-bar__item side-bar-item"
+      :class="{ 'side-bar-item--active': active === 4 }"
+    >
+      <svg
+        width="13"
+        height="12"
+        viewBox="0 0 13 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="side-bar-item__icon"
+      >
+        <path
+          id="order"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M7.5 1H3.5C2.95 1 2.505 1.45 2.505 2L2.5 10C2.5 10.55 2.945 11 3.495 11H9.5C10.05 11 10.5 10.55 10.5 10V4L7.5 1ZM8.5 8H7V9.5H6V8H4.5V7H6V5.5H7V7H8.5V8ZM7 1.75V4.5H9.75L7 1.75Z"
+          fill="#CACEDB"
+        />
+      </svg>
+
+      <p class="side-bar-item__text">Пример ошибки</p>
+    </router-link>
   </div>
 </template>
 

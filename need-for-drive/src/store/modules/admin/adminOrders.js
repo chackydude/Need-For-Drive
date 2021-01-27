@@ -11,6 +11,7 @@ export default {
     cars: [],
     carsCount: 0,
     cities: [],
+    citiesCount: 0
   },
   getters: {
     getOrders(state) {
@@ -29,6 +30,9 @@ export default {
     },
     getCities(state) {
       return state.cities;
+    },
+    getCitiesCount(state) {
+      return state.citiesCount;
     }
   },
   actions: {
@@ -97,7 +101,7 @@ export default {
     fetchCarsCount({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
 
-      console.log("payload for cars count: ", payload)
+      console.log("payload for cars count: ", payload);
 
       let params = "";
 
@@ -123,14 +127,55 @@ export default {
         });
     },
 
-    fetchCities({ commit, rootState }) {
+    fetchCities({ commit, rootState }, payload) {
       let api = new Api(new AxiosApi());
+
+      let params = "";
+
+      // adding params
+      if (payload.params) {
+        payload.params.forEach(param => {
+          if (param.value != null && param.value.length !== 0) {
+            params += "&" + param.name + "=" + param.value;
+          }
+        });
+      }
+
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
       api
-        .getRequest(`db/city`)
+        .getRequest(
+          `db/city?page=${payload.page}&limit=${payload.limit}?${params}`
+        )
         .then(result => {
           commit("updateCities", result.data);
+          console.log(result.data);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
+
+    fetchCitiesCount({ commit, rootState }, payload) {
+      let api = new Api(new AxiosApi());
+
+      let params = "";
+
+      // adding params
+      if (payload.params) {
+        payload.params.forEach(param => {
+          if (param.value != null && param.value.length !== 0) {
+            params += "&" + param.name + "=" + param.value;
+          }
+        });
+      }
+
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+      api
+        .getRequest(`db/city?${params}`)
+        .then(result => {
+          commit("updateCitiesCount", result.data.length);
           console.log(result.data);
         })
         .catch(error => {
@@ -153,6 +198,9 @@ export default {
     },
     updateCarsCount(state, count) {
       state.carsCount = count;
-    }
+    },
+    updateCitiesCount(state, count) {
+      state.citiesCount = count;
+    },
   }
 };

@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: "/admin/orders/:id",
-    component: () => import("../views/admin/AdminOrderEdit"),
+    component: () => import("../views/admin/edit/AdminOrderEdit"),
 
     beforeEnter(to, from, next) {
       if (localStorage.getItem("auth")) {
@@ -51,7 +51,7 @@ const routes = [
   },
   {
     path: "/admin/edit/",
-    component: () => import("../views/admin/AdminCarEdit"),
+    component: () => import("../views/admin/edit/AdminCarEdit"),
 
     beforeEnter(to, from, next) {
       if (localStorage.getItem("auth")) {
@@ -64,6 +64,30 @@ const routes = [
   {
     path: "/admin/cars/",
     component: () => import("../views/admin/AdminCars"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
+  },
+  {
+    path: "/admin/cities/",
+    component: () => import("../views/admin/AdminCities"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
+  },
+  {
+    path: "/admin/error/",
+    component: () => import("../views/admin/AdminErrorExample"),
 
     beforeEnter(to, from, next) {
       if (localStorage.getItem("auth")) {

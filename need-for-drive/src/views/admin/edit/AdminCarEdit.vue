@@ -75,14 +75,14 @@
 </template>
 
 <script>
-import AdminSideBar from "../../components/admin/AdminSideBar";
-import AdminHeader from "../../components/admin/AdminHeader";
-import AdminFooter from "../../components/admin/AdminFooter";
-import EntityFileInput from "../../components/admin/entity-edit/EntitExtraInputWrapper";
-import EntityDefaultInputs from "../../components/admin/entity-edit/EntitMainInputWrapper";
-import ArrayField from "../../components/admin/entity-edit/edit-types/ArrayField";
+import AdminSideBar from "../../../components/admin/AdminSideBar";
+import AdminHeader from "../../../components/admin/AdminHeader";
+import AdminFooter from "../../../components/admin/AdminFooter";
+import EntityFileInput from "../../../components/admin/entity-edit/EntitExtraInputWrapper";
+import EntityDefaultInputs from "../../../components/admin/entity-edit/EntitMainInputWrapper";
+import ArrayField from "../../../components/admin/entity-edit/edit-types/ArrayField";
 import { mapGetters, mapActions } from "vuex";
-import router from "../../router";
+import router from "../../../router";
 
 export default {
   name: "AdminEntityEdit",
@@ -163,8 +163,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../../public/css/mixins";
+@import "../../../../public/css/variables";
 
 * {
   font-family: Helvetica, sans-serif;

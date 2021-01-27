@@ -259,12 +259,16 @@ export default {
 }
 
 .action-button:first-child {
-  border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px !important;
   border-right: none;
 }
 
+.action-button:nth-child(2) {
+  border-radius: 0 !important;
+}
+
 .action-button:last-child {
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0 !important;
   border-left: none;
 }
 

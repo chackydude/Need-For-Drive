@@ -83,12 +83,12 @@
 </template>
 
 <script>
-import AdminSideBar from "../../components/admin/AdminSideBar";
-import AdminHeader from "../../components/admin/AdminHeader";
-import AdminFooter from "../../components/admin/AdminFooter";
-import EntitMainInputWrapper from "../../components/admin/entity-edit/EntitMainInputWrapper";
+import AdminSideBar from "../../../components/admin/AdminSideBar";
+import AdminHeader from "../../../components/admin/AdminHeader";
+import AdminFooter from "../../../components/admin/AdminFooter";
+import EntitMainInputWrapper from "../../../components/admin/entity-edit/EntitMainInputWrapper";
 import { mapGetters, mapActions } from "vuex";
-import router from "../../router";
+import router from "../../../router";
 
 export default {
   name: "AdminOrderEdit",
@@ -169,8 +169,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "public/css/mixins";
-@import "public/css/variables";
+@import "../../../../public/css/mixins";
+@import "../../../../public/css/variables";
 
 * {
   font-family: Helvetica, sans-serif;
