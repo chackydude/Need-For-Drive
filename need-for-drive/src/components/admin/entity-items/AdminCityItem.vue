@@ -54,6 +54,11 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  transition: 1s;
+
+  &:hover {
+    background-color: $admin-light-gray;
+  }
 }
 
 .city-item__info {
