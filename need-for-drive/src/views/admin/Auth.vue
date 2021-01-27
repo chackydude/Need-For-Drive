@@ -70,6 +70,11 @@ export default {
   background-color: $background-admin;
 }
 
+.auth-page__content {
+  display: flex;
+  flex-direction: column;
+}
+
 .auth-title {
   display: flex;
   flex-direction: row;

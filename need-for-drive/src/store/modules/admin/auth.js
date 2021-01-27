@@ -4,7 +4,7 @@ import AxiosApi from "../../../utils/api/AxiosApi";
 
 export default {
   state: {
-    accessToken: "",
+    accessToken: localStorage.getItem("auth"),
     authError: false,
     authLoading: false
   },
@@ -34,7 +34,7 @@ export default {
           commit("updateAccessToken", result.access_token);
           commit("updateLoading", false);
           commit("updateError", false);
-          localStorage.setItem("auth", true);
+          localStorage.setItem("auth", result.access_token);
         })
         .catch(error => {
           console.log(error.message);

@@ -23,17 +23,27 @@ export default {
     comparingValue: [String, Array],
     groupName: String,
     value: Object,
+    isLocked: {
+      type: Boolean,
+      default: false
+    },
     inputType: {
       default: "radio"
     }
   },
   methods: {
     change() {
+      if (this.isLocked) this.preventStop(event);
       this.$emit("change", this.value);
+    },
+    preventStop(e) {
+      e.preventDefault();
+      return false;
     }
   },
   computed: {
     getCheckState() {
+      if (this.isChecked) return true;
       if (this.comparingValue instanceof Array) {
         for (let i = 0; i < this.comparingValue.length; i++) {
           if (this.comparingValue[i].text === this.value.text) {
