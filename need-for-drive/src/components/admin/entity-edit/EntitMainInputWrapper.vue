@@ -9,21 +9,6 @@
         <!--          placehoder="Hyndai, i30N"-->
         <!--          :modeling-value="{ name: 'name', value: car.name }"-->
         <!--        />-->
-
-        <!--        <TextField-->
-        <!--          label-name="Минимальная цена"-->
-        <!--          type="number"-->
-        <!--          placehoder="5 000"-->
-        <!--          :modeling-value="{ name: 'priceMin', value: car.priceMin }"-->
-        <!--        />-->
-
-        <!--        <TextField-->
-        <!--          label-name="Максимальная цена"-->
-        <!--          type="number"-->
-        <!--          placehoder="10 000"-->
-        <!--          :modeling-value="{ name: 'priceMax', value: car.priceMax }"-->
-        <!--        />-->
-
         <slot>
           <!--inputs-->
         </slot>
@@ -38,6 +23,9 @@
       <div class="edit-result-buttons__save-cancel-button">
         <button class="edit-result-buttons__save-button" @click="emitPost">
           Сохранить
+        </button>
+        <button class="edit-result-buttons__new-button" @click="emitNew" v-if="isCreatable">
+          Новый
         </button>
         <button class="edit-result-buttons__cancel-button" @click="emitCancel">
           Отмена
@@ -61,7 +49,11 @@ export default {
   },
   props: {
     car: Object,
-    title: String
+    title: String,
+    isCreatable: {
+      type: Boolean,
+      default: false,
+    }
   },
   methods: {
     emitPost() {
@@ -72,6 +64,9 @@ export default {
     },
     emitDelete() {
       this.$emit("delete");
+    },
+    emitNew() {
+      this.$emit("new");
     }
   }
 };
@@ -166,6 +161,7 @@ export default {
 
   .edit-result-buttons__save-button,
   .edit-result-buttons__cancel-button,
+  .edit-result-buttons__new-button,
   .edit-result-buttons__delete-button {
     width: 100px;
     height: 29px;
@@ -180,7 +176,8 @@ export default {
     background-color: $admin-blue-color;
   }
 
-  .edit-result-buttons__cancel-button {
+  .edit-result-buttons__cancel-button,
+  .edit-result-buttons__new-button {
     color: $admin-text-dark;
     background-color: $admin-light-gray;
     margin-left: 8px;
@@ -194,6 +191,23 @@ export default {
 
 .message {
   margin: auto;
+}
+
+@media (max-width: 1200px) {
+  .main-edit-items__buttons {
+    align-items: flex-end;
+
+    .edit-result-buttons__cancel-button,
+    .edit-result-buttons__new-button,
+    .edit-result-buttons__save-button {
+      margin: 10px 0 0 0;
+    }
+  }
+
+  .edit-result-buttons__save-cancel-button {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
 
 @media (max-width: 900px) {

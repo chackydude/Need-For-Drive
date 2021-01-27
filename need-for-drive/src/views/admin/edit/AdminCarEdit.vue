@@ -14,8 +14,10 @@
           <EntityDefaultInputs
             title="Настройки автомобиля"
             @post="postNewCarHandled"
-            @cancel="cancelCarEditingHandled"
+            @new="cancelCarEditingHandled"
+            @cancel="leave"
             @delete="deleteLastCarHandled"
+            :is-creatable="true"
           >
             <div class="edit-item">
               <label>Модель автомобиля</label>
@@ -129,6 +131,11 @@ export default {
     cancelCarEditingHandled() {
       this.cancelCarEditing();
       this.removeValidation();
+    },
+    leave() {
+      this.cancelCarEditing();
+      this.removeValidation();
+      router.push(`/admin/cars`);
     },
     validate() {
       this.name = this.isValidName;

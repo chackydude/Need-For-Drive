@@ -10,8 +10,10 @@
             title="Настроки города"
             class="content-items__inputs"
             @post="postNewCityHandled"
-            @cancel="cancelCityEditingHandled"
+            @cancel="leave"
+            @new="cancelCityEditingHandled"
             @delete="deleteLastCityHandled"
+            :is-creatable="true"
           >
             <div class="edit-item">
               <label>Название города</label>
@@ -78,6 +80,12 @@ export default {
     cancelCityEditingHandled() {
       this.cancelCityEditing();
       this.removeValidation();
+    },
+
+    leave() {
+      this.cancelCityEditing();
+      this.removeValidation();
+      router.push(`/admin/cities`);
     },
 
     validate() {

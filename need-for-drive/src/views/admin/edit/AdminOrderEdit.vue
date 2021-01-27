@@ -33,6 +33,7 @@
           <EntitMainInputWrapper
             title="Настроки заказа"
             class="content-items__inputs"
+            :is-creatable="false"
             @post="postNewOrderHandled"
             @cancel="cancelOrderEditingHandled"
             @delete="deleteLastOrderHandled"
@@ -72,8 +73,6 @@
                 Невалидный заказ в базе данных
               </div>
             </template>
-
-            {{ getLastOrder }}
           </EntitMainInputWrapper>
         </div>
       </div>
