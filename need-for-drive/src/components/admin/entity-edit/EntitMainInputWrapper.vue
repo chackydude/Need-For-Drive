@@ -206,7 +206,7 @@ export default {
 
   .edit-result-buttons__save-cancel-button {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column-reverse !important;
   }
 }
 
