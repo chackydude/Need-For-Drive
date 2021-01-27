@@ -1,0 +1,36 @@
+@import "variables";
+
+@mixin buttonStyles() {
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &:active {
+    filter: brightness(80%);
+  }
+}
+
+@mixin buttonStylesByColor($color) {
+  &:hover {
+    background-color: darken($color, 10%);
+  }
+
+  &:active {
+    background-color: darken($color, 20%);
+  }
+}
+
+@mixin buttonBlocked {
+  pointer-events: none;
+  background-color: $gray-light-color;
+};
+
+@mixin fontStylesLight() {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+@mixin fontStyleRegular() {
+  font-size: 14px;
+  font-weight: 400;
+}
