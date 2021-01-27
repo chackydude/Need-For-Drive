@@ -10,6 +10,7 @@ import auth from "./modules/admin/auth";
 import adminOrders from "./modules/admin/adminOrders";
 import carEdit from "./modules/admin/edit/carEdit";
 import orderEdit from "./modules/admin/edit/orderEdit";
+import cityEdit from "./modules/admin/edit/cityEdit";
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     auth,
     adminOrders,
     carEdit,
-    orderEdit
+    orderEdit,
+    cityEdit
   }
 });

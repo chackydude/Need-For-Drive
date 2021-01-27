@@ -86,6 +86,18 @@ const routes = [
     }
   },
   {
+    path: "/admin/cities/:id",
+    component: () => import("../views/admin/edit/AdminCitiesEdit"),
+
+    beforeEnter(to, from, next) {
+      if (localStorage.getItem("auth")) {
+        next();
+      } else {
+        next({ name: "auth" });
+      }
+    }
+  },
+  {
     path: "/admin/error/",
     component: () => import("../views/admin/AdminErrorExample"),
 

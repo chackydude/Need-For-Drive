@@ -15,6 +15,8 @@
 
 <script>
 import dayjs from "dayjs";
+import router from "../../../router";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "AdminCityItem",
@@ -24,7 +26,13 @@ export default {
     updatedAt: Number
   },
   methods: {
-    toEditEntity() {}
+    ...mapActions(["fetchCityById"]),
+    ...mapMutations(["updateCityEditingStatus"]),
+    async toEditEntity() {
+      await this.fetchCityById(this.id);
+      this.updateCityEditingStatus(true);
+      router.push(`/admin/cities/${this.id}`);
+    }
   },
   filters: {
     toDate(date) {
