@@ -58,11 +58,11 @@
     <div class="order__additional-info">
       <p class="order__price">{{ price | toPrice }} ₽</p>
       <div class="order__action-buttons">
-        <button class="action-button">
+        <button class="action-button" @click="orderConfirm">
           <img src="@/assets/icons/admin/buttons/ready.svg" alt="ready" />
-          <p class="action-button__text">Готово</p>
+          <p class="action-button__text" >Готово</p>
         </button>
-        <button class="action-button">
+        <button class="action-button" @click="orderCancel">
           <img src="@/assets/icons/admin/buttons/close.svg" alt="cancel" />
           <p class="action-button__text">Отмена</p>
         </button>
@@ -78,7 +78,7 @@
 <script>
 import CheckInputItem from "../../common/CheckInputItem";
 import dayjs from "dayjs";
-import { mapActions } from "vuex"
+import { mapActions, mapGetters } from "vuex";
 import router from "../../../router";
 
 export default {
@@ -101,10 +101,23 @@ export default {
     CheckInputItem
   },
   methods: {
-    ...mapActions(["fetchOrderById"]),
+    ...mapActions(["fetchOrderById", "updateLastOrderStatus"]),
     editOrder() {
       this.fetchOrderById(this.id);
       router.push(`/admin/orders/${this.id}`);
+    },
+    async orderConfirm() {
+      this.updateLastOrderStatus({
+        statusId: this.getStatuses.confirmed,
+        orderId: this.id
+      });
+    },
+    async orderCancel() {
+      await this.fetchOrderById(this.id);
+      this.updateLastOrderStatus({
+        statusId: this.getStatuses.cancelled,
+        orderId: this.id
+      });
     }
   },
   filters: {
@@ -129,6 +142,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["getStatuses"]),
     getHandledCarId() {
       if (this.carId === null) {
         return {

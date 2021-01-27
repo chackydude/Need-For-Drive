@@ -17,52 +17,59 @@ export default {
       isFullTank: true,
       isNeedChildChair: true,
       isRightWheel: true
+    },
+    statuses: {
+      confirmed: "5e26a1f0099b810b946c5d8b",
+      cancelled: "5e26a1f5099b810b946c5d8c",
+      new: "5e26a191099b810b946c5d89"
     }
-    // comfirmed - 5e26a1f0099b810b946c5d8b
-    // cancelled - 5e26a1f5099b810b946c5d8c
-    // new - 5e26a191099b810b946c5d89
   },
 
   getters: {
     getLastOrder(state) {
       return state.lastOrder;
+    },
+    getStatuses(state) {
+      return state.statuses;
     }
   },
 
   actions: {
-    fetchOrderById({ commit, rootState }, id) {
+    async fetchOrderById({ commit, rootState }, id) {
       let api = new Api(new AxiosApi());
 
       instance.defaults.headers["Authorization"] =
         "Bearer " + rootState.auth.accessToken;
-      api
+      let order = await api
         .getRequest(`db/order/${id}`)
         .then(result => {
           commit("updateLastOrder", result.data);
+          console.log(result.data);
+          return result.data;
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+      return order;
+    },
+
+    updateLastOrderStatus({ state, rootState }, payload) {
+      let api = new Api(new AxiosApi());
+
+      instance.defaults.headers["Authorization"] =
+        "Bearer " + rootState.auth.accessToken;
+
+      state.lastOrder.orderStatusId.id = payload.statusId;
+
+      api
+        .putRequest(`db/order/${payload.orderId}`, state.lastOrder)
+        .then(result => {
           console.log(result.data);
         })
         .catch(error => {
           console.log(error.message);
         });
     },
-
-    // updateLastOrderStatus({ state, rootState }, payload) {
-    //   let api = new Api(new AxiosApi());
-    //
-    //   instance.defaults.headers["Authorization"] =
-    //       "Bearer " + rootState.auth.accessToken;
-    //
-    //   // state.lastOrder.
-    //
-    //   api
-    //       .putRequest(`db/order/${id}`, state.lastOrder)
-    //       .then(result => {
-    //         console.log(result.data);
-    //       })
-    //       .catch(error => {
-    //         console.log(error.message);
-    //       });
-    // },
 
     updateNewOrder({ state, rootState }, id) {
       let api = new Api(new AxiosApi());
@@ -116,7 +123,7 @@ export default {
         isFullTank: true,
         isNeedChildChair: true,
         isRightWheel: true
-      })
+      });
     }
   },
 
