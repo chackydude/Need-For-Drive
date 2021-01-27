@@ -8,7 +8,7 @@ export default {
       orderStatusId: {},
       cityId: {},
       pointId: {},
-      carId: {}, // костыль, от изначально прилетевших заказов с carId === null
+      carId: {},
       color: "",
       dateFrom: 0,
       dateTo: 0,
@@ -95,7 +95,7 @@ export default {
         orderStatusId: {},
         cityId: {},
         pointId: {},
-        carId: {}, // костыль, от изначально прилетевших заказов с carId === null
+        carId: {},
         color: "",
         dateFrom: 0,
         dateTo: 0,
@@ -114,7 +114,7 @@ export default {
         orderStatusId: {},
         cityId: {},
         pointId: {},
-        carId: {}, // костыль, от изначально прилетевших заказов с carId === null
+        carId: {},
         color: "",
         dateFrom: 0,
         dateTo: 0,

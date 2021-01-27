@@ -60,7 +60,6 @@ export default {
       "cancelCityEditing",
       "postNewCity"
     ]),
-    // need to add some
     postNewCityHandled() {
       this.validate();
       if (this.isValidName) {
@@ -71,7 +70,6 @@ export default {
       }
     },
 
-    // done
     deleteLastCityHandled() {
       this.deleteLastCity(this.getLastCity.id);
       router.push(`/admin/cities`);
