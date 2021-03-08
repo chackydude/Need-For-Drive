@@ -67,15 +67,17 @@ export default {
   },
 
   actions: {
-    fetchCarById({ commit, rootState }, id) {
+    fetchCarById(ctx, id) {
+      console.log('context: ', ctx);
+
       let api = new Api(new AxiosApi());
 
       instance.defaults.headers["Authorization"] =
-        "Bearer " + rootState.auth.accessToken;
+        "Bearer " + ctx.rootState.auth.accessToken;
       api
         .getRequest(`db/car/${id}`)
         .then(result => {
-          commit("updateLastCar", result.data);
+          ctx.commit("updateLastCar", result.data);
           console.log(result.data);
         })
         .catch(error => {
